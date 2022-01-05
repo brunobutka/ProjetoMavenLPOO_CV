@@ -24,7 +24,7 @@ import javax.persistence.TemporalType;
  *
  * @author bruno
  */
-@Entity
+@Entity 
 @Table(name = "tb_agenda")
 public class Agenda implements Serializable {
     
