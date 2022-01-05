@@ -13,7 +13,7 @@ import org.junit.Test;
  */
 public class TestPersistenciaJPA {
     
-    //@Test
+    @Test
     public void testConexaoGeracaoTabelas(){
         
         PersistenciaJPA persistencia = new PersistenciaJPA();
