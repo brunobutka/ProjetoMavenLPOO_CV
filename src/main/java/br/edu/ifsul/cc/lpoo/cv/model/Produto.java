@@ -44,7 +44,7 @@ public class Produto implements Serializable{
     private TipoProduto tipo_produto;
     
     @ManyToOne
-    @JoinColumn(name = "fornecedor_id", nullable = false)
+    @JoinColumn(name = "fornecedor_cpf", nullable = false)
     private Fornecedor fornecedor;
     
     public Produto(){

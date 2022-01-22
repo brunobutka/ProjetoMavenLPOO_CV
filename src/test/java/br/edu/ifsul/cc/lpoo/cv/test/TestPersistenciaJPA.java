@@ -1,10 +1,7 @@
 
 package br.edu.ifsul.cc.lpoo.cv.test;
 
-import br.edu.ifsul.cc.lpoo.cv.model.Venda;
-import br.edu.ifsul.cc.lpoo.cv.model.Produto;
 import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJPA;
-import java.util.List;
 import org.junit.Test;
 
 /**

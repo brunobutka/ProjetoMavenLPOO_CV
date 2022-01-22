@@ -5,6 +5,7 @@
 package br.edu.ifsul.cc.lpoo.cv.model;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import javax.persistence.Column;
@@ -51,11 +52,11 @@ public class Venda implements Serializable{
     private Pagamento pagamento;
     
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "cliente_cpf", nullable = false)
     private Cliente cliente;
     
     @ManyToOne
-    @JoinColumn(name = "funcionario_id", nullable = true)
+    @JoinColumn(name = "funcionario_cpf", nullable = false)
     private Funcionario funcionario;
     
     @ManyToMany
@@ -182,6 +183,13 @@ public class Venda implements Serializable{
      */
     public void setProdutos(List<Produto> produtos) {
         this.produtos = produtos;
+    }
+    
+    public void setProduto(Produto produto){
+        if(this.produtos == null){
+            this.produtos = new ArrayList();
+        }
+        this.produtos.add(produto);
     }
 
     /**
