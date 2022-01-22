@@ -176,7 +176,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                     p.setId(rs.getInt(1));
                 }   
                 
-                //ps.execute();
+                //ps.execute(); Estava fazendo inserir 2 em tb_produto;
                 
             }else{
                 //UPTADE
@@ -212,7 +212,15 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 ps.setString(4, v.getCliente().getCpf());
                 ps.setString(5, v.getFuncionario().getCpf());
                 
-                ps.execute();
+                //ps.execute();
+                
+                ResultSet rs = ps.executeQuery();
+                
+                if(rs.next()){
+                    v.setId(rs.getInt(1));
+                } 
+                
+                
                 
                 if(v.getProdutos() != null && !v.getProdutos().isEmpty()){
                     for(Produto p : v.getProdutos()){
@@ -268,9 +276,13 @@ public class PersistenciaJDBC implements InterfacePersistencia {
         if(o instanceof Produto){
             Produto p = (Produto) o;
             
-            PreparedStatement ps = this.con.prepareStatement("delete from tb_produto where id = ?");
+            PreparedStatement ps = this.con.prepareStatement("delete from tb_venda_produto where produto_id = ?");
             ps.setInt(1, p.getId());
             ps.execute();
+            
+            PreparedStatement ps2 = this.con.prepareStatement("delete from tb_produto where id = ?");
+            ps2.setInt(1, p.getId());
+            ps2.execute();
         }else if(o instanceof Venda){
             Venda v = (Venda) o;
             
@@ -281,7 +293,6 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             PreparedStatement ps2 = this.con.prepareStatement("delete from tb_venda where id = ?");
             ps2.setInt(1, v.getId());
             ps2.execute();
-            
         }
     }
 

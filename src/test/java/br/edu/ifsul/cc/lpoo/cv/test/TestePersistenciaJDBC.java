@@ -95,7 +95,6 @@ public class TestePersistenciaJDBC {
         
         if (persistencia.conexaoAberta()){
             List<Venda> lista = persistencia.listVendas();
-            List<Produto> lista2 = persistencia.listProdutos();
             
             if (!lista.isEmpty()) {
                 DateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
@@ -107,8 +106,7 @@ public class TestePersistenciaJDBC {
                                        " | Data: " + formatador.format(v.getData().getTime()) +
                                        " | Pagamento: " + v.getPagamento() +
                                        " | Cliente CPF: " + v.getCliente().getCpf() +
-                                       " | Funcionario CPF: " + v.getFuncionario().getCpf() +
-                                       " | Produtos: " + v.getProdutos());
+                                       " | Funcionario CPF: " + v.getFuncionario().getCpf());
                                         
                     
                     if(v.getProdutos() != null && !v.getProdutos().isEmpty()){
@@ -125,24 +123,8 @@ public class TestePersistenciaJDBC {
                         }
                     }
                     
-                    for(Produto p : lista2){
-                        persistencia.remover(p);
-                    }
-                    /*for(Produto p : lista2){
-                        System.out.println("Id: " + p.getId() +
-                                       " | Nome: " + p.getNome() +
-                                       " | Quantidade: " + p.getQuantidade() +
-                                       " | Tipo produto: " + p.getTipo_produto() +
-                                       " | Valor: " + p.getValor() +
-                                       " | Fornecedor CPF: " + p.getFornecedor().getCpf());
-                
-                        System.out.println("Removendo o produto de ID: " + p.getId());
-                        persistencia.remover(p);
-                    }*/
-                    
                     System.out.println("Removendo a venda de ID: " + v.getId());
                     persistencia.remover(v);
-                    
                     
                }
                 
@@ -154,18 +136,15 @@ public class TestePersistenciaJDBC {
 
                 ven.setObservacao("Venda realizada.");
                 ven.setValor_total(Float.parseFloat("25.00"));
-                ven.setPagamento(Pagamento.DINHEIRO);
-                
+                ven.setPagamento(Pagamento.DINHEIRO); 
                 Cliente clie = new Cliente();
                 clie.setCpf("044.444.040-12");
                 ven.setCliente(clie);
-                
                 Funcionario func = new Funcionario();
                 func.setCpf("055.555.050-12");
                 ven.setFuncionario(func);
                 
                 /// Adicionando um produto
-                    
                 pro.setNome("Bisacodil");
                 pro.setQuantidade(Float.parseFloat("2"));
                 pro.setValor(Float.parseFloat("12.50"));
@@ -173,13 +152,27 @@ public class TestePersistenciaJDBC {
                 forn.setCpf("033.505.023-12");
                 pro.setFornecedor(forn);
                 pro.setTipo_produto(TipoProduto.MEDICAMENTO);
-                
-                
-                
                 ven.setProduto(pro);
                 persistencia.persist(pro);
                 
+                System.out.println("Cadastrou o produto de ID: " + pro.getId());
+
+                pro = new Produto();
+                pro.setNome("Teste");
+                pro.setQuantidade(Float.parseFloat("1"));
+                pro.setValor(Float.parseFloat("40.00"));
+                forn.setCpf("033.505.023-12");
+                pro.setFornecedor(forn);
+                pro.setTipo_produto(TipoProduto.CONSULTA);
+                ven.setProduto(pro);
+                persistencia.persist(pro);
+                    
+                System.out.println("Cadastrou o produto de ID: " + pro.getId());
+                
                 persistencia.persist(ven);
+                
+                System.out.println("Cadastrou a venda de ID: " + ven.getId());
+                
             }
             
             
