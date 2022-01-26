@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package br.edu.ifsul.cc.lpoo.cv.model;
 
 import java.io.Serializable;
@@ -42,7 +39,7 @@ public class Pet implements Serializable{
     private String observacao;
     
     @ManyToOne
-    @JoinColumn(name = "cliente_id", nullable = false)
+    @JoinColumn(name = "cliente_cpf", nullable = false)
     private Cliente cliente;
     
     @ManyToOne

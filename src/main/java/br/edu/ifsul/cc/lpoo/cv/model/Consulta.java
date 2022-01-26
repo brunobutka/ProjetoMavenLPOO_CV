@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package br.edu.ifsul.cc.lpoo.cv.model;
 
 import java.io.Serializable;
@@ -48,7 +45,7 @@ public class Consulta implements Serializable{
     private Float valor;
     
     @ManyToOne
-    @JoinColumn(name = "medico_id", nullable = false)
+    @JoinColumn(name = "medico_cpf", nullable = false)
     private Medico medico;
     
     @ManyToOne

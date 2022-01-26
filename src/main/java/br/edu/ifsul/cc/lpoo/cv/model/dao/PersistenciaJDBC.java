@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package br.edu.ifsul.cc.lpoo.cv.model.dao;
 
 import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
@@ -35,7 +32,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
     private Connection con = null;
 
     public PersistenciaJDBC () throws Exception {
-        Class.forName(DRIVER); //carregamento do driver postgresql em tempo de execução
+        Class.forName(DRIVER); 
         System.out.println("Tentando estabelecer conexao JDBC com : "+URL+" ...");
             
         this.con = (Connection) DriverManager.getConnection(URL, USER, SENHA); 
@@ -158,6 +155,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
         if(o instanceof Produto){
             Produto p = (Produto) o;
             
+            //Insert ou Update
             if(p.getId() == null){
                 //INSERT
                 PreparedStatement ps = this.con.prepareStatement("insert into tb_produto "
@@ -175,8 +173,6 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 if(rs.next()){
                     p.setId(rs.getInt(1));
                 }   
-                
-                //ps.execute(); Estava fazendo inserir 2 em tb_produto;
                 
             }else{
                 //UPTADE
@@ -212,15 +208,11 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 ps.setString(4, v.getCliente().getCpf());
                 ps.setString(5, v.getFuncionario().getCpf());
                 
-                //ps.execute();
-                
                 ResultSet rs = ps.executeQuery();
                 
                 if(rs.next()){
                     v.setId(rs.getInt(1));
-                } 
-                
-                
+                }      
                 
                 if(v.getProdutos() != null && !v.getProdutos().isEmpty()){
                     for(Produto p : v.getProdutos()){
@@ -253,7 +245,6 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 
                 PreparedStatement ps2 = this.con.prepareStatement("delete from tb_venda_produto where venda_id = ?");
                 ps2.setInt(1, v.getId());
-                //ps2.execute();
                 
                 if(v.getProdutos() != null && !v.getProdutos().isEmpty()){
                     for(Produto p : v.getProdutos()){
@@ -348,8 +339,8 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 p.setFornecedor(forn);
 
                 v.setProduto(p);
-                //v.setProdutos((List<Produto>) p);
             }
+            
             lista.add(v);
      
         }

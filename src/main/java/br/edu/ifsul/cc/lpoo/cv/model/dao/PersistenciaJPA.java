@@ -1,7 +1,4 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
+
 package br.edu.ifsul.cc.lpoo.cv.model.dao;
 
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
@@ -17,11 +14,10 @@ import javax.persistence.Persistence;
  */
 public class PersistenciaJPA implements InterfacePersistencia {
     
-    public EntityManagerFactory factory;    //fabrica de gerenciadores de entidades
-    public EntityManager entity;            //gerenciador de entidades JPA
+    public EntityManagerFactory factory;    
+    public EntityManager entity;            
     
     public PersistenciaJPA(){
-        //parametro: é o nome da unidade de persistencia (Persistence Unit)
         factory = Persistence.createEntityManagerFactory("pu_db_cv");
         entity = factory.createEntityManager();
     }

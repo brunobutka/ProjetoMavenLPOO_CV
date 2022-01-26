@@ -1,3 +1,4 @@
+
 package br.edu.ifsul.cc.lpoo.cv.test;
 
 import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
@@ -37,19 +38,20 @@ public class TestePersistenciaJDBC {
     public void testPersistenciaProduto() throws Exception {
         PersistenciaJDBC persistencia = new PersistenciaJDBC();
         
-        if (persistencia.conexaoAberta()) {
+        if(persistencia.conexaoAberta()) {
             
             List<Produto> lista = persistencia.listProdutos();
 
-            if (!lista.isEmpty()) {
-                
+            if(!lista.isEmpty()) {
+                System.out.println("\n---- Produtos ----\n");
                 for(Produto p : lista){
                     System.out.println("Id: " + p.getId() +
                                        " | Nome: " + p.getNome() +
                                        " | Quantidade: " + p.getQuantidade() +
                                        " | Tipo produto: " + p.getTipo_produto() +
                                        " | Valor: " + p.getValor() +
-                                       " | Fornecedor CPF: " + p.getFornecedor().getCpf());
+                                       " | Fornecedor CPF: " + p.getFornecedor().getCpf() +
+                                       "\n");
                 
                     System.out.println("Removendo o produto de ID: " + p.getId());
                     persistencia.remover(p);
@@ -59,33 +61,22 @@ public class TestePersistenciaJDBC {
                 System.out.println("Produtos nao encontrados!");
                 
                 Produto pro = new Produto();
-                //Fornecedor forn = new Fornecedor();
-                //forn.getCpf();
-                //pro.setFornecedor(forn);
-                            //Fornecedor forn = new Fornecedor();
-                            //forn.setCpf(forn.getCpf());
-                            //pro.setFornecedor(forn);
-                //pro.setFornecedor(forn.getCpf());
                 Fornecedor forn = new Fornecedor();
                 forn.setCpf("033.505.023-12");
                 pro.setFornecedor(forn);
-                /*Fornecedor forn = new Fornecedor();
-                forn.getCpf();
-                pro.setFornecedor(forn);*/
-
                 pro.setNome("Bisacodil");
-                pro.setQuantidade(Float.parseFloat("2"));
-                pro.setValor(Float.parseFloat("12.50"));
+                pro.setQuantidade(2F);
+                pro.setValor(12.50F);
                 pro.setTipo_produto(TipoProduto.MEDICAMENTO);
                 
+                persistencia.persist(pro);  
                 
-                persistencia.persist(pro);
-                
+                System.out.println("Cadastrou o produto " + pro.getId());
             }
 
             persistencia.fecharConexao();
         } else {
-            System.out.println("A conexao com o Banco de Dados nao foi estabelecida.");
+            System.out.println("Não abriu conexão com o BD via JDBC.");
         }
     }
     
@@ -100,7 +91,8 @@ public class TestePersistenciaJDBC {
                 DateFormat formatador = new SimpleDateFormat("dd/MM/yyyy");
                 
                 for(Venda v : lista){
-                    System.out.println("Id: " + v.getId() +
+                    System.out.println("\n---- Venda ----\n" +
+                                       "Id: " + v.getId() +
                                        " | Observacao: " + v.getObservacao() +
                                        " | Valor Total: " + v.getValor_total() +
                                        " | Data: " + formatador.format(v.getData().getTime()) +
@@ -110,6 +102,7 @@ public class TestePersistenciaJDBC {
                                         
                     
                     if(v.getProdutos() != null && !v.getProdutos().isEmpty()){
+                        System.out.println("\n---- Produtos ----");
                         for(Produto p : v.getProdutos()){
                            System.out.println("Id: " + p.getId() +
                                        " | Nome: " + p.getNome() +
@@ -123,7 +116,7 @@ public class TestePersistenciaJDBC {
                         }
                     }
                     
-                    System.out.println("Removendo a venda de ID: " + v.getId());
+                    System.out.println("\nRemovendo a venda de ID: " + v.getId());
                     persistencia.remover(v);
                     
                }
@@ -135,7 +128,7 @@ public class TestePersistenciaJDBC {
                 Produto pro = new Produto();
 
                 ven.setObservacao("Venda realizada.");
-                ven.setValor_total(Float.parseFloat("25.00"));
+                ven.setValor_total(25F);
                 ven.setPagamento(Pagamento.DINHEIRO); 
                 Cliente clie = new Cliente();
                 clie.setCpf("044.444.040-12");
@@ -146,8 +139,8 @@ public class TestePersistenciaJDBC {
                 
                 /// Adicionando um produto
                 pro.setNome("Bisacodil");
-                pro.setQuantidade(Float.parseFloat("2"));
-                pro.setValor(Float.parseFloat("12.50"));
+                pro.setQuantidade(2F);
+                pro.setValor(12.50F);
                 Fornecedor forn = new Fornecedor();
                 forn.setCpf("033.505.023-12");
                 pro.setFornecedor(forn);
@@ -158,9 +151,9 @@ public class TestePersistenciaJDBC {
                 System.out.println("Cadastrou o produto de ID: " + pro.getId());
 
                 pro = new Produto();
-                pro.setNome("Teste");
-                pro.setQuantidade(Float.parseFloat("1"));
-                pro.setValor(Float.parseFloat("40.00"));
+                pro.setNome("Raio X");
+                pro.setQuantidade(1F);
+                pro.setValor(40F);
                 forn.setCpf("033.505.023-12");
                 pro.setFornecedor(forn);
                 pro.setTipo_produto(TipoProduto.CONSULTA);
@@ -171,15 +164,12 @@ public class TestePersistenciaJDBC {
                 
                 persistencia.persist(ven);
                 
-                System.out.println("Cadastrou a venda de ID: " + ven.getId());
-                
+                System.out.println("Cadastrou a venda de ID: " + ven.getId());       
             }
             
             
         }else {
-            System.out.println("A conexao com o Banco de Dados nao foi estabelecida.");
+            System.out.println("Não abriu conexão com o BD via JDBC.");
         }        
     }
-    
-    
 }
