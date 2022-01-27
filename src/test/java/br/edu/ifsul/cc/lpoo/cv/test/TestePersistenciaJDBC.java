@@ -19,55 +19,10 @@ import org.junit.Test;
  * @author bruno
  */
 public class TestePersistenciaJDBC {
-        
-    //@Test
-    public void testPersistenciaProduto() throws Exception {
-        PersistenciaJDBC persistencia = new PersistenciaJDBC();
-        
-        if(persistencia.conexaoAberta()) {
-            
-            List<Produto> lista = persistencia.listProdutos();
-
-            if(!lista.isEmpty()) {
-                System.out.println("\n---- Produtos ----\n");
-                for(Produto p : lista){
-                    System.out.println("Id: " + p.getId() +
-                                       " | Nome: " + p.getNome() +
-                                       " | Quantidade: " + p.getQuantidade() +
-                                       " | Tipo produto: " + p.getTipo_produto() +
-                                       " | Valor: " + p.getValor() +
-                                       " | Fornecedor CPF: " + p.getFornecedor().getCpf() +
-                                       "\n");
-                
-                    System.out.println("Removendo o produto de ID: " + p.getId());
-                    persistencia.remover(p);
-               }
-                
-            } else {
-                System.out.println("Produtos nao encontrados!");
-                
-                Produto pro = new Produto();
-                Fornecedor forn = new Fornecedor();
-                forn.setCpf("033.505.023-12");
-                pro.setFornecedor(forn);
-                pro.setNome("Bisacodil");
-                pro.setQuantidade(2F);
-                pro.setValor(12.50F);
-                pro.setTipo_produto(TipoProduto.MEDICAMENTO);
-                
-                persistencia.persist(pro);  
-                
-                System.out.println("Cadastrou o produto " + pro.getId());
-            }
-
-            persistencia.fecharConexao();
-        } else {
-            System.out.println("Não abriu conexão com o BD via JDBC.");
-        }
-    }
     
-    @Test
-    public void testPersistenciaVenda() throws Exception {
+    //Teste principal, adiciona 2 produtos e 1 venda, faz a adição dos produtos a lista de produtos da venda.
+    //@Test
+    public void testPersistenciaVendaProduto() throws Exception {
         PersistenciaJDBC persistencia = new PersistenciaJDBC();
         
         if (persistencia.conexaoAberta()){
@@ -157,5 +112,52 @@ public class TestePersistenciaJDBC {
         }else {
             System.out.println("Não abriu conexão com o BD via JDBC.");
         }        
+    }
+    
+    //Teste apenas para produto.
+    //@Test
+    public void testPersistenciaProduto() throws Exception {
+        PersistenciaJDBC persistencia = new PersistenciaJDBC();
+        
+        if(persistencia.conexaoAberta()) {
+            
+            List<Produto> lista = persistencia.listProdutos();
+
+            if(!lista.isEmpty()) {
+                System.out.println("\n---- Produtos ----\n");
+                for(Produto p : lista){
+                    System.out.println("Id: " + p.getId() +
+                                       " | Nome: " + p.getNome() +
+                                       " | Quantidade: " + p.getQuantidade() +
+                                       " | Tipo produto: " + p.getTipo_produto() +
+                                       " | Valor: " + p.getValor() +
+                                       " | Fornecedor CPF: " + p.getFornecedor().getCpf() +
+                                       "\n");
+                
+                    System.out.println("Removendo o produto de ID: " + p.getId());
+                    persistencia.remover(p);
+               }
+                
+            } else {
+                System.out.println("Produtos nao encontrados!");
+                
+                Produto pro = new Produto();
+                Fornecedor forn = new Fornecedor();
+                forn.setCpf("033.505.023-12");
+                pro.setFornecedor(forn);
+                pro.setNome("Bisacodil");
+                pro.setQuantidade(2F);
+                pro.setValor(12.50F);
+                pro.setTipo_produto(TipoProduto.MEDICAMENTO);
+                
+                persistencia.persist(pro);  
+                
+                System.out.println("Cadastrou o produto " + pro.getId());
+            }
+
+            persistencia.fecharConexao();
+        } else {
+            System.out.println("Não abriu conexão com o BD via JDBC.");
+        }
     }
 }
