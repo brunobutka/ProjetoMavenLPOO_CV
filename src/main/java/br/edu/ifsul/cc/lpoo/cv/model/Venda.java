@@ -37,7 +37,7 @@ public class Venda implements Serializable{
     @Column(nullable = true)
     private String observacao;
     
-    @Column(nullable = false)
+    @Column(precision = 2, nullable = false)
     private Float valor_total;
     
     @Column(nullable = false)

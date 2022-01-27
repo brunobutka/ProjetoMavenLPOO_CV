@@ -37,11 +37,11 @@ public class Consulta implements Serializable{
     @Column(nullable = true)
     private String observacao;
     
-    @Column(nullable = false)
+    @Column(nullable = true)
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_retorno;
     
-    @Column(nullable = false)
+    @Column(precision = 2, nullable = false)
     private Float valor;
     
     @ManyToOne

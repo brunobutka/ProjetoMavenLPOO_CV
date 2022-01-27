@@ -26,7 +26,7 @@ public class Pessoa implements Serializable{
     @Id
     private String cpf;
     
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String rg;
     
     @Column(nullable = false)
@@ -49,13 +49,13 @@ public class Pessoa implements Serializable{
     @Temporal(TemporalType.TIMESTAMP)
     private Calendar data_nascimento;
     
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String cep;
     
     @Column(nullable = false)
     private String endereco;
     
-    @Column(nullable = true)
+    @Column(nullable = false)
     private String complemento;
     
     public Pessoa(){
