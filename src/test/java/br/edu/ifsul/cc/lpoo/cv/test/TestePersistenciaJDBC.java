@@ -21,7 +21,8 @@ import org.junit.Test;
 public class TestePersistenciaJDBC {
     
     //Teste principal, adiciona 2 produtos e 1 venda, faz a adição dos produtos a lista de produtos da venda.
-    //@Test
+    //Faz a o "loop" ao ficar executando o teste.
+    @Test
     public void testPersistenciaVendaProduto() throws Exception {
         PersistenciaJDBC persistencia = new PersistenciaJDBC();
         
