@@ -5,12 +5,15 @@ import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Fornecedor;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pagamento;
+import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
 import br.edu.ifsul.cc.lpoo.cv.model.TipoProduto;
 import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJDBC;
+import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJPA;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.List;
 import org.junit.Test;
 
@@ -22,7 +25,7 @@ public class TestePersistenciaJDBC {
     
     //Teste principal, adiciona 2 produtos e 1 venda, faz a adição dos produtos a lista de produtos da venda.
     //Faz a o "loop" ao ficar executando o teste.
-    @Test
+    //@Test
     public void testPersistenciaVendaProduto() throws Exception {
         PersistenciaJDBC persistencia = new PersistenciaJDBC();
         
@@ -161,4 +164,104 @@ public class TestePersistenciaJDBC {
             System.out.println("Não abriu conexão com o BD via JDBC.");
         }
     }
+    
+    //@Test
+    public void testListPersistenciaPessoa() throws Exception {
+        
+        DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
+        
+        PersistenciaJDBC persistencia = new PersistenciaJDBC();
+        if(persistencia.conexaoAberta()) {
+        
+            List<Pessoa> lista = persistencia.listPessoas();
+            
+            if(!lista.isEmpty()) {
+            
+                for(Pessoa p : lista) {
+                
+                    System.out.println("\n-- CPF da pessoa: " + p.getCpf()
+                                       + " \n-- RG da pessoa: " +  p.getRg()
+                                       + " \n-- Nome da pessoa: " + p.getNome()
+                                       + " \n-- Senha: " + p.getSenha()
+                                       + " \n-- Número de celular: " + p.getNumero_celular()
+                                       + " \n-- Email: " + p.getEmail()
+                                       + " \n-- Data do cadastro: " + formatada.format(p.getData_cadastro().getTime())
+                                       + " \n-- Data de nascimento: " + formatada.format(p.getData_nascimento().getTime())
+                                       + " \n-- CEP: " + p.getCep()
+                                       + " \n-- Endereço: " + p.getEndereco()
+                                       + " \n-- Complemento: " + p.getComplemento()
+                                       + " \n-- Tipo: " + p.getTipo()+ "\n");
+                    
+                    persistencia.remover(p);
+                    System.out.println("Pessoa de CPF " + p.getCpf() + " removida.\n");
+                
+                }
+                
+            } else {
+                
+                System.out.println("\nNão encontrou a pessoa.");
+                
+                Pessoa pes = new Pessoa();
+                
+                pes.setCpf("12345678900");
+                
+                pes.setRg("9876543210");
+                
+                pes.setNome("Pedro");
+                
+                pes.setSenha("12345");
+                
+                pes.setNumero_celular("54991745612");
+                
+                pes.setEmail("Pedro@gmail.com");
+                
+                Calendar data_convertida_2 = Calendar.getInstance();
+                data_convertida_2.set(Calendar.YEAR, 2001);
+                data_convertida_2.set(Calendar.MONTH, 6 + 1);
+                data_convertida_2.set(Calendar.DAY_OF_MONTH, 22);
+                pes.setData_nascimento(data_convertida_2);
+                
+                pes.setCep("99900000");
+                
+                pes.setEndereco("Rua Amado Batista");
+                
+                pes.setComplemento("Nenhum");
+                
+                pes.setTipo("Forn");
+                
+                persistencia.persist(pes); // INSERT na tabela.
+                System.out.println("Cadastrou a pessoa de CPF " + pes.getCpf() + ".\n");
+            }
+        
+        } else {
+            System.out.println("Não abriu a conexão com o BD via JDBC.");
+        }        
+                       
+    }
+    
+    //@Test
+    public void testGeracaoPessoaLogin() throws Exception {
+        
+        PersistenciaJDBC persistencia = new PersistenciaJDBC();
+        if(persistencia.conexaoAberta()) {
+            System.out.println("\nAbriu a conexão com o BD via JDBC.\n");
+            
+            Pessoa p = persistencia.doLogin("12345678900", "12345");
+
+            if(p == null) {
+                
+                System.out.println("Não há nenhuma pessoa cadastrada.\n");
+                
+            } else {
+                System.out.println("Encontrou uma pessoa cadastrada.\n");
+            }
+            
+            persistencia.fecharConexao();
+            
+        } else {
+            System.out.println("\nNão abriu a conexão com o BD via JDBC.\n");
+        }
+        
+    }
+    
 }
