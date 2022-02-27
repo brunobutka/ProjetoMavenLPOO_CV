@@ -1,6 +1,7 @@
 
 package br.edu.ifsul.cc.lpoo.cv.test;
 
+import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.dao.PersistenciaJPA;
 import java.util.Calendar;
@@ -27,48 +28,48 @@ public class TestPersistenciaJPA {
         
     }
     
-    @Test
-    public void testGeracaoPessoaLogin() throws Exception {
+    /*@Test
+    public void testGeracaoFuncionarioLogin() throws Exception {
         
         PersistenciaJPA persistencia = new PersistenciaJPA();
         if(persistencia.conexaoAberta()) {
             System.out.println("\nAbriu a conexão com o BD via JPA.\n");
             
-            Pessoa p = persistencia.doLogin("12345678912", "1234");
+            Funcionario f = persistencia.doLogin("12345678912", "1234");
             // só pra ver se ha cadastro
-            if(p == null) {
-                p = new Pessoa();
+            if(f == null) {
+                f = new Funcionario();
                 
-                p.setCpf("12345678912");
-                p.setSenha("1234");
+                f.setCpf("12345678999");
+                f.setSenha("12345");
                 
-                p.setRg("4563219870");
+                f.setRg("4563217890");
                 
-                p.setNome("Thomas");
+                f.setNome("Pedro");
                 
-                p.setNumero_celular("54996358745");
+                f.setNumero_celular("54991312244");
                 
-                p.setEmail("thomas@gmail.com");
+                f.setEmail("pedro@gmail.com");
                 
                 Calendar data_convertida_1 = Calendar.getInstance();
                 data_convertida_1.set(Calendar.YEAR, 2022);
                 data_convertida_1.set(Calendar.MONTH, 02 + 1);
                 data_convertida_1.set(Calendar.DAY_OF_MONTH, 03);
-                p.setData_cadastro(data_convertida_1);
+                f.setData_cadastro(data_convertida_1);
                 
                 Calendar data_convertida_2 = Calendar.getInstance();
                 data_convertida_2.set(Calendar.YEAR, 2001);
                 data_convertida_2.set(Calendar.MONTH, 6 + 1);
                 data_convertida_2.set(Calendar.DAY_OF_MONTH, 22);
-                p.setData_nascimento(data_convertida_2);
+                f.setData_nascimento(data_convertida_2);
                 
-                p.setCep("36985241");
+                f.setCep("36985241");
                 
-                p.setEndereco("Rua Luiz II");
+                f.setEndereco("Rua Luiz II");
                 
-                p.setComplemento("Nenhum");
+                f.setComplemento("Nenhum");
                 
-                p.setTipo("M");
+                f.setTipo("M");
                 
                 persistencia.persist(p);
                 System.out.println("Cadastrou uma nova pessoa.");
@@ -82,6 +83,6 @@ public class TestPersistenciaJPA {
             System.out.println("\nNão abriu a conexão com o BD via JPA.\n");
         }
         
-    }
+    }*/
     
 }

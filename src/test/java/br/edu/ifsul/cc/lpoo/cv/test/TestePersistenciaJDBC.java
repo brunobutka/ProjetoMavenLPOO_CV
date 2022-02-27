@@ -1,6 +1,7 @@
 
 package br.edu.ifsul.cc.lpoo.cv.test;
 
+import br.edu.ifsul.cc.lpoo.cv.model.Cargo;
 import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Fornecedor;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
@@ -239,21 +240,104 @@ public class TestePersistenciaJDBC {
                        
     }
     
+    @Test
+    public void testListPersistenciaFuncionario() throws Exception {
+        
+        DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
+        
+        PersistenciaJDBC persistencia = new PersistenciaJDBC();
+        if(persistencia.conexaoAberta()) {
+        
+            List<Funcionario> lista = persistencia.listFuncionarios();
+            
+            if(!lista.isEmpty()) {
+            
+                for(Funcionario f : lista) {
+                
+                    System.out.println("\n-- CPF da pessoa: " + f.getCpf()
+                                       + " \n-- RG da pessoa: " +  f.getRg()
+                                       + " \n-- Nome da pessoa: " + f.getNome()
+                                       + " \n-- Senha: " + f.getSenha()
+                                       + " \n-- Número de celular: " + f.getNumero_celular()
+                                       + " \n-- Email: " + f.getEmail()
+                                       + " \n-- Data do cadastro: " + formatada.format(f.getData_cadastro().getTime())
+                                       + " \n-- Data de nascimento: " + formatada.format(f.getData_nascimento().getTime())
+                                       + " \n-- CEP: " + f.getCep()
+                                       + " \n-- Endereço: " + f.getEndereco()
+                                       + " \n-- Complemento: " + f.getComplemento()
+                                       + " \n-- Tipo: " + f.getTipo()
+                                       + " \n-- Cargo: " + f.getCargo()
+                                       + " \n-- Número CTPS: " + f.getNumero_ctps()
+                                       + " \n-- Número PIS: " + f.getNumero_pis() + "\n");
+                    
+                    persistencia.remover(f);
+                    System.out.println("Pessoa de CPF " + f.getCpf() + " removida.\n");
+                
+                }
+                
+            } else {
+                
+                System.out.println("\nNão encontrou a pessoa.");
+                
+                Funcionario f = new Funcionario();
+                
+                f.setCpf("12345678999");
+                
+                f.setRg("4563217890");
+                
+                f.setNome("Pedro");
+                
+                f.setSenha("12345");
+                
+                f.setNumero_celular("54991312244");
+                
+                f.setEmail("pedro@gmail.com");
+                
+                Calendar data_convertida_2 = Calendar.getInstance();
+                data_convertida_2.set(Calendar.YEAR, 2002);
+                data_convertida_2.set(Calendar.MONTH, 1 + 1);
+                data_convertida_2.set(Calendar.DAY_OF_MONTH, 12);
+                f.setData_nascimento(data_convertida_2);
+                
+                f.setCep("99900000");
+                
+                f.setEndereco("Rua Salgado Filho");
+                
+                f.setComplemento("Nenhum");
+                
+                f.setTipo("Func");
+                
+                f.setCargo(Cargo.ATENDENTE);
+                
+                f.setNumero_ctps("88876579");
+                
+                f.setNumero_pis("1350098");
+                
+                persistencia.persist(f); // INSERT na tabela.
+                System.out.println("Cadastrou a pessoa de CPF " + f.getCpf() + ".\n");
+            }
+        
+        } else {
+            System.out.println("Não abriu a conexão com o BD via JDBC.");
+        }        
+                       
+    }
+    
     //@Test
-    public void testGeracaoPessoaLogin() throws Exception {
+    public void testGeracaoFuncionarioLogin() throws Exception {
         
         PersistenciaJDBC persistencia = new PersistenciaJDBC();
         if(persistencia.conexaoAberta()) {
             System.out.println("\nAbriu a conexão com o BD via JDBC.\n");
             
-            Pessoa p = persistencia.doLogin("12345678900", "12345");
+            Funcionario f = persistencia.doLogin("12345678999", "12345");
 
-            if(p == null) {
+            if(f == null) {
                 
-                System.out.println("Não há nenhuma pessoa cadastrada.\n");
+                System.out.println("Não há nenhum funcionario cadastrado.\n");
                 
             } else {
-                System.out.println("Encontrou uma pessoa cadastrada.\n");
+                System.out.println("Encontrou um funcionario cadastrado.\n");
             }
             
             persistencia.fecharConexao();

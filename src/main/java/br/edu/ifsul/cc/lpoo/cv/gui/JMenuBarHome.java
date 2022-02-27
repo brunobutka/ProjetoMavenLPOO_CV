@@ -21,7 +21,7 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
     private JMenuItem menuItemSair;
 
     private JMenu menuCadastro;
-    private JMenuItem menuItemPessoa;    
+    private JMenuItem menuItemFuncionario;    
 
     private Controle controle;
     
@@ -53,13 +53,13 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
         menuCadastro.setToolTipText("Cadastro"); // Acessibilidade.
         menuCadastro.setFocusable(true); // Acessibilidade.
         
-        menuItemPessoa = new JMenuItem("Pessoa");
-        menuItemPessoa.setToolTipText("Pessoa"); // Acessibilidade.
-        menuItemPessoa.setFocusable(true); // Acessibilidade.
+        menuItemFuncionario = new JMenuItem("Funcionário");
+        menuItemFuncionario.setToolTipText("Funcionário"); // Acessibilidade.
+        menuItemFuncionario.setFocusable(true); // Acessibilidade.
 
-        menuItemPessoa.addActionListener(this);
-        menuItemPessoa.setActionCommand("menu_Pessoa");
-        menuCadastro.add(menuItemPessoa);   
+        menuItemFuncionario.addActionListener(this);
+        menuItemFuncionario.setActionCommand("menu_Funcionario");
+        menuCadastro.add(menuItemFuncionario);   
 
         this.add(menuArquivo);
         this.add(menuCadastro);
@@ -79,10 +79,10 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
                 System.exit(0); // Finaliza o processo do programa.
             }
             
-        } else if(e.getActionCommand().equals(menuItemPessoa.getActionCommand())) {
+        } else if(e.getActionCommand().equals(menuItemFuncionario.getActionCommand())) {
             
             // Se o usuario clicou no menuitem Usuario.
-            controle.showTela("tela_pessoa");
+            controle.showTela("tela_funcionario");
             
         }
         

@@ -4,6 +4,7 @@ package br.edu.ifsul.cc.lpoo.cv.model.dao;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
+import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import java.util.List;
 
 /**
@@ -27,6 +28,8 @@ public interface InterfacePersistencia {
     public List<Produto> listProdutos() throws Exception;
     
     public List<Pessoa> listPessoas() throws Exception;
+    
+    public List<Funcionario> listFuncionarios() throws Exception;
     
     public Pessoa doLogin(String nome, String senha) throws Exception;
         

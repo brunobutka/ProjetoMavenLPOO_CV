@@ -1,6 +1,7 @@
 
 package br.edu.ifsul.cc.lpoo.cv.model.dao;
 
+import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
@@ -65,9 +66,14 @@ public class PersistenciaJPA implements InterfacePersistencia {
     }
     
     @Override
-    public Pessoa doLogin(String cpf, String senha) throws Exception {
+    public List<Funcionario> listFuncionarios() throws Exception {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+    
+    @Override
+    public Funcionario doLogin(String cpf, String senha) throws Exception {
         
-        List<Pessoa> list = entity.createNamedQuery("Pessoa.login").setParameter("paramN", cpf).setParameter("paramS", senha).getResultList();
+        List<Funcionario> list = entity.createNamedQuery("Funcionario.login").setParameter("paramN", cpf).setParameter("paramS", senha).getResultList();
         if(list.isEmpty()) {
             return null;
         } else {

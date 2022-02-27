@@ -6,6 +6,7 @@ import br.edu.ifsul.cc.lpoo.cv.gui.JFramePrincipal;
 import br.edu.ifsul.cc.lpoo.cv.gui.JMenuBarHome;
 import br.edu.ifsul.cc.lpoo.cv.gui.JPanelHome;
 import br.edu.ifsul.cc.lpoo.cv.gui.autenticacao.JPanelAutenticacao;
+import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import javax.swing.JOptionPane;
 
@@ -25,7 +26,9 @@ public class Controle {
     
     private JPanelHome pnlHome; // Painel de boas vindas (home).
     
-        
+    //private JPanelFuncionario pnlFuncionario; // Painel de manutenção para funcionário.
+    //private JPanelAFuncionario pnlAFuncionario; // Painel de manutenção para funcionário.
+      
     //construtor.
     public Controle(){
                         
@@ -64,8 +67,14 @@ public class Controle {
         
         pnlHome = new JPanelHome(this);
         
+        //pnlFuncionario = new JPanelFuncionario(this);   
+        //pnlAFuncionario = new JPanelAFuncionario(this);
+        
         frame.addTela(pnlAutenticacao, "tela_autenticacao"); // Carta 1.
         frame.addTela(pnlHome, "tela_home"); // Carta 2.
+        
+        //frame.addTela(pnlAFuncionario, "tela_funcionario");  // Carta 3 - poderia adicionar opcionalmente: pnlFuncionario.
+        //frame.addTela(pnlAFuncionario, "tela_funcionario"); // Carta 3 - poderia adicionar opcionalmente: pnlFuncionario.
         
         frame.showTela("tela_autenticacao"); // Apresenta a carta cujo nome é "tela_autenticacao".
         
@@ -77,12 +86,12 @@ public class Controle {
         
         try {
 
-            Pessoa p =  conexaoJDBC.doLogin(cpf, senha);
+            Funcionario f =  conexaoJDBC.doLogin(cpf, senha);
             
-            if(p != null) {
+            if(f != null) {
 
-                JOptionPane.showMessageDialog(pnlAutenticacao, "Pessoa de CPF " + p.getCpf()+ 
-                                             " autenticada com sucesso.", "Autenticação", 
+                JOptionPane.showMessageDialog(pnlAutenticacao, "Funcionário de CPF " + f.getCpf() /*+ " e nome "*/
+                                             + /*f.getNome() +*/ " autenticado com sucesso.", "Autenticação", 
                                              JOptionPane.INFORMATION_MESSAGE);
 
                 frame.setJMenuBar(menuBar); // Adiciona o menu de barra no frame.
@@ -101,7 +110,24 @@ public class Controle {
     }
     
     public void showTela(String nomeTela) {
-        frame.showTela(nomeTela);
+        
+        if(nomeTela.equals("tela_autenticacao")){
+                        
+            pnlAutenticacao.cleanForm();            
+            frame.showTela(nomeTela);            
+            pnlAutenticacao.requestFocus();
+            
+        } else {
+            frame.showTela(nomeTela);
+        }   
+        
+    }
+    
+    /**
+     * @return the conexaoJDBC
+     */
+    public PersistenciaJDBC getConexaoJDBC() {
+        return conexaoJDBC;
     }
     
     
