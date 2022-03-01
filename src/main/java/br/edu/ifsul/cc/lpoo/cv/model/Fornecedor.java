@@ -10,7 +10,6 @@ import javax.persistence.Table;
  *
  * @author bruno
  */
-//teste
 @Entity
 @Table(name = "tb_fornecedor")
 @DiscriminatorValue("Forn")
