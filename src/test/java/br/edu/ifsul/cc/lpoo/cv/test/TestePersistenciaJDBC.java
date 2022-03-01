@@ -240,7 +240,7 @@ public class TestePersistenciaJDBC {
                        
     }
     
-    //@Test
+    @Test
     public void testListPersistenciaFuncionario() throws Exception {
         
         DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
@@ -382,7 +382,7 @@ public class TestePersistenciaJDBC {
                        
     }
     
-    @Test
+    //@Test
     public void testListPersistenciaCliente() throws Exception {
         
         DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
