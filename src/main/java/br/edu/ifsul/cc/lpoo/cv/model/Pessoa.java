@@ -66,8 +66,8 @@ public class Pessoa implements Serializable{
     @Column(nullable = false)
     private String complemento;
     
-    @Transient
-    private String tipo;
+    /*@Transient
+    private String tipo;*/
     
     public Pessoa(){
         
@@ -230,16 +230,16 @@ public class Pessoa implements Serializable{
     /**
      * @return the tipo
      */
-    public String getTipo() {
+    /*public String getTipo() {
         return tipo;
-    }
+    }*/
 
     /**
      * @param tipo the tipo to set
      */
-    public void setTipo(String tipo) {
+    /*public void setTipo(String tipo) {
         this.tipo = tipo;
-    }
+    }*/
     
     
 }

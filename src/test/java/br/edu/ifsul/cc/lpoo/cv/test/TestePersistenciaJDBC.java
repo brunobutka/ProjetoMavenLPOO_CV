@@ -190,8 +190,8 @@ public class TestePersistenciaJDBC {
                                        + " \n-- Data de nascimento: " + formatada.format(p.getData_nascimento().getTime())
                                        + " \n-- CEP: " + p.getCep()
                                        + " \n-- Endereço: " + p.getEndereco()
-                                       + " \n-- Complemento: " + p.getComplemento()
-                                       + " \n-- Tipo: " + p.getTipo()+ "\n");
+                                       + " \n-- Complemento: " + p.getComplemento() + "\n");
+                                       //+ " \n-- Tipo: " + p.getTipo()+ "\n");
                     
                     persistencia.remover(p);
                     System.out.println("Pessoa de CPF " + p.getCpf() + " removida.\n");
@@ -228,7 +228,7 @@ public class TestePersistenciaJDBC {
                 
                 pes.setComplemento("Nenhum");
                 
-                pes.setTipo("Forn");
+                //pes.setTipo("Forn");
                 
                 persistencia.persist(pes); // INSERT na tabela.
                 System.out.println("Cadastrou a pessoa de CPF " + pes.getCpf() + ".\n");
@@ -240,7 +240,7 @@ public class TestePersistenciaJDBC {
                        
     }
     
-    @Test
+    //@Test
     public void testListPersistenciaFuncionario() throws Exception {
         
         DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
@@ -265,32 +265,27 @@ public class TestePersistenciaJDBC {
                                        + " \n-- CEP: " + f.getCep()
                                        + " \n-- Endereço: " + f.getEndereco()
                                        + " \n-- Complemento: " + f.getComplemento()
-                                       + " \n-- Tipo: " + f.getTipo()
+                                       //+ " \n-- Tipo: " + f.getTipo()
                                        + " \n-- Cargo: " + f.getCargo()
                                        + " \n-- Número CTPS: " + f.getNumero_ctps()
                                        + " \n-- Número PIS: " + f.getNumero_pis() + "\n");
                     
                     persistencia.remover(f);
-                    System.out.println("Pessoa de CPF " + f.getCpf() + " removida.\n");
+                    System.out.println("Funcionário de CPF " + f.getCpf() + " removido.\n");
                 
                 }
                 
             } else {
                 
-                System.out.println("\nNão encontrou a pessoa.");
+                System.out.println("\nNão encontrou o funcinoário.");
                 
                 Funcionario f = new Funcionario();
                 
                 f.setCpf("12345678999");
-                
                 f.setRg("4563217890");
-                
                 f.setNome("Pedro");
-                
                 f.setSenha("12345");
-                
                 f.setNumero_celular("54991312244");
-                
                 f.setEmail("pedro@gmail.com");
                 
                 Calendar data_convertida_2 = Calendar.getInstance();
@@ -300,21 +295,152 @@ public class TestePersistenciaJDBC {
                 f.setData_nascimento(data_convertida_2);
                 
                 f.setCep("99900000");
-                
                 f.setEndereco("Rua Salgado Filho");
-                
                 f.setComplemento("Nenhum");
-                
-                f.setTipo("Func");
-                
+                //f.setTipo("Func");
                 f.setCargo(Cargo.ATENDENTE);
-                
                 f.setNumero_ctps("88876579");
-                
                 f.setNumero_pis("1350098");
                 
                 persistencia.persist(f); // INSERT na tabela.
-                System.out.println("Cadastrou a pessoa de CPF " + f.getCpf() + ".\n");
+                System.out.println("Cadastrou o Funcionário de CPF " + f.getCpf() + ".\n");
+            }
+        
+        } else {
+            System.out.println("Não abriu a conexão com o BD via JDBC.");
+        }        
+                       
+    }
+    
+    //@Test
+    public void testListPersistenciaFornecedor() throws Exception {
+        
+        DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
+        
+        PersistenciaJDBC persistencia = new PersistenciaJDBC();
+        if(persistencia.conexaoAberta()) {
+        
+            List<Fornecedor> lista = persistencia.listFornecedores();
+            
+            if(!lista.isEmpty()) {
+            
+                for(Fornecedor f : lista) {
+                
+                    System.out.println("\n-- CPF da pessoa: " + f.getCpf()
+                                       + " \n-- RG da pessoa: " +  f.getRg()
+                                       + " \n-- Nome da pessoa: " + f.getNome()
+                                       + " \n-- Senha: " + f.getSenha()
+                                       + " \n-- Número de celular: " + f.getNumero_celular()
+                                       + " \n-- Email: " + f.getEmail()
+                                       + " \n-- Data do cadastro: " + formatada.format(f.getData_cadastro().getTime())
+                                       + " \n-- Data de nascimento: " + formatada.format(f.getData_nascimento().getTime())
+                                       + " \n-- CEP: " + f.getCep()
+                                       + " \n-- Endereço: " + f.getEndereco()
+                                       + " \n-- Complemento: " + f.getComplemento()
+                                       //+ " \n-- Tipo: " + f.getTipo()
+                                       + " \n-- CNPJ: " + f.getCnpj()
+                                       + " \n-- IE: " + f.getIe() + "\n");
+                    
+                    persistencia.remover(f);
+                    System.out.println("Fornecedor de CPF " + f.getCpf() + " removido.\n");
+                
+                }
+                
+            } else {
+                
+                System.out.println("\nNão encontrou o fornecedor.");
+                
+                Fornecedor f = new Fornecedor();
+                
+                f.setCpf("88888888888");
+                f.setRg("7777777777");
+                f.setNome("Carlos");
+                f.setSenha("12345");
+                f.setNumero_celular("54991347611");
+                f.setEmail("Carlos@gmail.com");
+                
+                Calendar data_convertida_2 = Calendar.getInstance();
+                data_convertida_2.set(Calendar.YEAR, 2002);
+                data_convertida_2.set(Calendar.MONTH, 1 + 1);
+                data_convertida_2.set(Calendar.DAY_OF_MONTH, 12);
+                f.setData_nascimento(data_convertida_2);
+                
+                f.setCep("99900000");
+                f.setEndereco("Rua São João");
+                f.setComplemento("Nenhum");
+                //f.setTipo("Func");
+                f.setCnpj("33444555666677");
+                f.setIe("333");
+                
+                persistencia.persist(f); // INSERT na tabela.
+                System.out.println("Cadastrou o fornecedor de CPF " + f.getCpf() + ".\n");
+            }
+        
+        } else {
+            System.out.println("Não abriu a conexão com o BD via JDBC.");
+        }        
+                       
+    }
+    
+    @Test
+    public void testListPersistenciaCliente() throws Exception {
+        
+        DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
+        
+        PersistenciaJDBC persistencia = new PersistenciaJDBC();
+        if(persistencia.conexaoAberta()) {
+        
+            List<Cliente> lista = persistencia.listClientes();
+            
+            if(!lista.isEmpty()) {
+            
+                for(Cliente cli : lista) {
+                
+                    System.out.println("\n-- CPF da pessoa: " + cli.getCpf()
+                                       + " \n-- RG da pessoa: " +  cli.getRg()
+                                       + " \n-- Nome da pessoa: " + cli.getNome()
+                                       + " \n-- Senha: " + cli.getSenha()
+                                       + " \n-- Número de celular: " + cli.getNumero_celular()
+                                       + " \n-- Email: " + cli.getEmail()
+                                       + " \n-- Data do cadastro: " + formatada.format(cli.getData_cadastro().getTime())
+                                       + " \n-- Data de nascimento: " + formatada.format(cli.getData_nascimento().getTime())
+                                       + " \n-- CEP: " + cli.getCep()
+                                       + " \n-- Endereço: " + cli.getEndereco()
+                                       + " \n-- Complemento: " + cli.getComplemento()
+                                       //+ " \n-- Tipo: " + f.getTipo()
+                                       + " \n-- Data da ultima visita: " + formatada.format(cli.getData_ultima_visita().getTime()) + "\n");
+                    
+                    persistencia.remover(cli);
+                    System.out.println("Cliente de CPF " + cli.getCpf() + " removido.\n");
+                
+                }
+                
+            } else {
+                
+                System.out.println("\nNão encontrou o cliente.");
+                
+                Cliente cli = new Cliente();
+                
+                cli.setCpf("55555555555");
+                cli.setRg("6666666666");
+                cli.setNome("Henrique");
+                cli.setSenha("12345");
+                cli.setNumero_celular("54991007699");
+                cli.setEmail("henrique@gmail.com");
+                
+                Calendar data_convertida_2 = Calendar.getInstance();
+                data_convertida_2.set(Calendar.YEAR, 2002);
+                data_convertida_2.set(Calendar.MONTH, 1 + 1);
+                data_convertida_2.set(Calendar.DAY_OF_MONTH, 12);
+                cli.setData_nascimento(data_convertida_2);
+                
+                cli.setCep("99900000");
+                cli.setEndereco("Rua Santo Antonio");
+                cli.setComplemento("Nenhum");
+                //f.setTipo("Func");
+                
+                persistencia.persist(cli); // INSERT na tabela.
+                System.out.println("Cadastrou o cliente de CPF " + cli.getCpf() + ".\n");
             }
         
         } else {
