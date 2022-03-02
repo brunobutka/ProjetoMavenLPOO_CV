@@ -111,12 +111,14 @@ public class JPanelAFuncionarioListagem extends JPanel implements ActionListener
                 "CPF", "Data cadastro", "CEP"
             }, 0
              
-                
-            /*boolean[] canEdit = new boolean [] {
-                false, false, false
-            };*/
-        );
+        ){
+            @Override
+            public boolean isCellEditable(final int row, final int column) {
+		return false;
+            }
+	};
         
+        //tblListagem.getColumnModel().set(0).setEditable(false);
         tblListagem.setModel(modeloTabela);
         scpListagem.setViewportView(tblListagem);
     
