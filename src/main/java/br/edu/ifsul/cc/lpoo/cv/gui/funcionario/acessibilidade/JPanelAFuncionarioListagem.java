@@ -110,6 +110,11 @@ public class JPanelAFuncionarioListagem extends JPanel implements ActionListener
             new String [] {
                 "CPF", "Data cadastro", "CEP"
             }, 0
+             
+                
+            /*boolean[] canEdit = new boolean [] {
+                false, false, false
+            };*/
         );
         
         tblListagem.setModel(modeloTabela);

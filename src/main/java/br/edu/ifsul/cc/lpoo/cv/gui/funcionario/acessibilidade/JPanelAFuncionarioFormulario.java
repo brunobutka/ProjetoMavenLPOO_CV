@@ -1,6 +1,7 @@
 package br.edu.ifsul.cc.lpoo.cv.gui.funcionario.acessibilidade;
 
 import br.edu.ifsul.cc.lpoo.cv.Controle;
+import br.edu.ifsul.cc.lpoo.cv.model.Cargo;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -9,15 +10,24 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
+import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
+import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -70,6 +80,13 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     private JLabel lblNumero_pis;
     private JTextField txfNumero_pis;
     
+    private JLabel lblData_nascimento;
+    private JFormattedTextField txfData_nascimento;
+    //private GregorianCalendar data_n=new GregorianCalendar();
+    
+    private JLabel lblCargo;
+    private JComboBox cbxCargo;
+    
     //private JLabel lblPontos;
     //private JTextField txfPontos;
     
@@ -106,34 +123,34 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         
     }
     
-    /*public void populaComboEndereco() {
+    public void populaComboCargo(){
         
-        cbxEndereco.removeAllItems(); // Zera o combo.
+        cbxCargo.removeAllItems();//zera o combo
 
-        DefaultComboBoxModel model = (DefaultComboBoxModel) cbxEndereco.getModel();
+        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxCargo.getModel();
 
-        model.addElement("Selecione"); // Primeiro item.
+        model.addElement("Selecione"); //primeiro item        
         try {
-
-            List<Endereco> listCidades = controle.getConexaoJDBC().listEnderecos();
-            for(Endereco e : listCidades){
-                model.addElement(e);
-            }
+            
+            model.addElement(Cargo.ADESTRADOR);
+            model.addElement(Cargo.ATENDENTE);
+            model.addElement(Cargo.AUXILIAR_VETERINARIO);
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(this, "Erro ao listar Enderecos -:" + ex.getLocalizedMessage(), "Endereços", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao listar Cargos -:"+ex.getLocalizedMessage(), "Cargos", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-        }
+        }  
         
-    }*/
+        
+    }
     
     public Funcionario getFuncionariobyFormulario(){
         
         //validacao do formulario
          if(txfCpf.getText().trim().length() == 11 && 
-            new String(txfSenha.getPassword()).trim().length() > 3/* && 
-            cbxEndereco.getSelectedIndex() > 0*/){
+            new String(txfSenha.getPassword()).trim().length() > 3 && 
+            cbxCargo.getSelectedIndex() > 0){
 
             Funcionario f = new Funcionario();
             
@@ -141,8 +158,10 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             f.setRg(txfRg.getText().trim());
             f.setNome(txfRg.getText().trim());
             f.setSenha(new String(txfSenha.getPassword()).trim());
+            
             if(funcionario != null)
                 f.setData_cadastro(funcionario.getData_cadastro());
+            
             f.setNumero_celular(txfNumero_celular.getText().trim());
             f.setEmail(txfEmail.getText().trim());
             f.setCep(txfCep.getText().trim());
@@ -151,7 +170,19 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             f.setNumero_ctps(txfNumero_ctps.getText().trim());
             f.setNumero_pis(txfNumero_pis.getText().trim());
             
-            //f.setEndereco((Endereco) cbxEndereco.getSelectedItem());
+            String strData = txfData_nascimento.getText();
+            Calendar cal = Calendar.getInstance();
+            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+             try {
+                 cal.setTime(sdf.parse(strData));
+                 f.setData_nascimento(cal);
+             } catch (ParseException ex) {
+                 Logger.getLogger(JPanelAFuncionarioFormulario.class.getName()).log(Level.SEVERE, null, ex);
+             }
+            
+            
+            
+            f.setCargo((Cargo) cbxCargo.getSelectedItem());
             //f.setPontos(Integer.parseInt(txfPontos.getText().trim()));
 
             
@@ -197,8 +228,10 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             txfNumero_pis.setEditable(true);
             txfNumero_pis.setText("");
             
+            txfData_nascimento.setText("");
             
-            //cbxEndereco.setSelectedIndex(0);
+            
+            cbxCargo.setSelectedIndex(0);
             //txfPontos.setText("");
             
             //txfDataUltimoLogin.setText("");
@@ -242,7 +275,10 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             txfNumero_pis.setEditable(false);
             txfNumero_pis.setText(funcionario.getNumero_pis());
             
-            //cbxEndereco.getModel().setSelectedItem(funcionario.getEndereco());
+            if(f.getData_nascimento()!= null)
+                txfData_nascimento.setText(format.format(f.getData_nascimento().getTime()));
+            
+            cbxCargo.getModel().setSelectedItem(funcionario.getCargo());
             //txfPontos.setText(funcionario.getPontos().toString());
             
             //if(f.getData_ultimo_login() != null)
@@ -252,7 +288,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
 
     }
     
-    private void initComponents() {
+    private void initComponents(){
         
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
@@ -419,6 +455,38 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.gridx = 1; // Posição da coluna (horizontal).
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfNumero_pis, posicionador); // O add adiciona o rótulo no painel.
+        
+        lblData_nascimento = new JLabel("Data de nascimento: ");
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 12; // Posição da linha (vertical).
+        posicionador.gridx = 0; // Posição da coluna (horizontal).
+        pnlDadosCadastrais.add(lblData_nascimento, posicionador); // O add adiciona o rótulo no painel.
+        try {
+            //txfData_nascimento = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.MEDIUM));
+            txfData_nascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
+        } catch (ParseException ex) {
+            Logger.getLogger(JPanelAFuncionarioFormulario.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        txfData_nascimento.setColumns(6);
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 12; // Polição da linha (vertical).
+        posicionador.gridx = 1; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
+        pnlDadosCadastrais.add(txfData_nascimento, posicionador); // O add adiciona o rótulo no painel.
+        
+        lblCargo = new JLabel("Cargo:");
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 13;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        pnlDadosCadastrais.add(lblCargo, posicionador);//o add adiciona o rotulo no painel  
+                
+        cbxCargo = new JComboBox();
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 13;//policao da linha (vertical)
+        posicionador.gridx = 1;// posição da coluna (horizontal)
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        pnlDadosCadastrais.add(cbxCargo, posicionador);//o add adiciona o rotulo no painel
         
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
