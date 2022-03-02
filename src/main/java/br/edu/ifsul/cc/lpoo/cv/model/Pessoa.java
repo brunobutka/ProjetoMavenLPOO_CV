@@ -241,5 +241,10 @@ public class Pessoa implements Serializable{
         this.tipo = tipo;
     }*/
     
+    @Override
+    public String toString(){        
+        return cpf;
+    }
+   
     
 }

@@ -18,6 +18,7 @@ import javax.swing.JOptionPane;
 public class JMenuBarHome extends JMenuBar implements ActionListener {
     
     private JMenu menuArquivo;
+    private JMenuItem menuItemLogout;
     private JMenuItem menuItemSair;
 
     private JMenu menuCadastro;
@@ -43,6 +44,14 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
         menuItemSair = new JMenuItem("Sair");
         menuItemSair.setToolTipText("Sair"); // Acessibilidade.
         menuItemSair.setFocusable(true); // Acessibilidade.
+        
+        menuItemLogout = new JMenuItem("Logout");
+        menuItemLogout.setToolTipText("Logout");
+        menuItemLogout.setFocusable(true);
+        
+        menuItemLogout.addActionListener(this);
+        menuItemLogout.setActionCommand("menu_logout");
+        menuArquivo.add(menuItemLogout);
 
         menuItemSair.addActionListener(this);
         menuItemSair.setActionCommand("menu_sair");
@@ -84,6 +93,8 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
             // Se o usuario clicou no menuitem Usuario.
             controle.showTela("tela_funcionario");
             
+        } else if(e.getActionCommand().equals(menuItemLogout.getActionCommand())) {
+            controle.showTela("tela_autenticacao");
         }
         
     }

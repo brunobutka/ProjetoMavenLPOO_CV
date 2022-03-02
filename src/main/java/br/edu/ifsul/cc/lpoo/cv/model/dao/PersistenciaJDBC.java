@@ -218,9 +218,11 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 f.setNumero_celular(rs.getString("numero_celular"));
                 f.setEmail(rs.getString("email"));
                 
-                Calendar data_cadastro_cal = Calendar.getInstance();
-                data_cadastro_cal.setTimeInMillis(rs.getDate("data_cadastro").getTime());
-                f.setData_cadastro(data_cadastro_cal);
+                if(rs.getDate("data_cadastro") != null) {
+                    Calendar data_cadastro_cal = Calendar.getInstance();
+                    data_cadastro_cal.setTimeInMillis(rs.getDate("data_cadastro").getTime());
+                    f.setData_cadastro(data_cadastro_cal);
+                }
                 
                 Calendar data_nascimento_cal = Calendar.getInstance();
                 data_nascimento_cal.setTimeInMillis(rs.getDate("data_nascimento").getTime());
@@ -943,9 +945,11 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             
             p.setEmail(rs.getString("email"));
 
-            Calendar dtCad = Calendar.getInstance();
-            dtCad.setTimeInMillis(rs.getDate("data_cadastro").getTime());                        
-            p.setData_cadastro(dtCad);
+            if(rs.getDate("data_cadastro") != null){
+                Calendar dtCad = Calendar.getInstance();
+                dtCad.setTimeInMillis(rs.getDate("data_cadastro").getTime());                        
+                p.setData_cadastro(dtCad);
+            }
 
             Calendar dtU = Calendar.getInstance();
             dtU.setTimeInMillis(rs.getDate("data_nascimento").getTime());
@@ -996,9 +1000,11 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             f.setNumero_celular(rs.getString("numero_celular"));
             f.setEmail(rs.getString("email"));
 
-            Calendar dtCad = Calendar.getInstance();
-            dtCad.setTimeInMillis(rs.getDate("data_cadastro").getTime());                        
-            f.setData_cadastro(dtCad);
+            if(rs.getDate("data_cadastro") != null){
+                Calendar dtCad = Calendar.getInstance();
+                dtCad.setTimeInMillis(rs.getDate("data_cadastro").getTime());                        
+                f.setData_cadastro(dtCad);
+            }
 
             Calendar dtU = Calendar.getInstance();
             dtU.setTimeInMillis(rs.getDate("data_nascimento").getTime());
