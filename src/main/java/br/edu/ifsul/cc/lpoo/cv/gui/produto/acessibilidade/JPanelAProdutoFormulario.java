@@ -1,8 +1,8 @@
-package br.edu.ifsul.cc.lpoo.cv.gui.funcionario.acessibilidade;
+package br.edu.ifsul.cc.lpoo.cv.gui.produto.acessibilidade;
 
 import br.edu.ifsul.cc.lpoo.cv.Controle;
-import br.edu.ifsul.cc.lpoo.cv.model.Cargo;
-import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
+import br.edu.ifsul.cc.lpoo.cv.model.Produto;
+import br.edu.ifsul.cc.lpoo.cv.model.TipoProduto;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -34,10 +34,10 @@ import javax.swing.text.MaskFormatter;
  * @author bruno
  */
 
-public class JPanelAFuncionarioFormulario extends JPanel implements ActionListener{
+public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     
     
-    private JPanelAFuncionario pnlAFuncionario;
+    private JPanelAProduto pnlAProduto;
     private Controle controle;
     
     private BorderLayout borderLayout;
@@ -45,245 +45,136 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     
     private JPanel pnlDadosCadastrais;    
     private JPanel pnlCentroDadosCadastrais;
-    
     private GridBagLayout gridBagLayoutDadosCadastrais;
-    private JLabel lblCpf;
-    private JTextField txfCpf;
     
-    private JLabel lblRg;
-    private JTextField txfRg;
+    private JLabel lblId;
+    private JTextField txfId;
     
     private JLabel lblNome;
     private JTextField txfNome;
     
-    private JLabel lblSenha;
-    private JPasswordField txfSenha;
+    private JLabel lblQuantidade;
+    private JTextField txfQuantidade;
     
-    private JLabel lblNumero_celular;
-    private JTextField txfNumero_celular;
+    private JLabel lblValor;
+    private JTextField txfValor;
     
-    private JLabel lblEmail;
-    private JTextField txfEmail;
+    private JLabel lblTipo_produto;
+    private JComboBox cbxTipo_produto;
     
-    private JLabel lblCep;
-    private JTextField txfCep;
-    
-    private JLabel lblEndereco;
-    private JTextField txfEndereco;
-    
-    private JLabel lblComplemento;
-    private JTextField txfComplemento;
-    
-    private JLabel lblNumero_ctps;
-    private JTextField txfNumero_ctps;
-    
-    private JLabel lblNumero_pis;
-    private JTextField txfNumero_pis;
-    
-    private JLabel lblData_nascimento;
-    private JFormattedTextField txfData_nascimento;
-    //private GregorianCalendar data_n=new GregorianCalendar();
-    
-    private JLabel lblCargo;
-    private JComboBox cbxCargo;
-    
-    //private JLabel lblPontos;
-    //private JTextField txfPontos;
-    
-    //private JLabel lblEndereco;
-    //private JComboBox cbxEndereco;
-    
-    //private JLabel lblDataUltimoLogin;
-    //private JTextField txfDataUltimoLogin;
-        
-    private JLabel lblDataCadastro;
-    private JTextField txfDataCadastro;
-    
-    private Funcionario funcionario;
+    private Produto produto;
     private SimpleDateFormat format;
     
     private JPanel pnlSul;
     private JButton btnGravar;
     private JButton btnCancelar;
     
-    //private JPanel pnlDadosCompras;
-    //private JPanel pnlDadosArtefatos;
-    //private JPanel pnlDadosPatentes;
-    
     private JPanel pnlDadosVendas;
     private JPanel pnlDadosProdutos;
 
     
-    public JPanelAFuncionarioFormulario(JPanelAFuncionario pnlAFuncionario, Controle controle) {
+    public JPanelAProdutoFormulario(JPanelAProduto pnlAProduto, Controle controle) {
         
-        this.pnlAFuncionario = pnlAFuncionario;
+        this.pnlAProduto = pnlAProduto;
         this.controle = controle;
         
         initComponents();
         
     }
     
-    public void populaComboCargo(){
+    public void populaComboTipoProduto(){
         
-        cbxCargo.removeAllItems();//zera o combo
+        cbxTipo_produto.removeAllItems();//zera o combo
 
-        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxCargo.getModel();
+        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxTipo_produto.getModel();
 
         model.addElement("Selecione"); //primeiro item        
         try {
             
-            model.addElement(Cargo.ADESTRADOR);
-            model.addElement(Cargo.ATENDENTE);
-            model.addElement(Cargo.AUXILIAR_VETERINARIO);
+            model.addElement(TipoProduto.ATENDIMENTO_AMBULATORIAL);
+            model.addElement(TipoProduto.CONSULTA);
+            model.addElement(TipoProduto.CONSULTA_REVISAO);
+            model.addElement(TipoProduto.MEDICAMENTO);
+            model.addElement(TipoProduto.SESSAO_ADESTRAMENTO);
+            model.addElement(TipoProduto.SESSAO_FISIOTERAPIA);
+
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(this, "Erro ao listar Cargos -:"+ex.getLocalizedMessage(), "Cargos", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao listar Tipo Produto -:"+ex.getLocalizedMessage(), "Tipo Produto", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }  
         
         
     }
     
-    public Funcionario getFuncionariobyFormulario(){
+    public Produto getProdutobyFormulario(){
         
         //validacao do formulario
-         if(txfCpf.getText().trim().length() == 11 && 
+         if(txfNome.getText().trim().length() < 2 /*&& 
             new String(txfSenha.getPassword()).trim().length() > 3 && 
-            cbxCargo.getSelectedIndex() > 0){
+            cbxCargo.getSelectedIndex() > 0*/){
 
-            Funcionario f = new Funcionario();
+            Produto p = new Produto();
             
-            f.setCpf(txfCpf.getText().trim());   
-            f.setRg(txfRg.getText().trim());
-            f.setNome(txfNome.getText().trim());
-            f.setSenha(new String(txfSenha.getPassword()).trim());
+            String strId = txfId.getText();
+            Integer id_convert = Integer.parseInt(strId);
+            p.setId(id_convert); 
             
-            if(funcionario != null)
-                f.setData_cadastro(funcionario.getData_cadastro());
+            p.setNome(txfNome.getText().trim());
+            // j.setPontos(Integer.parseInt(txfPontos.getText().trim()));
+            p.setQuantidade(Float.parseFloat(txfQuantidade.getText().trim()));
+            p.setValor(Float.parseFloat(txfValor.getText().trim()));
+            //p.setValor(txfValor.getText().trim());
             
-            f.setNumero_celular(txfNumero_celular.getText().trim());
-            f.setEmail(txfEmail.getText().trim());
-            f.setCep(txfCep.getText().trim());
-            f.setEndereco(txfEndereco.getText().trim());
-            f.setComplemento(txfComplemento.getText().trim());
-            f.setNumero_ctps(txfNumero_ctps.getText().trim());
-            f.setNumero_pis(txfNumero_pis.getText().trim());
-            
-            String strData = txfData_nascimento.getText();
-            Calendar cal = Calendar.getInstance();
-            SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-             try {
-                 cal.setTime(sdf.parse(strData));
-                 f.setData_nascimento(cal);
-             } catch (ParseException ex) {
-                 Logger.getLogger(JPanelAFuncionarioFormulario.class.getName()).log(Level.SEVERE, null, ex);
-             }
+            p.setTipo_produto((TipoProduto) cbxTipo_produto.getSelectedItem());
             
             
-            
-            f.setCargo((Cargo) cbxCargo.getSelectedItem());
-            //f.setPontos(Integer.parseInt(txfPontos.getText().trim()));
-
-            
-            //if(funcionario != null)
-                //f.setData_ultimo_login(funcionario.getData_ultimo_login());
-            
-            
-            return f;
+            return p;
          }
-
          return null;
     }
     
-    public void setFuncionarioFormulario(Funcionario f){
+    public void setProdutoFormulario(Produto p){
 
-        if(f == null){//se o parametro estiver nullo, limpa o formulario
-            txfCpf.setEditable(true);
-            txfCpf.setText("");
+        if(p == null){//se o parametro estiver nullo, limpa o formulario
             
-            txfRg.setEditable(true);
-            txfRg.setText("");
+            txfId.setEditable(false);
+            txfId.setText("");
             
-            txfNome.setEditable(true);
+            //txfNome.setEditable(true);
             txfNome.setText("");
             
-            txfSenha.setText("");
+            //txfQuantidade.setEditable(true);
+            txfQuantidade.setText("");
             
-            txfDataCadastro.setText("");
+            //txfValor.setEditable(true);
+            txfValor.setText("");
             
-            txfNumero_celular.setText("");
+            cbxTipo_produto.setSelectedIndex(0);
             
-            txfEmail.setText("");
-            
-            txfCep.setText("");
-            
-            txfEndereco.setText("");
-            
-            txfComplemento.setText("");
-            
-            txfNumero_ctps.setEditable(true);
-            txfNumero_ctps.setText("");
-            
-            txfNumero_pis.setEditable(true);
-            txfNumero_pis.setText("");
-            
-            txfData_nascimento.setText("");
-            
-            
-            cbxCargo.setSelectedIndex(0);
-            //txfPontos.setText("");
-            
-            //txfDataUltimoLogin.setText("");
-            
-            
-            
-            
-            funcionario = null;
+            produto = null;
 
         }else{
 
-            funcionario = f;
+            produto = p;
             
-            txfCpf.setEditable(false);
-            txfCpf.setText(funcionario.getCpf());
             
-            txfRg.setEditable(false);
-            txfRg.setText(funcionario.getRg());
+            //String strId = txfId.getText();
+            //Integer id_convert = Integer.parseInt(strId);
+            txfId.setEditable(false);
+            txfId.setText(produto.getId().toString());
             
             txfNome.setEditable(false);
-            txfNome.setText(funcionario.getNome());
+            txfNome.setText(produto.getNome());
             
-            txfSenha.setText(funcionario.getSenha());
+            //txfQuantidade.setEditable(false);
+            txfQuantidade.setText(produto.getQuantidade().toString());
+            txfValor.setText(produto.getValor().toString());
             
-            if(f.getData_cadastro() != null)
-                txfDataCadastro.setText(format.format(f.getData_cadastro().getTime()));
+            //float n pode ser convertido para string
             
-            txfNumero_celular.setText(funcionario.getNumero_celular());
-            
-            txfEmail.setText(funcionario.getEmail());
-            
-            txfCep.setText(funcionario.getCep());
-            
-            txfEndereco.setText(funcionario.getEndereco());
-            
-            txfComplemento.setText(funcionario.getComplemento());
-            
-            txfNumero_ctps.setEditable(false);
-            txfNumero_ctps.setText(funcionario.getNumero_ctps());
-            
-            txfNumero_pis.setEditable(false);
-            txfNumero_pis.setText(funcionario.getNumero_pis());
-            
-            if(f.getData_nascimento()!= null)
-                txfData_nascimento.setText(format.format(f.getData_nascimento().getTime()));
-            
-            cbxCargo.getModel().setSelectedItem(funcionario.getCargo());
-            //txfPontos.setText(funcionario.getPontos().toString());
-            
-            //if(f.getData_ultimo_login() != null)
-                //txfDataUltimoLogin.setText(format.format(f.getData_ultimo_login().getTime()));
-
+            cbxTipo_produto.getModel().setSelectedItem(produto.getTipo_produto());
         }
 
     }
@@ -300,21 +191,77 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         gridBagLayoutDadosCadastrais = new GridBagLayout();
         pnlDadosCadastrais.setLayout(gridBagLayoutDadosCadastrais);
         
-        lblCpf = new JLabel("CPF: ");
+        lblId = new JLabel("ID: ");
         GridBagConstraints posicionador = new GridBagConstraints();
         posicionador.gridy = 0; // Posição da linha (vertical).
         posicionador.gridx = 0; // Posição da coluna (horizontal).
         posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblCpf, posicionador); // O add adiciona o rótulo no painel.
+        pnlDadosCadastrais.add(lblId, posicionador); // O add adiciona o rótulo no painel.
         
-        txfCpf = new JTextField(20);
+        txfId = new JTextField(20);
         posicionador = new GridBagConstraints();
         posicionador.gridy = 0; // Polição da linha (vertical).
         posicionador.gridx = 1; // Posição da coluna (horizontal).
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfCpf, posicionador); // O add adiciona o rótulo no painel.
+        pnlDadosCadastrais.add(txfId, posicionador); // O add adiciona o rótulo no painel.
         
-        lblRg = new JLabel("Rg: ");
+        lblNome = new JLabel("Nome: ");
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 1; // Posição da linha (vertical).
+        posicionador.gridx = 0; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
+        pnlDadosCadastrais.add(lblNome, posicionador); // O add adiciona o rótulo no painel.
+        
+        txfNome = new JTextField(20);
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 1; // Polição da linha (vertical).
+        posicionador.gridx = 1; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
+        pnlDadosCadastrais.add(txfNome, posicionador); // O add adiciona o rótulo no painel.
+        
+        lblQuantidade = new JLabel("Quantidade: ");
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 2; // Posição da linha (vertical).
+        posicionador.gridx = 0; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
+        pnlDadosCadastrais.add(lblQuantidade, posicionador); // O add adiciona o rótulo no painel.
+        
+        txfQuantidade = new JTextField(20);
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 2; // Polição da linha (vertical).
+        posicionador.gridx = 1; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
+        pnlDadosCadastrais.add(txfQuantidade, posicionador); // O add adiciona o rótulo no painel.
+        
+        lblValor = new JLabel("Valor: ");
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 3; // Posição da linha (vertical).
+        posicionador.gridx = 0; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
+        pnlDadosCadastrais.add(lblValor, posicionador); // O add adiciona o rótulo no painel.
+        
+        txfValor = new JTextField(20);
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 3; // Polição da linha (vertical).
+        posicionador.gridx = 1; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
+        pnlDadosCadastrais.add(txfValor, posicionador); // O add adiciona o rótulo no painel.
+        
+        lblTipo_produto = new JLabel("Tipo Produto:");
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 4;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        pnlDadosCadastrais.add(lblTipo_produto, posicionador);//o add adiciona o rotulo no painel  
+                
+        cbxTipo_produto = new JComboBox();
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 4;//policao da linha (vertical)
+        posicionador.gridx = 1;// posição da coluna (horizontal)
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        pnlDadosCadastrais.add(cbxTipo_produto, posicionador);//o add adiciona o rotulo no painel
+        
+        /*lblRg = new JLabel("Rg: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Posição da linha (vertical).
         posicionador.gridx = 0; // Posição da coluna (horizontal).
@@ -500,18 +447,9 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.gridx = 1;// posição da coluna (horizontal)
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
         pnlDadosCadastrais.add(cbxCargo, posicionador);//o add adiciona o rotulo no painel
-        
+        */
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
-        
-        //pnlDadosCompras = new JPanel();
-        //tbpAbas.addTab("Compras", pnlDadosCompras);
-        
-        //pnlDadosArtefatos = new JPanel();
-        //tbpAbas.addTab("Artefatos", pnlDadosArtefatos);
-        
-        //pnlDadosPatentes = new JPanel();
-        //tbpAbas.addTab("Patentes", pnlDadosPatentes);
         
         pnlDadosVendas = new JPanel();
         tbpAbas.addTab("Vendas", pnlDadosVendas);
@@ -525,17 +463,17 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         btnGravar = new JButton("Gravar");
         btnGravar.addActionListener(this);
         btnGravar.setFocusable(true); // Acessibilidade.
-        btnGravar.setToolTipText("btnGravarFuncionario"); // Acessibilidade.
+        btnGravar.setToolTipText("btnGravarProduto"); // Acessibilidade.
         btnGravar.setMnemonic(KeyEvent.VK_G);
-        btnGravar.setActionCommand("botao_gravar_formulario_funcionario");
+        btnGravar.setActionCommand("botao_gravar_formulario_produto");
         
         pnlSul.add(btnGravar);
         
         btnCancelar = new JButton("Cancelar");
         btnCancelar.addActionListener(this);
         btnCancelar.setFocusable(true); // Acessibilidade.
-        btnCancelar.setToolTipText("btnCancelarFuncionario"); // Acessibilidade.
-        btnCancelar.setActionCommand("botao_cancelar_formulario_funcionario");
+        btnCancelar.setToolTipText("btnCancelarProduto"); // Acessibilidade.
+        btnCancelar.setActionCommand("botao_cancelar_formulario_produto");
         
         pnlSul.add(btnCancelar);
         
@@ -549,19 +487,19 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     public void actionPerformed(ActionEvent arg0) {
         if(arg0.getActionCommand().equals(btnGravar.getActionCommand())) {
             
-            Funcionario f = getFuncionariobyFormulario(); // Recupera os dados do formulário.
+            Produto p = getProdutobyFormulario(); // Recupera os dados do formulário.
             
-            if(f != null) {
+            if(p != null) {
 
                 try {
                     
-                    pnlAFuncionario.getControle().getConexaoJDBC().persist(f);
+                    pnlAProduto.getControle().getConexaoJDBC().persist(p);
                     
-                    JOptionPane.showMessageDialog(this, "Funcionario armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Produto armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
             
-                    pnlAFuncionario.showTela("tela_funcionario_listagem");
+                    pnlAProduto.showTela("tela_produto_listagem");
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao salvar funcionário: " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao salvar Produto: " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
             } else {
@@ -569,7 +507,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             }
             
         } else if(arg0.getActionCommand().equals(btnCancelar.getActionCommand())) {
-            pnlAFuncionario.showTela("tela_funcionario_listagem");
+            pnlAProduto.showTela("tela_produto_listagem");
         }
     }
 }

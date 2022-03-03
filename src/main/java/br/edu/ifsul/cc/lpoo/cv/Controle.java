@@ -8,6 +8,7 @@ import br.edu.ifsul.cc.lpoo.cv.gui.JPanelHome;
 import br.edu.ifsul.cc.lpoo.cv.gui.autenticacao.JPanelAutenticacao;
 import br.edu.ifsul.cc.lpoo.cv.gui.funcionario.JPanelFuncionario;
 import br.edu.ifsul.cc.lpoo.cv.gui.funcionario.acessibilidade.JPanelAFuncionario;
+import br.edu.ifsul.cc.lpoo.cv.gui.produto.acessibilidade.JPanelAProduto;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import javax.swing.JOptionPane;
@@ -26,6 +27,8 @@ public class Controle {
     
     private JPanelFuncionario pnlFuncionario;
     private JPanelAFuncionario pnlAFuncionario;
+    
+    private JPanelAProduto pnlAProduto;
       
     //construtor.
     public Controle(){
@@ -64,12 +67,15 @@ public class Controle {
         
         pnlFuncionario = new JPanelFuncionario(this);   
         pnlAFuncionario = new JPanelAFuncionario(this);
+        pnlAProduto = new JPanelAProduto(this);
         
         frame.addTela(pnlAutenticacao, "tela_autenticacao"); // Carta 1.
         frame.addTela(pnlHome, "tela_home"); // Carta 2.
         
         frame.addTela(pnlAFuncionario, "tela_funcionario");  // Carta 3 - poderia adicionar opcionalmente: pnlFuncionario.
         //frame.addTela(pnlFuncionario, "tela_funcionario"); // Carta 3 - poderia adicionar opcionalmente: pnlFuncionario.
+        
+        frame.addTela(pnlAProduto, "tela_produto");  // Carta 4
         
         frame.showTela("tela_autenticacao"); // Apresenta a carta cujo nome é "tela_autenticacao".
         
@@ -118,7 +124,11 @@ public class Controle {
             //pnlFuncionario.showTela("tela_funcionario_listagem");
             pnlAFuncionario.showTela("tela_funcionario_listagem");
             frame.showTela(nomeTela); 
-        }  
+            
+        } else if(nomeTela.equals("tela_produto")){
+            pnlAProduto.showTela("tela_produto_listagem");
+            frame.showTela(nomeTela);
+        }
         
     }
     

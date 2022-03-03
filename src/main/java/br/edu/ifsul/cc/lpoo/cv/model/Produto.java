@@ -132,4 +132,9 @@ public class Produto implements Serializable{
         this.fornecedor = fornecedor;
     }
     
+    @Override
+    public String toString(){      
+        return id.toString();
+    }
+    
 }

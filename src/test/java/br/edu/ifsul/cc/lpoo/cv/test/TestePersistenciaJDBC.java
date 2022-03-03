@@ -148,7 +148,7 @@ public class TestePersistenciaJDBC {
                 
                 Produto pro = new Produto();
                 Fornecedor forn = new Fornecedor();
-                forn.setCpf("033.505.023-12");
+                forn.setCpf("88888888888");
                 pro.setFornecedor(forn);
                 pro.setNome("Bisacodil");
                 pro.setQuantidade(2F);
@@ -240,7 +240,7 @@ public class TestePersistenciaJDBC {
                        
     }
     
-    @Test
+    //@Test
     public void testListPersistenciaFuncionario() throws Exception {
         
         DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
