@@ -120,8 +120,6 @@ public class Controle {
             
         } else if(nomeTela.equals("tela_funcionario")){
             
-            //pnlFuncionario.getListagem().populaTable();
-            //pnlFuncionario.showTela("tela_funcionario_listagem");
             pnlAFuncionario.showTela("tela_funcionario_listagem");
             frame.showTela(nomeTela); 
             

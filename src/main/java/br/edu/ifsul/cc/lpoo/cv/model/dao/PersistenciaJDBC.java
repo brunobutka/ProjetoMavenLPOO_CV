@@ -354,7 +354,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 
             }else{
                 //UPTADE
-                PreparedStatement ps = this.con.prepareStatement("update tb_produto set"
+                PreparedStatement ps = this.con.prepareStatement("update tb_produto set "
                                                                 + "nome = ?, "
                                                                 + "quantidade = ?, "
                                                                 + "tipo_produto = ?, "

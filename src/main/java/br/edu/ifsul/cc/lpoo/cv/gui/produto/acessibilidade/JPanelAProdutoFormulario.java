@@ -1,6 +1,7 @@
 package br.edu.ifsul.cc.lpoo.cv.gui.produto.acessibilidade;
 
 import br.edu.ifsul.cc.lpoo.cv.Controle;
+import br.edu.ifsul.cc.lpoo.cv.model.Fornecedor;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
 import br.edu.ifsul.cc.lpoo.cv.model.TipoProduto;
 import java.awt.BorderLayout;
@@ -15,6 +16,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -62,6 +64,9 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     private JLabel lblTipo_produto;
     private JComboBox cbxTipo_produto;
     
+    private JLabel lblFornecedor;
+    private JComboBox cbxFornecedor;
+    
     private Produto produto;
     private SimpleDateFormat format;
     
@@ -98,10 +103,30 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             model.addElement(TipoProduto.SESSAO_ADESTRAMENTO);
             model.addElement(TipoProduto.SESSAO_FISIOTERAPIA);
 
-
         } catch (Exception ex) {
 
             JOptionPane.showMessageDialog(this, "Erro ao listar Tipo Produto -:"+ex.getLocalizedMessage(), "Tipo Produto", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }    
+    }
+    
+    public void populaComboFornecedor(){
+        
+        cbxFornecedor.removeAllItems();//zera o combo
+
+        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxFornecedor.getModel();
+
+        model.addElement("Selecione"); //primeiro item        
+        try {
+
+            List<Fornecedor> listCidades = controle.getConexaoJDBC().listFornecedores();
+            for(Fornecedor f : listCidades){
+                model.addElement(f);
+            }
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(this, "Erro ao listar Fornecedores -:"+ex.getLocalizedMessage(), "Fornecedores", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }  
         
@@ -111,23 +136,21 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     public Produto getProdutobyFormulario(){
         
         //validacao do formulario
-         if(txfNome.getText().trim().length() < 2 /*&& 
+         if(txfNome.getText().trim().length() > 2 /*&& 
             new String(txfSenha.getPassword()).trim().length() > 3 && 
             cbxCargo.getSelectedIndex() > 0*/){
 
             Produto p = new Produto();
-            
-            String strId = txfId.getText();
-            Integer id_convert = Integer.parseInt(strId);
-            p.setId(id_convert); 
+             
+            p.setId(Integer.parseInt(txfId.getText().trim()));            
             
             p.setNome(txfNome.getText().trim());
-            // j.setPontos(Integer.parseInt(txfPontos.getText().trim()));
             p.setQuantidade(Float.parseFloat(txfQuantidade.getText().trim()));
             p.setValor(Float.parseFloat(txfValor.getText().trim()));
-            //p.setValor(txfValor.getText().trim());
             
             p.setTipo_produto((TipoProduto) cbxTipo_produto.getSelectedItem());
+            
+            p.setFornecedor((Fornecedor) cbxFornecedor.getSelectedItem());
             
             
             return p;
@@ -140,18 +163,18 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         if(p == null){//se o parametro estiver nullo, limpa o formulario
             
             txfId.setEditable(false);
-            txfId.setText("");
+            //txfId.setText("");
             
-            //txfNome.setEditable(true);
+            txfNome.setEditable(true);
             txfNome.setText("");
-            
-            //txfQuantidade.setEditable(true);
+                
             txfQuantidade.setText("");
             
-            //txfValor.setEditable(true);
             txfValor.setText("");
             
             cbxTipo_produto.setSelectedIndex(0);
+            
+            cbxFornecedor.setSelectedIndex(0);
             
             produto = null;
 
@@ -159,22 +182,17 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
 
             produto = p;
             
-            
-            //String strId = txfId.getText();
-            //Integer id_convert = Integer.parseInt(strId);
             txfId.setEditable(false);
             txfId.setText(produto.getId().toString());
             
             txfNome.setEditable(false);
             txfNome.setText(produto.getNome());
             
-            //txfQuantidade.setEditable(false);
             txfQuantidade.setText(produto.getQuantidade().toString());
             txfValor.setText(produto.getValor().toString());
             
-            //float n pode ser convertido para string
-            
             cbxTipo_produto.getModel().setSelectedItem(produto.getTipo_produto());
+            cbxFornecedor.getModel().setSelectedItem(produto.getFornecedor());
         }
 
     }
@@ -261,193 +279,19 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
         pnlDadosCadastrais.add(cbxTipo_produto, posicionador);//o add adiciona o rotulo no painel
         
-        /*lblRg = new JLabel("Rg: ");
+        lblFornecedor = new JLabel("Fornecedor:");
         posicionador = new GridBagConstraints();
-        posicionador.gridy = 1; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblRg, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfRg = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 1; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfRg, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblNome = new JLabel("Nome: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 2; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblNome, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfNome = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 2; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfNome, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblSenha = new JLabel("Senha:");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 3; // Polição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblSenha, posicionador);//o add adiciona o rotulo no painel  
-        
-        txfSenha = new JPasswordField(10);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 3; // Posição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; // Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfSenha, posicionador); // O add adiciona o rotulo no painel.
-        
-        lblDataCadastro = new JLabel("Data de cadastro: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 4; // Polição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblDataCadastro, posicionador);//o add adiciona o rotulo no painel         
-        
-        txfDataCadastro = new JTextField(20);
-        txfDataCadastro.setEditable(false);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 4; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        pnlDadosCadastrais.add(txfDataCadastro, posicionador); // O add adiciona o rotulo no painel.
-        
-        lblNumero_celular = new JLabel("Número de Celular: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 5; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblNumero_celular, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfNumero_celular = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 5; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfNumero_celular, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblEmail = new JLabel("Email: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 6; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblEmail, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfEmail = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 6; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfEmail, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblCep = new JLabel("Cep: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 7; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblCep, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfCep = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 7; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfCep, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblEndereco = new JLabel("Endereço: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 8; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblEndereco, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfEndereco = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 8; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfEndereco, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblComplemento = new JLabel("Complemento: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 9; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblComplemento, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfComplemento = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 9; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfComplemento, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblNumero_ctps = new JLabel("Número CTPS: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 10; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblNumero_ctps, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfNumero_ctps = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 10; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfNumero_ctps, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblNumero_pis = new JLabel("Número PIS: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 11; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblNumero_pis, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfNumero_pis = new JTextField(20);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 11; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfNumero_pis, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblData_nascimento = new JLabel("Data de nascimento: ");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 12; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblData_nascimento, posicionador); // O add adiciona o rótulo no painel.
-        try {
-            //txfData_nascimento = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.MEDIUM));
-            txfData_nascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
-        } catch (ParseException ex) {
-            Logger.getLogger(JPanelAFuncionarioFormulario.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        txfData_nascimento.setColumns(6);
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 12; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfData_nascimento, posicionador); // O add adiciona o rótulo no painel.
-        
-        lblCargo = new JLabel("Cargo:");
-        posicionador = new GridBagConstraints();
-        posicionador.gridy = 13;//policao da linha (vertical)
+        posicionador.gridy = 5;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblCargo, posicionador);//o add adiciona o rotulo no painel  
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        pnlDadosCadastrais.add(lblFornecedor, posicionador);//o add adiciona o rotulo no painel  
                 
-        cbxCargo = new JComboBox();
+        cbxFornecedor = new JComboBox();
         posicionador = new GridBagConstraints();
-        posicionador.gridy = 13;//policao da linha (vertical)
+        posicionador.gridy = 5;//policao da linha (vertical)
         posicionador.gridx = 1;// posição da coluna (horizontal)
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
-        pnlDadosCadastrais.add(cbxCargo, posicionador);//o add adiciona o rotulo no painel
-        */
+        pnlDadosCadastrais.add(cbxFornecedor, posicionador);//o add adiciona o rotulo no painel
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
         
@@ -498,6 +342,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
                     JOptionPane.showMessageDialog(this, "Produto armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
             
                     pnlAProduto.showTela("tela_produto_listagem");
+                    
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Erro ao salvar Produto: " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();

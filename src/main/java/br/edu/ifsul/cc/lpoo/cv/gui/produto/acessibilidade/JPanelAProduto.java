@@ -46,6 +46,7 @@ public class JPanelAProduto extends JPanel {
         } else if(nomeTela.equals("tela_produto_formulario")) {
             
             getFormulario().populaComboTipoProduto();
+            getFormulario().populaComboFornecedor();
         }
         
         cardLayout.show(this, nomeTela);
