@@ -203,6 +203,10 @@ public class Venda implements Serializable{
         this.consultas = consultas;
     }
     
+    @Override
+    public String toString(){      
+        return id.toString();
+    }
     
     
 }

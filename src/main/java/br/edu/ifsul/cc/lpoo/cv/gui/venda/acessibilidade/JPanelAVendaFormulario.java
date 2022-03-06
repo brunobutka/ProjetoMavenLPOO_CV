@@ -1,9 +1,14 @@
-package br.edu.ifsul.cc.lpoo.cv.gui.produto.acessibilidade;
+
+package br.edu.ifsul.cc.lpoo.cv.gui.venda.acessibilidade;
 
 import br.edu.ifsul.cc.lpoo.cv.Controle;
+import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Fornecedor;
+import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
+import br.edu.ifsul.cc.lpoo.cv.model.Pagamento;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
 import br.edu.ifsul.cc.lpoo.cv.model.TipoProduto;
+import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.GridBagConstraints;
@@ -36,10 +41,10 @@ import javax.swing.text.MaskFormatter;
  * @author bruno
  */
 
-public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
+public class JPanelAVendaFormulario extends JPanel implements ActionListener{
     
     
-    private JPanelAProduto pnlAProduto;
+    private JPanelAVenda pnlAVenda;
     private Controle controle;
     
     private BorderLayout borderLayout;
@@ -52,22 +57,22 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     private JLabel lblId;
     private JTextField txfId;
     
-    private JLabel lblNome;
-    private JTextField txfNome;
+    private JLabel lblObservacao;
+    private JTextField txfObservacao;
     
-    private JLabel lblQuantidade;
-    private JTextField txfQuantidade;
+    private JLabel lblValor_total;
+    private JTextField txfValor_total;
     
-    private JLabel lblValor;
-    private JTextField txfValor;
+    private JLabel lblPagamento;
+    private JComboBox cbxPagamento;
     
-    private JLabel lblTipo_produto;
-    private JComboBox cbxTipo_produto;
+    private JLabel lblCliente;
+    private JComboBox cbxCliente;
     
-    private JLabel lblFornecedor;
-    private JComboBox cbxFornecedor;
+    private JLabel lblFuncionario;
+    private JComboBox cbxFuncionario;
     
-    private Produto produto;
+    private Venda venda;
     private SimpleDateFormat format;
     
     private JPanel pnlSul;
@@ -78,123 +83,134 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     private JPanel pnlDadosProdutos;
 
     
-    public JPanelAProdutoFormulario(JPanelAProduto pnlAProduto, Controle controle) {
+    public JPanelAVendaFormulario(JPanelAVenda pnlAVenda, Controle controle) {
         
-        this.pnlAProduto = pnlAProduto;
+        this.pnlAVenda = pnlAVenda;
         this.controle = controle;
         
         initComponents();
         
     }
     
-    public void populaComboTipoProduto(){
+    public void populaComboPagamento(){
         
-        cbxTipo_produto.removeAllItems();//zera o combo
+        cbxPagamento.removeAllItems();//zera o combo
 
-        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxTipo_produto.getModel();
+        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxPagamento.getModel();
 
         model.addElement("Selecione"); //primeiro item        
         try {
             
-            model.addElement(TipoProduto.ATENDIMENTO_AMBULATORIAL);
-            model.addElement(TipoProduto.CONSULTA);
-            model.addElement(TipoProduto.CONSULTA_REVISAO);
-            model.addElement(TipoProduto.MEDICAMENTO);
-            model.addElement(TipoProduto.SESSAO_ADESTRAMENTO);
-            model.addElement(TipoProduto.SESSAO_FISIOTERAPIA);
+            model.addElement(Pagamento.BOLETO);
+            model.addElement(Pagamento.CARTAO_CREDITO);
+            model.addElement(Pagamento.CARTAO_DEBITO);
+            model.addElement(Pagamento.DINHEIRO);
+            model.addElement(Pagamento.PIX);
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(this, "Erro ao listar Tipo Produto -:"+ex.getLocalizedMessage(), "Tipo Produto", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao listar Pagamento -:"+ex.getLocalizedMessage(), "Pagamento", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }    
     }
     
-    public void populaComboFornecedor(){
+    public void populaComboFuncionario(){
         
-        cbxFornecedor.removeAllItems();//zera o combo
+        cbxFuncionario.removeAllItems();//zera o combo
 
-        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxFornecedor.getModel();
+        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxFuncionario.getModel();
 
         model.addElement("Selecione"); //primeiro item        
         try {
 
-            List<Fornecedor> listFornecedores = controle.getConexaoJDBC().listFornecedores();
-            for(Fornecedor f : listFornecedores){
+            List<Funcionario> listFuncionarios = controle.getConexaoJDBC().listFuncionarios();
+            for(Funcionario f : listFuncionarios){
                 model.addElement(f);
             }
 
         } catch (Exception ex) {
 
-            JOptionPane.showMessageDialog(this, "Erro ao listar Fornecedores -:"+ex.getLocalizedMessage(), "Fornecedores", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(this, "Erro ao listar Funcionários -:"+ex.getLocalizedMessage(), "Funcionários", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-        }  
-        
-        
+        }     
     }
     
-    public Produto getProdutobyFormulario(){
+    public void populaComboCliente(){
+        
+        cbxCliente.removeAllItems();//zera o combo
+
+        DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxCliente.getModel();
+
+        model.addElement("Selecione"); //primeiro item        
+        try {
+
+            List<Cliente> listClientes = controle.getConexaoJDBC().listClientes();
+            for(Cliente c : listClientes){
+                model.addElement(c);
+            }
+
+        } catch (Exception ex) {
+
+            JOptionPane.showMessageDialog(this, "Erro ao listar Clientes -:"+ex.getLocalizedMessage(), "Clientes", JOptionPane.ERROR_MESSAGE);
+            ex.printStackTrace();
+        }     
+    }
+    
+    public Venda getVendabyFormulario(){
         
         //validacao do formulario
-        /*(txfNome.getText().trim().length() > 2 
+         if(txfObservacao.getText().trim().length() > 2 /*&& 
             new String(txfSenha.getPassword()).trim().length() > 3 && 
-            cbxCargo.getSelectedIndex() > 0)*/
-         if(txfNome.getText().trim().length() > 1 && cbxTipo_produto.getSelectedIndex() > 0 &&
-            cbxFornecedor.getSelectedIndex() > 0){
+            cbxCargo.getSelectedIndex() > 0*/){
 
-            Produto p = new Produto();
+            Venda v = new Venda();
              
-            p.setId(Integer.parseInt(txfId.getText().trim()));            
+            v.setId(Integer.parseInt(txfId.getText().trim()));    
             
-            p.setNome(txfNome.getText().trim());
-            p.setQuantidade(Float.parseFloat(txfQuantidade.getText().trim()));
-            p.setValor(Float.parseFloat(txfValor.getText().trim()));
+            v.setObservacao(txfObservacao.getText().trim());
+            v.setValor_total(Float.parseFloat(txfValor_total.getText().trim()));
+            v.setPagamento((Pagamento) cbxPagamento.getSelectedItem());
+            v.setCliente((Cliente) cbxCliente.getSelectedItem());
+            v.setFuncionario((Funcionario) cbxFuncionario.getSelectedItem());
             
-            p.setTipo_produto((TipoProduto) cbxTipo_produto.getSelectedItem());
-            
-            p.setFornecedor((Fornecedor) cbxFornecedor.getSelectedItem());
-            
-            
-            return p;
+            return v;
          }
          return null;
     }
     
-    public void setProdutoFormulario(Produto p){
+    public void setVendaFormulario(Venda v){
 
-        if(p == null){//se o parametro estiver nullo, limpa o formulario
+        if(v == null){//se o parametro estiver nullo, limpa o formulario
             
             txfId.setEditable(false);
-            txfId.setText("");
             
-            txfNome.setEditable(true);
-            txfNome.setText("");
+            txfObservacao.setText("");
                 
-            txfQuantidade.setText("");
+            txfValor_total.setText("");
             
-            txfValor.setText("");
+            cbxPagamento.setSelectedIndex(0);
             
-            cbxTipo_produto.setSelectedIndex(0);
+            cbxFuncionario.setSelectedIndex(0);
             
-            cbxFornecedor.setSelectedIndex(0);
+            cbxCliente.setSelectedIndex(0);
             
-            produto = null;
+            venda = null;
 
         }else{
 
-            produto = p;
+            venda = v;
             
             txfId.setEditable(false);
-            txfId.setText(produto.getId().toString());
+            txfId.setText(venda.getId().toString());
             
-            txfNome.setEditable(false);
-            txfNome.setText(produto.getNome());
+            txfObservacao.setEditable(false);
+            txfObservacao.setText(venda.getObservacao());
             
-            txfQuantidade.setText(produto.getQuantidade().toString());
-            txfValor.setText(produto.getValor().toString());
+            txfValor_total.setText(venda.getValor_total().toString());
             
-            cbxTipo_produto.getModel().setSelectedItem(produto.getTipo_produto());
-            cbxFornecedor.getModel().setSelectedItem(produto.getFornecedor());
+            cbxPagamento.getModel().setSelectedItem(venda.getPagamento());
+            cbxFuncionario.getModel().setSelectedItem(venda.getFuncionario());
+            cbxCliente.getModel().setSelectedItem(venda.getCliente());
         }
 
     }
@@ -225,75 +241,75 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfId, posicionador); // O add adiciona o rótulo no painel.
         
-        lblNome = new JLabel("Nome: ");
+        lblObservacao = new JLabel("Observação: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Posição da linha (vertical).
         posicionador.gridx = 0; // Posição da coluna (horizontal).
         posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblNome, posicionador); // O add adiciona o rótulo no painel.
+        pnlDadosCadastrais.add(lblObservacao, posicionador); // O add adiciona o rótulo no painel.
         
-        txfNome = new JTextField(20);
+        txfObservacao = new JTextField(20);
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Polição da linha (vertical).
         posicionador.gridx = 1; // Posição da coluna (horizontal).
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfNome, posicionador); // O add adiciona o rótulo no painel.
+        pnlDadosCadastrais.add(txfObservacao, posicionador); // O add adiciona o rótulo no painel.
         
-        lblQuantidade = new JLabel("Quantidade: ");
+        lblValor_total = new JLabel("Valor Total: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 2; // Posição da linha (vertical).
         posicionador.gridx = 0; // Posição da coluna (horizontal).
         posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblQuantidade, posicionador); // O add adiciona o rótulo no painel.
+        pnlDadosCadastrais.add(lblValor_total, posicionador); // O add adiciona o rótulo no painel.
         
-        txfQuantidade = new JTextField(20);
+        txfValor_total = new JTextField(20);
         posicionador = new GridBagConstraints();
         posicionador.gridy = 2; // Polição da linha (vertical).
         posicionador.gridx = 1; // Posição da coluna (horizontal).
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfQuantidade, posicionador); // O add adiciona o rótulo no painel.
+        pnlDadosCadastrais.add(txfValor_total, posicionador); // O add adiciona o rótulo no painel.
         
-        lblValor = new JLabel("Valor: ");
+        lblPagamento = new JLabel("Pagamento:");
         posicionador = new GridBagConstraints();
-        posicionador.gridy = 3; // Posição da linha (vertical).
-        posicionador.gridx = 0; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
-        pnlDadosCadastrais.add(lblValor, posicionador); // O add adiciona o rótulo no painel.
-        
-        txfValor = new JTextField(20);
+        posicionador.gridy = 3;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        pnlDadosCadastrais.add(lblPagamento, posicionador);//o add adiciona o rotulo no painel  
+                
+        cbxPagamento = new JComboBox();
         posicionador = new GridBagConstraints();
-        posicionador.gridy = 3; // Polição da linha (vertical).
-        posicionador.gridx = 1; // Posição da coluna (horizontal).
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
-        pnlDadosCadastrais.add(txfValor, posicionador); // O add adiciona o rótulo no painel.
+        posicionador.gridy = 3;//policao da linha (vertical)
+        posicionador.gridx = 1;// posição da coluna (horizontal)
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        pnlDadosCadastrais.add(cbxPagamento, posicionador);//o add adiciona o rotulo no painel
         
-        lblTipo_produto = new JLabel("Tipo Produto:");
+        lblFuncionario = new JLabel("Funcionário:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 4;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
-        pnlDadosCadastrais.add(lblTipo_produto, posicionador);//o add adiciona o rotulo no painel  
+        pnlDadosCadastrais.add(lblFuncionario, posicionador);//o add adiciona o rotulo no painel  
                 
-        cbxTipo_produto = new JComboBox();
+        cbxFuncionario = new JComboBox();
         posicionador = new GridBagConstraints();
         posicionador.gridy = 4;//policao da linha (vertical)
         posicionador.gridx = 1;// posição da coluna (horizontal)
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
-        pnlDadosCadastrais.add(cbxTipo_produto, posicionador);//o add adiciona o rotulo no painel
+        pnlDadosCadastrais.add(cbxFuncionario, posicionador);//o add adiciona o rotulo no painel
         
-        lblFornecedor = new JLabel("Fornecedor:");
+        lblCliente = new JLabel("Cliente:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 5;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
-        pnlDadosCadastrais.add(lblFornecedor, posicionador);//o add adiciona o rotulo no painel  
+        pnlDadosCadastrais.add(lblCliente, posicionador);//o add adiciona o rotulo no painel  
                 
-        cbxFornecedor = new JComboBox();
+        cbxCliente = new JComboBox();
         posicionador = new GridBagConstraints();
         posicionador.gridy = 5;//policao da linha (vertical)
         posicionador.gridx = 1;// posição da coluna (horizontal)
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
-        pnlDadosCadastrais.add(cbxFornecedor, posicionador);//o add adiciona o rotulo no painel
+        pnlDadosCadastrais.add(cbxCliente, posicionador);//o add adiciona o rotulo no painel
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
         
@@ -311,15 +327,15 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         btnGravar.setFocusable(true); // Acessibilidade.
         btnGravar.setToolTipText("btnGravarProduto"); // Acessibilidade.
         btnGravar.setMnemonic(KeyEvent.VK_G);
-        btnGravar.setActionCommand("botao_gravar_formulario_produto");
+        btnGravar.setActionCommand("botao_gravar_formulario_venda");
         
         pnlSul.add(btnGravar);
         
         btnCancelar = new JButton("Cancelar");
         btnCancelar.addActionListener(this);
         btnCancelar.setFocusable(true); // Acessibilidade.
-        btnCancelar.setToolTipText("btnCancelarProduto"); // Acessibilidade.
-        btnCancelar.setActionCommand("botao_cancelar_formulario_produto");
+        btnCancelar.setToolTipText("btnCancelarVenda"); // Acessibilidade.
+        btnCancelar.setActionCommand("botao_cancelar_formulario_venda");
         
         pnlSul.add(btnCancelar);
         
@@ -333,20 +349,20 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent arg0) {
         if(arg0.getActionCommand().equals(btnGravar.getActionCommand())) {
             
-            Produto p = getProdutobyFormulario(); // Recupera os dados do formulário.
+            Venda v = getVendabyFormulario(); // Recupera os dados do formulário.
             
-            if(p != null) {
+            if(v != null) {
 
                 try {
                     
-                    pnlAProduto.getControle().getConexaoJDBC().persist(p);
+                    pnlAVenda.getControle().getConexaoJDBC().persist(v);
                     
-                    JOptionPane.showMessageDialog(this, "Produto armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Venda armazenada!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
             
-                    pnlAProduto.showTela("tela_produto_listagem");
+                    pnlAVenda.showTela("tela_venda_listagem");
                     
                 } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, "Erro ao salvar Produto: " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao salvar Venda: " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
                 }
             } else {
@@ -354,7 +370,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             }
             
         } else if(arg0.getActionCommand().equals(btnCancelar.getActionCommand())) {
-            pnlAProduto.showTela("tela_produto_listagem");
+            pnlAVenda.showTela("tela_venda_listagem");
         }
     }
 }

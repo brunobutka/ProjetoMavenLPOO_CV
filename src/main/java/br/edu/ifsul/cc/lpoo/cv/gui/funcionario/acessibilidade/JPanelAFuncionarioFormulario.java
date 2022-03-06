@@ -82,19 +82,9 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     
     private JLabel lblData_nascimento;
     private JFormattedTextField txfData_nascimento;
-    //private GregorianCalendar data_n=new GregorianCalendar();
     
     private JLabel lblCargo;
     private JComboBox cbxCargo;
-    
-    //private JLabel lblPontos;
-    //private JTextField txfPontos;
-    
-    //private JLabel lblEndereco;
-    //private JComboBox cbxEndereco;
-    
-    //private JLabel lblDataUltimoLogin;
-    //private JTextField txfDataUltimoLogin;
         
     private JLabel lblDataCadastro;
     private JTextField txfDataCadastro;
@@ -105,10 +95,6 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     private JPanel pnlSul;
     private JButton btnGravar;
     private JButton btnCancelar;
-    
-    //private JPanel pnlDadosCompras;
-    //private JPanel pnlDadosArtefatos;
-    //private JPanel pnlDadosPatentes;
     
     private JPanel pnlDadosVendas;
     private JPanel pnlDadosProdutos;
@@ -148,9 +134,11 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     public Funcionario getFuncionariobyFormulario(){
         
         //validacao do formulario
-         if(txfCpf.getText().trim().length() == 11 && 
-            new String(txfSenha.getPassword()).trim().length() > 3 && 
-            cbxCargo.getSelectedIndex() > 0){
+         if(txfCpf.getText().trim().length() == 11 && txfRg.getText().trim().length() == 10 &&
+            txfNome.getText().trim().length() > 3 && new String(txfSenha.getPassword()).trim().length() > 3 &&
+            txfNumero_celular.getText().trim().length() > 7 && txfEmail.getText().trim().length() > 8 && 
+            txfCep.getText().trim().length() == 8 && txfNumero_ctps.getText().trim().length() == 8 && 
+            txfNumero_pis.getText().trim().length() > 9 && cbxCargo.getSelectedIndex() > 0){
 
             Funcionario f = new Funcionario();
             
@@ -179,16 +167,8 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
              } catch (ParseException ex) {
                  Logger.getLogger(JPanelAFuncionarioFormulario.class.getName()).log(Level.SEVERE, null, ex);
              }
-            
-            
-            
+                        
             f.setCargo((Cargo) cbxCargo.getSelectedItem());
-            //f.setPontos(Integer.parseInt(txfPontos.getText().trim()));
-
-            
-            //if(funcionario != null)
-                //f.setData_ultimo_login(funcionario.getData_ultimo_login());
-            
             
             return f;
          }
@@ -228,17 +208,10 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             txfNumero_pis.setEditable(true);
             txfNumero_pis.setText("");
             
-            txfData_nascimento.setText("");
-            
+            txfData_nascimento.setText("");            
             
             cbxCargo.setSelectedIndex(0);
-            //txfPontos.setText("");
-            
-            //txfDataUltimoLogin.setText("");
-            
-            
-            
-            
+   
             funcionario = null;
 
         }else{
@@ -279,10 +252,6 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
                 txfData_nascimento.setText(format.format(f.getData_nascimento().getTime()));
             
             cbxCargo.getModel().setSelectedItem(funcionario.getCargo());
-            //txfPontos.setText(funcionario.getPontos().toString());
-            
-            //if(f.getData_ultimo_login() != null)
-                //txfDataUltimoLogin.setText(format.format(f.getData_ultimo_login().getTime()));
 
         }
 
@@ -475,7 +444,6 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         pnlDadosCadastrais.add(lblData_nascimento, posicionador); // O add adiciona o rótulo no painel.
         try {
-            //txfData_nascimento = new JFormattedTextField(DateFormat.getDateInstance(DateFormat.MEDIUM));
             txfData_nascimento = new JFormattedTextField(new MaskFormatter("##/##/####"));
         } catch (ParseException ex) {
             Logger.getLogger(JPanelAFuncionarioFormulario.class.getName()).log(Level.SEVERE, null, ex);
@@ -503,15 +471,6 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
-        
-        //pnlDadosCompras = new JPanel();
-        //tbpAbas.addTab("Compras", pnlDadosCompras);
-        
-        //pnlDadosArtefatos = new JPanel();
-        //tbpAbas.addTab("Artefatos", pnlDadosArtefatos);
-        
-        //pnlDadosPatentes = new JPanel();
-        //tbpAbas.addTab("Patentes", pnlDadosPatentes);
         
         pnlDadosVendas = new JPanel();
         tbpAbas.addTab("Vendas", pnlDadosVendas);

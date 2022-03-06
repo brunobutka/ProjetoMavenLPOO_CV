@@ -26,7 +26,7 @@ public class TestePersistenciaJDBC {
     
     //Teste principal, adiciona 2 produtos e 1 venda, faz a adição dos produtos a lista de produtos da venda.
     //Faz a o "loop" ao ficar executando o teste.
-    //@Test
+    @Test
     public void testPersistenciaVendaProduto() throws Exception {
         PersistenciaJDBC persistencia = new PersistenciaJDBC();
         
@@ -77,10 +77,10 @@ public class TestePersistenciaJDBC {
                 ven.setValor_total(25F);
                 ven.setPagamento(Pagamento.DINHEIRO); 
                 Cliente clie = new Cliente();
-                clie.setCpf("044.444.040-12");
+                clie.setCpf("55555555555");
                 ven.setCliente(clie);
                 Funcionario func = new Funcionario();
-                func.setCpf("055.555.050-12");
+                func.setCpf("12345678999");
                 ven.setFuncionario(func);
                 
                 /// Adicionando um produto
@@ -88,7 +88,7 @@ public class TestePersistenciaJDBC {
                 pro.setQuantidade(2F);
                 pro.setValor(12.50F);
                 Fornecedor forn = new Fornecedor();
-                forn.setCpf("033.505.023-12");
+                forn.setCpf("88888888888");
                 pro.setFornecedor(forn);
                 pro.setTipo_produto(TipoProduto.MEDICAMENTO);
                 ven.setProduto(pro);
@@ -100,7 +100,7 @@ public class TestePersistenciaJDBC {
                 pro.setNome("Raio X");
                 pro.setQuantidade(1F);
                 pro.setValor(40F);
-                forn.setCpf("033.505.023-12");
+                forn.setCpf("88888888888");
                 pro.setFornecedor(forn);
                 pro.setTipo_produto(TipoProduto.CONSULTA);
                 ven.setProduto(pro);

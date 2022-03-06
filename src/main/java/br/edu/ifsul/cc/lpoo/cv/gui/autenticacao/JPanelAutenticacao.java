@@ -47,8 +47,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         gridLayout = new GridBagLayout(); // Inicializando o gerenciador de layout.
         this.setLayout(gridLayout); // Definie o gerenciador para este painel.
         
-        lblCpf = new JLabel("CPF: ");
-        lblCpf.setFocusable(true); // Acessibilidade. 
+        lblCpf = new JLabel("CPF: "); 
         lblCpf.setToolTipText("lblCpf"); // Acessibilidade.
         posicionador = new GridBagConstraints();
         posicionador.gridy = 0; // Posição da linha (vertical).
@@ -66,8 +65,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         this.add(txfCpf, posicionador); // O add adiciona o rotulo no painel.
         
         lblSenha = new JLabel("Senha: ");
-        lblSenha.setToolTipText("lblSenha"); // Acessibilidade
-        //lblSenha.setFocusable(true); // Acessibilidade    
+        lblSenha.setToolTipText("lblSenha"); // Acessibilidade  
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Posição da linha (vertical).
         posicionador.gridx = 0;// Posição da coluna (horizontal).
@@ -85,7 +83,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         btnLogar = new JButton("Autenticar");
         btnLogar.setFocusable(true); // Acessibilidade.
         btnLogar.setToolTipText("btnLogar"); // Acessibilidade.
-        Util.considerarEnterComoTab(btnLogar);
+        Util.registraEnterNoBotao(btnLogar);
         posicionador = new GridBagConstraints();
         posicionador.gridy = 2; // Posição da linha (vertical).
         posicionador.gridx = 1; // Posição da coluna (horizontal).
@@ -100,7 +98,6 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
     }
     
     public void cleanForm(){
-        
         txfCpf.setText("");
         psfSenha.setText("");        
         
@@ -110,21 +107,6 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent e) {
-                
-        // Testa para verificar se o botão btnLogar foi clicado.
-        /*if(e.getActionCommand().equals(btnLogar.getActionCommand())) {
-
-            // Validacao do formulário.
-            if(txfCpf.getText().trim().length() > 4 && 
-            new String(psfSenha.getPassword()).trim().length() > 3 ) {
-
-                controle.autenticar(txfCpf.getText().trim(), new String(psfSenha.getPassword()).trim());
-
-            } else {
-                JOptionPane.showMessageDialog(this, "Informe os dados para CPF e Senha.", 
-                                             "Autenticação", JOptionPane.ERROR_MESSAGE);
-            }
-        }*/
         
         if(e.getActionCommand().equals(btnLogar.getActionCommand())){
             

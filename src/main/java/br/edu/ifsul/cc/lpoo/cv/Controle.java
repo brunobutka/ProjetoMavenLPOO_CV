@@ -9,6 +9,7 @@ import br.edu.ifsul.cc.lpoo.cv.gui.autenticacao.JPanelAutenticacao;
 import br.edu.ifsul.cc.lpoo.cv.gui.funcionario.JPanelFuncionario;
 import br.edu.ifsul.cc.lpoo.cv.gui.funcionario.acessibilidade.JPanelAFuncionario;
 import br.edu.ifsul.cc.lpoo.cv.gui.produto.acessibilidade.JPanelAProduto;
+import br.edu.ifsul.cc.lpoo.cv.gui.venda.acessibilidade.JPanelAVenda;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import javax.swing.JOptionPane;
@@ -29,6 +30,8 @@ public class Controle {
     private JPanelAFuncionario pnlAFuncionario;
     
     private JPanelAProduto pnlAProduto;
+    
+    private JPanelAVenda pnlAVenda;
       
     //construtor.
     public Controle(){
@@ -68,6 +71,7 @@ public class Controle {
         pnlFuncionario = new JPanelFuncionario(this);   
         pnlAFuncionario = new JPanelAFuncionario(this);
         pnlAProduto = new JPanelAProduto(this);
+        pnlAVenda = new JPanelAVenda(this);
         
         frame.addTela(pnlAutenticacao, "tela_autenticacao"); // Carta 1.
         frame.addTela(pnlHome, "tela_home"); // Carta 2.
@@ -76,6 +80,8 @@ public class Controle {
         //frame.addTela(pnlFuncionario, "tela_funcionario"); // Carta 3 - poderia adicionar opcionalmente: pnlFuncionario.
         
         frame.addTela(pnlAProduto, "tela_produto");  // Carta 4
+        
+        frame.addTela(pnlAVenda, "tela_venda");  // Carta 5
         
         frame.showTela("tela_autenticacao"); // Apresenta a carta cujo nome é "tela_autenticacao".
         
@@ -87,12 +93,12 @@ public class Controle {
         
         try {
 
-            Funcionario f =  conexaoJDBC.doLogin(cpf, senha);
+            Funcionario f =  getConexaoJDBC().doLogin(cpf, senha);
             
             if(f != null) {
 
-                JOptionPane.showMessageDialog(pnlAutenticacao, "Funcionário de CPF " + f.getCpf() /*+ " e nome "*/
-                                             + /*f.getNome() +*/ " autenticado com sucesso.", "Autenticação", 
+                JOptionPane.showMessageDialog(pnlAutenticacao, "Funcionário de CPF " + f.getCpf()
+                                             + " autenticado com sucesso.", "Autenticação", 
                                              JOptionPane.INFORMATION_MESSAGE);
 
                 frame.setJMenuBar(menuBar); // Adiciona o menu de barra no frame.
@@ -126,6 +132,11 @@ public class Controle {
         } else if(nomeTela.equals("tela_produto")){
             pnlAProduto.showTela("tela_produto_listagem");
             frame.showTela(nomeTela);
+            
+        } else if(nomeTela.equals("tela_venda")){
+            pnlAProduto.showTela("tela_venda_listagem");
+            frame.showTela(nomeTela);
+            
         }
         
     }
