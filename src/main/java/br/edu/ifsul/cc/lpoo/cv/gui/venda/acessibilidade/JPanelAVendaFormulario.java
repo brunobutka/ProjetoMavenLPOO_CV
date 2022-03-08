@@ -101,11 +101,9 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         model.addElement("Selecione"); //primeiro item        
         try {
             
-            model.addElement(Pagamento.BOLETO);
-            model.addElement(Pagamento.CARTAO_CREDITO);
-            model.addElement(Pagamento.CARTAO_DEBITO);
-            model.addElement(Pagamento.DINHEIRO);
-            model.addElement(Pagamento.PIX);
+            for(Pagamento pagamento : Pagamento.values()){
+                model.addElement(pagamento.toString());
+            }
 
         } catch (Exception ex) {
 
@@ -163,17 +161,15 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
             new String(txfSenha.getPassword()).trim().length() > 3 && 
             cbxCargo.getSelectedIndex() > 0*/){
 
-            Venda v = new Venda();
-             
-            //v.setId(Integer.parseInt(txfId.getText().trim()));    
+            Venda v = new Venda(); 
             
             v.setObservacao(txfObservacao.getText().trim());
             v.setValor_total(Float.parseFloat(txfValor_total.getText().trim()));
-            v.setPagamento((Pagamento) cbxPagamento.getSelectedItem());
+            v.setPagamento(Pagamento.getPagamento(cbxPagamento.getSelectedItem().toString()));
             v.setCliente((Cliente) cbxCliente.getSelectedItem());
             v.setFuncionario((Funcionario) cbxFuncionario.getSelectedItem());
             
-            if (venda != null) {
+            if(venda != null){
                 v.setId(venda.getId());
             }
             
@@ -187,9 +183,9 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         if(v == null){//se o parametro estiver nullo, limpa o formulario
             
             txfId.setEditable(false);
-            txfObservacao.setText("");
-            txfValor_total.setText("");    
-            cbxPagamento.setSelectedIndex(0);
+            txfObservacao.setText("");          
+            txfValor_total.setText("");  
+            cbxPagamento.setSelectedIndex(0); 
             cbxFuncionario.setSelectedIndex(0);
             cbxCliente.setSelectedIndex(0);
             
@@ -201,12 +197,9 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
             
             txfId.setEditable(false);
             txfId.setText(venda.getId().toString());
-            
             txfObservacao.setText(venda.getObservacao());
-            
             txfValor_total.setText(venda.getValor_total().toString());
-            
-            cbxPagamento.getModel().setSelectedItem(venda.getPagamento());
+            cbxPagamento.getModel().setSelectedItem(venda.getPagamento().toString());
             cbxFuncionario.getModel().setSelectedItem(venda.getFuncionario());
             cbxCliente.getModel().setSelectedItem(venda.getCliente());
         }
