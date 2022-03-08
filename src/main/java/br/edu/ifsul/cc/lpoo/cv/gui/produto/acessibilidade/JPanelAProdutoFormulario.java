@@ -88,20 +88,15 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     }
     
     public void populaComboTipoProduto(){
-        
         cbxTipo_produto.removeAllItems();//zera o combo
 
         DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxTipo_produto.getModel();
 
         model.addElement("Selecione"); //primeiro item        
         try {
-            
-            model.addElement(TipoProduto.ATENDIMENTO_AMBULATORIAL);
-            model.addElement(TipoProduto.CONSULTA);
-            model.addElement(TipoProduto.CONSULTA_REVISAO);
-            model.addElement(TipoProduto.MEDICAMENTO);
-            model.addElement(TipoProduto.SESSAO_ADESTRAMENTO);
-            model.addElement(TipoProduto.SESSAO_FISIOTERAPIA);
+            for(TipoProduto tipoProduto : TipoProduto.values()){
+                model.addElement(tipoProduto.toString());
+            }
 
         } catch (Exception ex) {
 
@@ -111,7 +106,6 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     }
     
     public void populaComboFornecedor(){
-        
         cbxFornecedor.removeAllItems();//zera o combo
 
         DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxFornecedor.getModel();
@@ -128,31 +122,31 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
 
             JOptionPane.showMessageDialog(this, "Erro ao listar Fornecedores -:"+ex.getLocalizedMessage(), "Fornecedores", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-        }  
-        
-        
+        }    
     }
     
     public Produto getProdutobyFormulario(){
         
         //validacao do formulario
-        /*(txfNome.getText().trim().length() > 2 
-            new String(txfSenha.getPassword()).trim().length() > 3 && 
-            cbxCargo.getSelectedIndex() > 0)*/
-         if(txfNome.getText().trim().length() > 1 && cbxTipo_produto.getSelectedIndex() > 0 &&
+         if(txfNome.getText().trim().length() > 1 &&  cbxTipo_produto.getSelectedIndex() > 0 &&
             cbxFornecedor.getSelectedIndex() > 0){
 
-            Produto p = new Produto();
-             
-            p.setId(Integer.parseInt(txfId.getText().trim()));            
+            Produto p = new Produto();         
             
             p.setNome(txfNome.getText().trim());
-            p.setQuantidade(Float.parseFloat(txfQuantidade.getText().trim()));
-            p.setValor(Float.parseFloat(txfValor.getText().trim()));
+            try{
+                p.setQuantidade(Float.parseFloat(txfQuantidade.getText().trim()));
+                p.setValor(Float.parseFloat(txfValor.getText().trim()));
+            }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Coloque numeros em Quantidade e Valor ", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
             
-            p.setTipo_produto((TipoProduto) cbxTipo_produto.getSelectedItem());
-            
+            p.setTipo_produto(TipoProduto.getTipoProduto(cbxTipo_produto.getSelectedItem().toString()));
             p.setFornecedor((Fornecedor) cbxFornecedor.getSelectedItem());
+            
+            if(produto != null){
+                p.setId(produto.getId());
+            }
             
             return p;
          }
@@ -160,21 +154,13 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     }
     
     public void setProdutoFormulario(Produto p){
-
         if(p == null){//se o parametro estiver nullo, limpa o formulario
-            
             txfId.setEditable(false);
             txfId.setText("");
-            
-            txfNome.setEditable(true);
-            txfNome.setText("");
-                
-            txfQuantidade.setText("");
-            
-            txfValor.setText("");
-            
-            cbxTipo_produto.setSelectedIndex(0);
-            
+            txfNome.setText(""); 
+            txfQuantidade.setText("");         
+            txfValor.setText(""); 
+            cbxTipo_produto.setSelectedIndex(0);           
             cbxFornecedor.setSelectedIndex(0);
             
             produto = null;
@@ -185,14 +171,10 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             
             txfId.setEditable(false);
             txfId.setText(produto.getId().toString());
-            
-            txfNome.setEditable(false);
             txfNome.setText(produto.getNome());
-            
             txfQuantidade.setText(produto.getQuantidade().toString());
             txfValor.setText(produto.getValor().toString());
-            
-            cbxTipo_produto.getModel().setSelectedItem(produto.getTipo_produto());
+            cbxTipo_produto.getModel().setSelectedItem(produto.getTipo_produto().toString());
             cbxFornecedor.getModel().setSelectedItem(produto.getFornecedor());
         }
 
@@ -210,6 +192,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         gridBagLayoutDadosCadastrais = new GridBagLayout();
         pnlDadosCadastrais.setLayout(gridBagLayoutDadosCadastrais);
         
+        // ------------------------------------ ID --------------------------------------
         lblId = new JLabel("ID: ");
         GridBagConstraints posicionador = new GridBagConstraints();
         posicionador.gridy = 0; // Posição da linha (vertical).
@@ -224,6 +207,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfId, posicionador); // O add adiciona o rótulo no painel.
         
+        // ------------------------------------ NOME --------------------------------------
         lblNome = new JLabel("Nome: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Posição da linha (vertical).
@@ -238,6 +222,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfNome, posicionador); // O add adiciona o rótulo no painel.
         
+        // ------------------------------------ QUANTIDADE --------------------------------------
         lblQuantidade = new JLabel("Quantidade: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 2; // Posição da linha (vertical).
@@ -252,6 +237,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfQuantidade, posicionador); // O add adiciona o rótulo no painel.
         
+        // ------------------------------------ VALOR --------------------------------------
         lblValor = new JLabel("Valor: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 3; // Posição da linha (vertical).
@@ -266,6 +252,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfValor, posicionador); // O add adiciona o rótulo no painel.
         
+        // ------------------------------------ TIPO PRODUTO --------------------------------------
         lblTipo_produto = new JLabel("Tipo Produto:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 4;//policao da linha (vertical)
@@ -280,6 +267,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
         pnlDadosCadastrais.add(cbxTipo_produto, posicionador);//o add adiciona o rotulo no painel
         
+        // ------------------------------------ FORNECEDOR --------------------------------------
         lblFornecedor = new JLabel("Fornecedor:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 5;//policao da linha (vertical)
@@ -295,12 +283,6 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         pnlDadosCadastrais.add(cbxFornecedor, posicionador);//o add adiciona o rotulo no painel
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
-        
-        pnlDadosVendas = new JPanel();
-        tbpAbas.addTab("Vendas", pnlDadosVendas);
-        
-        pnlDadosProdutos = new JPanel();
-        tbpAbas.addTab("Produtos", pnlDadosProdutos);
         
         pnlSul = new JPanel();
         pnlSul.setLayout(new FlowLayout());
@@ -336,8 +318,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             
             if(p != null) {
 
-                try {
-                    
+                try {   
                     pnlAProduto.getControle().getConexaoJDBC().persist(p);
                     
                     JOptionPane.showMessageDialog(this, "Produto armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);

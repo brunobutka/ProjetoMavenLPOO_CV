@@ -50,7 +50,6 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
     private SimpleDateFormat format;
     
     public JPanelAVendaListagem(JPanelAVenda pnlAVenda, Controle controle) {
-        
         this.pnlAVenda = pnlAVenda;
         this.controle = controle;
         
@@ -58,16 +57,14 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
     }
     
     public void populaTable() {
-        
         DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da tabela.
 
         model.setRowCount(0); // Elimina as linhas existentes (reset na tabela).
 
         try {
-
             List<Venda> listVendas = controle.getConexaoJDBC().listVendas();
-            for(Venda v : listVendas){
-                                
+            
+            for(Venda v : listVendas){               
                 model.addRow(new Object[]{v, v.getObservacao(), v.getFuncionario()});
             }
 
@@ -75,8 +72,7 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
 
             JOptionPane.showMessageDialog(this, "Erro ao listar vendas: " + ex.getLocalizedMessage(), "Vendas", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-        }        
-        
+        }          
     }
     
     private void initComponents(){
@@ -163,20 +159,14 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-    
         if(arg0.getActionCommand().equals(btnNovo.getActionCommand())) {
-            
             pnlAVenda.showTela("tela_venda_formulario");
-            
             pnlAVenda.getFormulario().setVendaFormulario(null); // Limpando o formulário.
             
-            
         } else if(arg0.getActionCommand().equals(btnAlterar.getActionCommand())) {
-            
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
             if(indice > -1) {
-
-                DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
+                DefaultTableModel model = (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
 
                 Vector linha = (Vector) model.getDataVector().get(indice); // Recupera o vetor de dados da linha selecionada.
 
@@ -184,17 +174,14 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
 
                 pnlAVenda.showTela("tela_venda_formulario");
                 pnlAVenda.getFormulario().setVendaFormulario(v); 
-            
             } else {
                   JOptionPane.showMessageDialog(this, "Selecione uma linha para editar.", "Edição", JOptionPane.INFORMATION_MESSAGE);
             }
                 
         } else if(arg0.getActionCommand().equals(btnRemover.getActionCommand())) {           
-            
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
             if(indice > -1){
-
-                DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
+                DefaultTableModel model = (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
 
                 Vector linha = (Vector) model.getDataVector().get(indice); // Recupera o vetor de dados da linha selecionada.
 
@@ -202,9 +189,8 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
 
                 try {
                     pnlAVenda.getControle().getConexaoJDBC().remover(v);
-                    JOptionPane.showMessageDialog(this, "Venda removida.", "Venda", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Venda removida.", "Deletar", JOptionPane.INFORMATION_MESSAGE);
                     populaTable(); // Refresh na tabela.
-
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, "Erro ao remover Venda: " + ex.getLocalizedMessage(), "Vendas", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();

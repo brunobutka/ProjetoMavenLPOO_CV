@@ -57,21 +57,16 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
     }
     
     public void populaTable() {
-        
         DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da tabela.
-
         model.setRowCount(0); // Elimina as linhas existentes (reset na tabela).
-
+        
         try {
-
             List<Produto> listProdutos = controle.getConexaoJDBC().listProdutos();
-            for(Produto p : listProdutos){
-                                
+            
+            for(Produto p : listProdutos){                          
                 model.addRow(new Object[]{p, p.getNome(), p.getFornecedor()});
             }
-
         } catch (Exception ex) {
-
             JOptionPane.showMessageDialog(this, "Erro ao listar produtos: " + ex.getLocalizedMessage(), "Produtos", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }        
@@ -162,21 +157,15 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-    
-        if(arg0.getActionCommand().equals(btnNovo.getActionCommand())) {
-            
+        if(arg0.getActionCommand().equals(btnNovo.getActionCommand())) {        
             pnlAProduto.showTela("tela_produto_formulario");
-            
             pnlAProduto.getFormulario().setProdutoFormulario(null); // Limpando o formulário.
             
-            
         } else if(arg0.getActionCommand().equals(btnAlterar.getActionCommand())) {
-            
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
             if(indice > -1) {
-
                 DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
-
+                
                 Vector linha = (Vector) model.getDataVector().get(indice); // Recupera o vetor de dados da linha selecionada.
 
                 Produto p = (Produto) linha.get(0); // model.addRow(new Object[]{u, u.getNome(), ...
@@ -187,14 +176,13 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
             } else {
                   JOptionPane.showMessageDialog(this, "Selecione uma linha para editar.", "Edição", JOptionPane.INFORMATION_MESSAGE);
             }
-                
+          
         } else if(arg0.getActionCommand().equals(btnRemover.getActionCommand())) {           
             
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
             if(indice > -1){
-
                 DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
-
+                
                 Vector linha = (Vector) model.getDataVector().get(indice); // Recupera o vetor de dados da linha selecionada.
 
                 Produto p = (Produto) linha.get(0); // model.addRow(new Object[]{u, u.getNome(), ...
