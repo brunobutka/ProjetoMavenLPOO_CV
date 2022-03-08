@@ -49,7 +49,6 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
     private SimpleDateFormat format;
     
     public JPanelAProdutoListagem(JPanelAProduto pnlAProduto, Controle controle) {
-        
         this.pnlAProduto = pnlAProduto;
         this.controle = controle;
         

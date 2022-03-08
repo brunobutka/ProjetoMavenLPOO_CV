@@ -18,13 +18,11 @@ public class JPanelAVenda extends JPanel {
     private JPanelAVendaListagem listagem;
     
     public JPanelAVenda(Controle controle) {
-        
         this.controle = controle;
         initComponents();
     }
     
     private void initComponents() {
-        
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);
         
@@ -37,8 +35,7 @@ public class JPanelAVenda extends JPanel {
         cardLayout.show(this, "tela_venda_listagem");
     }
     
-    public void showTela(String nomeTela) {
-        
+    public void showTela(String nomeTela) {  
         if(nomeTela.equals("tela_venda_listagem")) {
             
             listagem.populaTable();

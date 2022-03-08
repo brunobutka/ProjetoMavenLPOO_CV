@@ -165,13 +165,17 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
 
             Venda v = new Venda();
              
-            v.setId(Integer.parseInt(txfId.getText().trim()));    
+            //v.setId(Integer.parseInt(txfId.getText().trim()));    
             
             v.setObservacao(txfObservacao.getText().trim());
             v.setValor_total(Float.parseFloat(txfValor_total.getText().trim()));
             v.setPagamento((Pagamento) cbxPagamento.getSelectedItem());
             v.setCliente((Cliente) cbxCliente.getSelectedItem());
             v.setFuncionario((Funcionario) cbxFuncionario.getSelectedItem());
+            
+            if (venda != null) {
+                v.setId(venda.getId());
+            }
             
             return v;
          }
@@ -183,15 +187,10 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         if(v == null){//se o parametro estiver nullo, limpa o formulario
             
             txfId.setEditable(false);
-            
             txfObservacao.setText("");
-                
-            txfValor_total.setText("");
-            
+            txfValor_total.setText("");    
             cbxPagamento.setSelectedIndex(0);
-            
             cbxFuncionario.setSelectedIndex(0);
-            
             cbxCliente.setSelectedIndex(0);
             
             venda = null;
@@ -203,7 +202,6 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
             txfId.setEditable(false);
             txfId.setText(venda.getId().toString());
             
-            txfObservacao.setEditable(false);
             txfObservacao.setText(venda.getObservacao());
             
             txfValor_total.setText(venda.getValor_total().toString());
