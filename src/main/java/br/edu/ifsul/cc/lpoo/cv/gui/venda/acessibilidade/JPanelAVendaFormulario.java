@@ -273,7 +273,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         posicionador = new GridBagConstraints();
         posicionador.gridy = 3;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         pnlDadosCadastrais.add(lblPagamento, posicionador);//o add adiciona o rotulo no painel  
                 
         cbxPagamento = new JComboBox();
@@ -287,7 +287,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         posicionador = new GridBagConstraints();
         posicionador.gridy = 4;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         pnlDadosCadastrais.add(lblFuncionario, posicionador);//o add adiciona o rotulo no painel  
                 
         cbxFuncionario = new JComboBox();
@@ -301,7 +301,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         posicionador = new GridBagConstraints();
         posicionador.gridy = 5;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         pnlDadosCadastrais.add(lblCliente, posicionador);//o add adiciona o rotulo no painel  
                 
         cbxCliente = new JComboBox();

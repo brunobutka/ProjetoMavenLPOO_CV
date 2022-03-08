@@ -148,7 +148,7 @@ public class JPanelAFuncionarioListagem extends JPanel implements ActionListener
         btnRemover = new JButton("Remover");
         btnRemover.addActionListener(this);
         btnRemover.setFocusable(true); // Acessibilidade.
-        btnRemover.setToolTipText("btnRemvoer"); // Acessibilidade.
+        btnRemover.setToolTipText("btnRemovoer"); // Acessibilidade.
         btnRemover.setActionCommand("botao_remover");
         
         pnlSul.add(btnRemover); // Adiciona o botão na fila organizada pelo flowlayout.

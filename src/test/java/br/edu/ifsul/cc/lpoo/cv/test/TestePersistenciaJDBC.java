@@ -372,6 +372,27 @@ public class TestePersistenciaJDBC {
                 f.setCnpj("33444555666677");
                 f.setIe("333");
                 
+                f = new Fornecedor();
+                
+                f.setCpf("77777777777");
+                f.setRg("7777777777");
+                f.setNome("Antonio");
+                f.setSenha("12345");
+                f.setNumero_celular("54991548777");
+                f.setEmail("Antonio@gmail.com");
+                
+                data_convertida_2.set(Calendar.YEAR, 2002);
+                data_convertida_2.set(Calendar.MONTH, 1 + 1);
+                data_convertida_2.set(Calendar.DAY_OF_MONTH, 12);
+                f.setData_nascimento(data_convertida_2);
+                
+                f.setCep("99900000");
+                f.setEndereco("Rua 1");
+                f.setComplemento("Casa");
+                //f.setTipo("Func");
+                f.setCnpj("66888111333377");
+                f.setIe("777");
+                
                 persistencia.persist(f); // INSERT na tabela.
                 System.out.println("Cadastrou o fornecedor de CPF " + f.getCpf() + ".\n");
             }

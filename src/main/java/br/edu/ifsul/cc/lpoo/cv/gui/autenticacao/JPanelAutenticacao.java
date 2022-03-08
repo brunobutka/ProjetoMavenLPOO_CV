@@ -52,6 +52,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         posicionador = new GridBagConstraints();
         posicionador.gridy = 0; // Posição da linha (vertical).
         posicionador.gridx = 0; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         this.add(lblCpf, posicionador); // O add adiciona o rotulo no painel.
         
         txfCpf = new JTextField(10);
@@ -62,6 +63,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         posicionador.gridy = 0; // Posição da linha (vertical).
         posicionador.gridx = 1; // Posição da coluna (horizontal).
         defaultBorder = txfCpf.getBorder();
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a direita.
         this.add(txfCpf, posicionador); // O add adiciona o rotulo no painel.
         
         lblSenha = new JLabel("Senha: ");
@@ -69,6 +71,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Posição da linha (vertical).
         posicionador.gridx = 0;// Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         this.add(lblSenha, posicionador); // O add adiciona o rotulo no painel.
         
         psfSenha = new JPasswordField(10);
@@ -78,6 +81,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Posição da linha (vertical).
         posicionador.gridx = 1; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a direita.
         this.add(psfSenha, posicionador); // O add adiciona o rotulo no painel.
 
         btnLogar = new JButton("Autenticar");

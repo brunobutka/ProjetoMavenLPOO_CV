@@ -337,6 +337,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador = new GridBagConstraints();
         posicionador.gridy = 4; // Polição da linha (vertical).
         posicionador.gridx = 1; // Posição da coluna (horizontal).
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_START; // Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfDataCadastro, posicionador); // O add adiciona o rotulo no painel.
         
         lblNumero_celular = new JLabel("Número de Celular: ");

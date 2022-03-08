@@ -154,7 +154,6 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             
             p.setFornecedor((Fornecedor) cbxFornecedor.getSelectedItem());
             
-            
             return p;
          }
          return null;
@@ -271,7 +270,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador = new GridBagConstraints();
         posicionador.gridy = 4;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         pnlDadosCadastrais.add(lblTipo_produto, posicionador);//o add adiciona o rotulo no painel  
                 
         cbxTipo_produto = new JComboBox();
@@ -285,7 +284,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         posicionador = new GridBagConstraints();
         posicionador.gridy = 5;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
-        posicionador.anchor = java.awt.GridBagConstraints.LINE_START;//ancoragem a esquerda.
+        posicionador.anchor = java.awt.GridBagConstraints.LINE_END; //Ancoragem a direita.
         pnlDadosCadastrais.add(lblFornecedor, posicionador);//o add adiciona o rotulo no painel  
                 
         cbxFornecedor = new JComboBox();
