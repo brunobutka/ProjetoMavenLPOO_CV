@@ -424,6 +424,8 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 PreparedStatement ps2 = this.con.prepareStatement("delete from tb_venda_produto where venda_id = ?");
                 ps2.setInt(1, v.getId());
                 
+                ps2.execute();
+                
                 if(v.getProdutos() != null && !v.getProdutos().isEmpty()){
                     for(Produto p : v.getProdutos()){
                         PreparedStatement ps3 = this.con.prepareStatement("insert into tb_venda_produto "

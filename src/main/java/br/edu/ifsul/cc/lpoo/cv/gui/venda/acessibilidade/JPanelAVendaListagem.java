@@ -47,6 +47,11 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
     private JButton btnAlterar;
     private JButton btnRemover;
     
+    
+    //---------------------------
+    
+    
+    
     private SimpleDateFormat format;
     
     public JPanelAVendaListagem(JPanelAVenda pnlAVenda, Controle controle) {
@@ -58,18 +63,15 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
     
     public void populaTable() {
         DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da tabela.
-
         model.setRowCount(0); // Elimina as linhas existentes (reset na tabela).
-
+        
         try {
             List<Venda> listVendas = controle.getConexaoJDBC().listVendas();
             
-            for(Venda v : listVendas){               
+            for(Venda v : listVendas){                          
                 model.addRow(new Object[]{v, v.getObservacao(), v.getFuncionario()});
             }
-
         } catch (Exception ex) {
-
             JOptionPane.showMessageDialog(this, "Erro ao listar vendas: " + ex.getLocalizedMessage(), "Vendas", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
         }          
@@ -159,12 +161,16 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
+        
         if(arg0.getActionCommand().equals(btnNovo.getActionCommand())) {
+            
             pnlAVenda.showTela("tela_venda_formulario");
             pnlAVenda.getFormulario().setVendaFormulario(null); // Limpando o formulário.
             
         } else if(arg0.getActionCommand().equals(btnAlterar.getActionCommand())) {
+            
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
+            
             if(indice > -1) {
                 DefaultTableModel model = (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
 
@@ -178,8 +184,10 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
                   JOptionPane.showMessageDialog(this, "Selecione uma linha para editar.", "Edição", JOptionPane.INFORMATION_MESSAGE);
             }
                 
-        } else if(arg0.getActionCommand().equals(btnRemover.getActionCommand())) {           
+        } else if(arg0.getActionCommand().equals(btnRemover.getActionCommand())) {      
+            
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
+            
             if(indice > -1){
                 DefaultTableModel model = (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
 

@@ -29,7 +29,7 @@ public class JPanelAVenda extends JPanel {
         formulario = new JPanelAVendaFormulario(this, controle);
         listagem = new JPanelAVendaListagem(this, controle);
         
-        this.add(formulario, "tela_venda_formulario");
+        this.add(getFormulario(), "tela_venda_formulario");
         this.add(listagem, "tela_venda_listagem");
         
         cardLayout.show(this, "tela_venda_listagem");
@@ -45,6 +45,7 @@ public class JPanelAVenda extends JPanel {
             getFormulario().populaComboPagamento();
             getFormulario().populaComboFuncionario();
             getFormulario().populaComboCliente();
+            getFormulario().populaComboProduto();
         }
         
         cardLayout.show(this, nomeTela);

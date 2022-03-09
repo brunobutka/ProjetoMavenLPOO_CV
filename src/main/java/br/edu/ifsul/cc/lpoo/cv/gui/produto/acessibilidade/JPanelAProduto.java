@@ -29,7 +29,7 @@ public class JPanelAProduto extends JPanel {
         formulario = new JPanelAProdutoFormulario(this, controle);
         listagem = new JPanelAProdutoListagem(this, controle);
         
-        this.add(formulario, "tela_produto_formulario");
+        this.add(getFormulario(), "tela_produto_formulario");
         this.add(listagem, "tela_produto_listagem");
         
         cardLayout.show(this, "tela_produto_listagem");

@@ -68,8 +68,7 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao listar produtos: " + ex.getLocalizedMessage(), "Produtos", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-        }        
-        
+        }          
     }
     
     private void initComponents(){
@@ -156,12 +155,16 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-        if(arg0.getActionCommand().equals(btnNovo.getActionCommand())) {        
+        
+        if(arg0.getActionCommand().equals(btnNovo.getActionCommand())) {   
+            
             pnlAProduto.showTela("tela_produto_formulario");
             pnlAProduto.getFormulario().setProdutoFormulario(null); // Limpando o formulário.
             
         } else if(arg0.getActionCommand().equals(btnAlterar.getActionCommand())) {
+            
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
+            
             if(indice > -1) {
                 DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.
                 

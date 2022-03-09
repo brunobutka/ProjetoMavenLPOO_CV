@@ -134,7 +134,8 @@ public class Controle {
             frame.showTela(nomeTela);
             
         } else if(nomeTela.equals("tela_venda")){
-            pnlAProduto.showTela("tela_venda_listagem");
+            
+            pnlAVenda.showTela("tela_venda_listagem");
             frame.showTela(nomeTela);
             
         }
