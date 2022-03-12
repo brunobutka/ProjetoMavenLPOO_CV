@@ -6,12 +6,10 @@ import br.edu.ifsul.cc.lpoo.cv.gui.JFramePrincipal;
 import br.edu.ifsul.cc.lpoo.cv.gui.JMenuBarHome;
 import br.edu.ifsul.cc.lpoo.cv.gui.JPanelHome;
 import br.edu.ifsul.cc.lpoo.cv.gui.autenticacao.JPanelAutenticacao;
-import br.edu.ifsul.cc.lpoo.cv.gui.funcionario.JPanelFuncionario;
 import br.edu.ifsul.cc.lpoo.cv.gui.funcionario.acessibilidade.JPanelAFuncionario;
 import br.edu.ifsul.cc.lpoo.cv.gui.produto.acessibilidade.JPanelAProduto;
 import br.edu.ifsul.cc.lpoo.cv.gui.venda.acessibilidade.JPanelAVenda;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
-import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import javax.swing.JOptionPane;
 
 /**
@@ -26,49 +24,39 @@ public class Controle {
     private JMenuBarHome menuBar; // Menu principal.
     private JPanelHome pnlHome; // Painel de boas vindas (home).
     
-    private JPanelFuncionario pnlFuncionario;
     private JPanelAFuncionario pnlAFuncionario;
-    
     private JPanelAProduto pnlAProduto;
-    
     private JPanelAVenda pnlAVenda;
       
-    //construtor.
+    // Construtor.
     public Controle(){
                         
     }
     
     public boolean conectarBD() throws Exception {
+        conexaoJDBC = new PersistenciaJDBC();
 
-            conexaoJDBC = new PersistenciaJDBC();
+        if(getConexaoJDBC() != null){
+            return getConexaoJDBC().conexaoAberta();
+        }
 
-            if(getConexaoJDBC() != null){
-
-                        return getConexaoJDBC().conexaoAberta();
-            }
-
-            return false;
+        return false;
     }
     
     public void fecharBD(){
-
         System.out.println("Fechando conexao com o Banco de Dados");
+        
         getConexaoJDBC().fecharConexao();
-
     }
     
     public void initComponents(){
-    
-        
-        //inicia a interface gráfica.
-        //"caminho feliz" : passo 5
+        // Inicia a interface gráfica.
         
         frame = new JFramePrincipal();
         pnlAutenticacao = new JPanelAutenticacao(this);
         menuBar = new JMenuBarHome(this);
         pnlHome = new JPanelHome(this);
-        
-        pnlFuncionario = new JPanelFuncionario(this);   
+          
         pnlAFuncionario = new JPanelAFuncionario(this);
         pnlAProduto = new JPanelAProduto(this);
         pnlAVenda = new JPanelAVenda(this);
@@ -77,7 +65,6 @@ public class Controle {
         frame.addTela(pnlHome, "tela_home"); // Carta 2.
         
         frame.addTela(pnlAFuncionario, "tela_funcionario");  // Carta 3 - poderia adicionar opcionalmente: pnlFuncionario.
-        //frame.addTela(pnlFuncionario, "tela_funcionario"); // Carta 3 - poderia adicionar opcionalmente: pnlFuncionario.
         
         frame.addTela(pnlAProduto, "tela_produto");  // Carta 4
         
@@ -85,18 +72,14 @@ public class Controle {
         
         frame.showTela("tela_autenticacao"); // Apresenta a carta cujo nome é "tela_autenticacao".
         
-        frame.setVisible(true); // torna visível o jframe
-                
+        frame.setVisible(true); // torna visível o jframe        
     }
     
     public void autenticar(String cpf, String senha) {
-        
         try {
-
             Funcionario f =  getConexaoJDBC().doLogin(cpf, senha);
             
             if(f != null) {
-
                 JOptionPane.showMessageDialog(pnlAutenticacao, "Funcionário de CPF " + f.getCpf()
                                              + " autenticado com sucesso.", "Autenticação", 
                                              JOptionPane.INFORMATION_MESSAGE);
@@ -112,20 +95,16 @@ public class Controle {
         } catch(Exception e) {
             JOptionPane.showMessageDialog(pnlAutenticacao, "Erro ao executar a autenticação no Banco de Dados.", 
                                          "Autenticação", JOptionPane.ERROR_MESSAGE);
-        }
-        
+        } 
     }
     
-    public void showTela(String nomeTela) {
-        
-        if(nomeTela.equals("tela_autenticacao")){
-                        
+    public void showTela(String nomeTela) { 
+        if(nomeTela.equals("tela_autenticacao")){          
             pnlAutenticacao.cleanForm();            
             frame.showTela(nomeTela);            
             pnlAutenticacao.requestFocus();
             
         } else if(nomeTela.equals("tela_funcionario")){
-            
             pnlAFuncionario.showTela("tela_funcionario_listagem");
             frame.showTela(nomeTela); 
             
@@ -134,12 +113,10 @@ public class Controle {
             frame.showTela(nomeTela);
             
         } else if(nomeTela.equals("tela_venda")){
-            
             pnlAVenda.showTela("tela_venda_listagem");
             frame.showTela(nomeTela);
             
-        }
-        
+        }  
     }
     
     /**
@@ -148,6 +125,4 @@ public class Controle {
     public PersistenciaJDBC getConexaoJDBC() {
         return conexaoJDBC;
     }
-    
-    
 }

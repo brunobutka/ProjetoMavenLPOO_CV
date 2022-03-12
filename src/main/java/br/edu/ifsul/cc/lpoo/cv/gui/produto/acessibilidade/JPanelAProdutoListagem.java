@@ -8,7 +8,6 @@ import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -26,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
  */
 
 public class JPanelAProdutoListagem extends JPanel implements ActionListener {
-    
     private JPanelAProduto pnlAProduto;
     private Controle controle;
     
@@ -46,7 +44,6 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
     private JButton btnAlterar;
     private JButton btnRemover;
     
-    private SimpleDateFormat format;
     
     public JPanelAProdutoListagem(JPanelAProduto pnlAProduto, Controle controle) {
         this.pnlAProduto = pnlAProduto;
@@ -66,13 +63,14 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
                 model.addRow(new Object[]{p, p.getNome(), p.getFornecedor()});
             }
         } catch (Exception ex) {
+            
             JOptionPane.showMessageDialog(this, "Erro ao listar produtos: " + ex.getLocalizedMessage(), "Produtos", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
+            
         }          
     }
     
     private void initComponents(){
-        
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout); // Seta o gerenciado border para este painel.
         
@@ -148,8 +146,6 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
         pnlSul.add(btnRemover); // Adiciona o botão na fila organizada pelo flowlayout.
         
         this.add(pnlSul, BorderLayout.SOUTH); // Adiciona o painel na posição norte.
-        
-        format = new SimpleDateFormat("dd/MM/yyyy");
         
     }
 

@@ -11,25 +11,15 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JTabbedPane;
 import javax.swing.JTextField;
-import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -37,8 +27,6 @@ import javax.swing.text.MaskFormatter;
  */
 
 public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
-    
-    
     private JPanelAProduto pnlAProduto;
     private Controle controle;
     
@@ -68,18 +56,12 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     private JComboBox cbxFornecedor;
     
     private Produto produto;
-    private SimpleDateFormat format;
     
     private JPanel pnlSul;
     private JButton btnGravar;
     private JButton btnCancelar;
     
-    private JPanel pnlDadosVendas;
-    private JPanel pnlDadosProdutos;
-
-    
     public JPanelAProdutoFormulario(JPanelAProduto pnlAProduto, Controle controle) {
-        
         this.pnlAProduto = pnlAProduto;
         this.controle = controle;
         
@@ -112,7 +94,6 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
 
         model.addElement("Selecione"); //primeiro item        
         try {
-
             List<Fornecedor> listFornecedores = controle.getConexaoJDBC().listFornecedores();
             for(Fornecedor f : listFornecedores){
                 model.addElement(f);
@@ -122,11 +103,11 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
 
             JOptionPane.showMessageDialog(this, "Erro ao listar Fornecedores -:"+ex.getLocalizedMessage(), "Fornecedores", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
+            
         }    
     }
     
     public Produto getProdutobyFormulario(){
-        
         //validacao do formulario
          if(txfNome.getText().trim().length() > 1 &&  cbxTipo_produto.getSelectedIndex() > 0 &&
             cbxFornecedor.getSelectedIndex() > 0){
@@ -137,6 +118,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             try{
                 p.setQuantidade(Float.parseFloat(txfQuantidade.getText().trim()));
                 p.setValor(Float.parseFloat(txfValor.getText().trim()));
+                
             }catch (NumberFormatException e){
                 JOptionPane.showMessageDialog(this, "Coloque numeros em Quantidade e Valor ", "Erro", JOptionPane.ERROR_MESSAGE);
             }
@@ -154,8 +136,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     }
     
     public void setProdutoFormulario(Produto p){
-        if(p == null){//se o parametro estiver nullo, limpa o formulario
-            
+        if(p == null){ // Se o parametro estiver nullo, limpa o formulario
             txfId.setEditable(false);
             txfId.setText(""); 
             txfNome.setText(""); 
@@ -167,7 +148,6 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             produto = null;
 
         }else{
-
             produto = p;
             
             txfId.setEditable(false);
@@ -182,7 +162,6 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     }
     
     private void initComponents(){
-        
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         
@@ -307,8 +286,6 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         
         this.add(pnlSul, BorderLayout.SOUTH);
         
-        format = new SimpleDateFormat("dd/MM/yyyy");
-        
     }
 
     @Override
@@ -327,8 +304,10 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
                     pnlAProduto.showTela("tela_produto_listagem");
                     
                 } catch (Exception ex) {
+                    
                     JOptionPane.showMessageDialog(this, "Erro ao salvar Produto: " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Preencha o formulário.", "Edição", JOptionPane.INFORMATION_MESSAGE);
@@ -336,6 +315,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
             
         } else if(arg0.getActionCommand().equals(btnCancelar.getActionCommand())) {
             pnlAProduto.showTela("tela_produto_listagem");
+            
         }
     }
 }

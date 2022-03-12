@@ -28,20 +28,18 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
 
     private Controle controle;
     
-    public JMenuBarHome(Controle controle) {
-        
+    public JMenuBarHome(Controle controle) {  
         this.controle = controle;        
         
         initComponents();
+        
     }
     
-    private void initComponents() {
-        
+    private void initComponents() {  
         menuArquivo = new JMenu("Arquivo");
         menuArquivo.setMnemonic(KeyEvent.VK_A); // Ativa o ALT + A para acessar esse menu - acessibilidade.
         menuArquivo.setToolTipText("Arquivo"); // Acessibilidade.
         menuArquivo.setFocusable(true); // Acessibilidade.
-
                 
         menuItemSair = new JMenuItem("Sair");
         menuItemSair.setToolTipText("Sair"); // Acessibilidade.
@@ -94,11 +92,8 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        
+    public void actionPerformed(ActionEvent e) {   
         if(e.getActionCommand().equals(menuItemSair.getActionCommand())){
-        
-            // Se o usuario clicou no menuitem Sair.
             int d = JOptionPane.showConfirmDialog(this, "Deseja realmente sair do sistema? ", "Sair", 
                                                  JOptionPane.YES_NO_OPTION);
             if(d == 0) {                
@@ -107,24 +102,17 @@ public class JMenuBarHome extends JMenuBar implements ActionListener {
             }
             
         } else if(e.getActionCommand().equals(menuItemFuncionario.getActionCommand())) {
-            
-            // Se o usuario clicou no menuitem Usuario.
             controle.showTela("tela_funcionario");
             
         } else if(e.getActionCommand().equals(menuItemProduto.getActionCommand())) {
-            
-            // Se o usuario clicou no menuitem Usuario.
             controle.showTela("tela_produto");
             
         } else if(e.getActionCommand().equals(menuItemVenda.getActionCommand())) {
-            
-            // Se o usuario clicou no menuitem Usuario.
             controle.showTela("tela_venda");
             
         } else if(e.getActionCommand().equals(menuItemLogout.getActionCommand())) {
             controle.showTela("tela_autenticacao");
+            
         }
-        
-    }
-       
+    }   
 }

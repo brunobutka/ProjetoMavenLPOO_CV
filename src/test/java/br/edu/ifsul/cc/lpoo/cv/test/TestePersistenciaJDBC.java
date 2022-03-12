@@ -6,7 +6,6 @@ import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Fornecedor;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pagamento;
-import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
 import br.edu.ifsul.cc.lpoo.cv.model.TipoProduto;
@@ -26,7 +25,7 @@ public class TestePersistenciaJDBC {
     
     //Teste principal, adiciona 2 produtos e 1 venda, faz a adição dos produtos a lista de produtos da venda.
     //Faz a o "loop" ao ficar executando o teste.
-    @Test
+    //@Test
     public void testPersistenciaVendaProduto() throws Exception {
         PersistenciaJDBC persistencia = new PersistenciaJDBC();
         
@@ -167,80 +166,6 @@ public class TestePersistenciaJDBC {
     }
     
     //@Test
-    public void testListPersistenciaPessoa() throws Exception {
-        
-        DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
-        
-        PersistenciaJDBC persistencia = new PersistenciaJDBC();
-        if(persistencia.conexaoAberta()) {
-        
-            List<Pessoa> lista = persistencia.listPessoas();
-            
-            if(!lista.isEmpty()) {
-            
-                for(Pessoa p : lista) {
-                
-                    System.out.println("\n-- CPF da pessoa: " + p.getCpf()
-                                       + " \n-- RG da pessoa: " +  p.getRg()
-                                       + " \n-- Nome da pessoa: " + p.getNome()
-                                       + " \n-- Senha: " + p.getSenha()
-                                       + " \n-- Número de celular: " + p.getNumero_celular()
-                                       + " \n-- Email: " + p.getEmail()
-                                       + " \n-- Data do cadastro: " + formatada.format(p.getData_cadastro().getTime())
-                                       + " \n-- Data de nascimento: " + formatada.format(p.getData_nascimento().getTime())
-                                       + " \n-- CEP: " + p.getCep()
-                                       + " \n-- Endereço: " + p.getEndereco()
-                                       + " \n-- Complemento: " + p.getComplemento() + "\n");
-                                       //+ " \n-- Tipo: " + p.getTipo()+ "\n");
-                    
-                    persistencia.remover(p);
-                    System.out.println("Pessoa de CPF " + p.getCpf() + " removida.\n");
-                
-                }
-                
-            } else {
-                
-                System.out.println("\nNão encontrou a pessoa.");
-                
-                Pessoa pes = new Pessoa();
-                
-                pes.setCpf("12345678900");
-                
-                pes.setRg("9876543210");
-                
-                pes.setNome("Pedro");
-                
-                pes.setSenha("12345");
-                
-                pes.setNumero_celular("54991745612");
-                
-                pes.setEmail("Pedro@gmail.com");
-                
-                Calendar data_convertida_2 = Calendar.getInstance();
-                data_convertida_2.set(Calendar.YEAR, 2001);
-                data_convertida_2.set(Calendar.MONTH, 6 + 1);
-                data_convertida_2.set(Calendar.DAY_OF_MONTH, 22);
-                pes.setData_nascimento(data_convertida_2);
-                
-                pes.setCep("99900000");
-                
-                pes.setEndereco("Rua Amado Batista");
-                
-                pes.setComplemento("Nenhum");
-                
-                //pes.setTipo("Forn");
-                
-                persistencia.persist(pes); // INSERT na tabela.
-                System.out.println("Cadastrou a pessoa de CPF " + pes.getCpf() + ".\n");
-            }
-        
-        } else {
-            System.out.println("Não abriu a conexão com o BD via JDBC.");
-        }        
-                       
-    }
-    
-    //@Test
     public void testListPersistenciaFuncionario() throws Exception {
         
         DateFormat formatada = new SimpleDateFormat("dd/MM/yyyy");
@@ -281,8 +206,8 @@ public class TestePersistenciaJDBC {
                 
                 Funcionario f = new Funcionario();
                 
-                f.setCpf("12345678999");
-                f.setRg("4563217890");
+                f.setCpf("11111111199");
+                f.setRg("1111111188");
                 f.setNome("Pedro");
                 f.setSenha("12345");
                 f.setNumero_celular("54991312244");
@@ -296,11 +221,11 @@ public class TestePersistenciaJDBC {
                 
                 f.setCep("99900000");
                 f.setEndereco("Rua Salgado Filho");
-                f.setComplemento("Nenhum");
+                f.setComplemento("Casa");
                 //f.setTipo("Func");
                 f.setCargo(Cargo.ATENDENTE);
-                f.setNumero_ctps("88876579");
-                f.setNumero_pis("1350098");
+                f.setNumero_ctps("11111177");
+                f.setNumero_pis("1111111166");
                 
                 persistencia.persist(f); // INSERT na tabela.
                 System.out.println("Cadastrou o Funcionário de CPF " + f.getCpf() + ".\n");
@@ -337,7 +262,6 @@ public class TestePersistenciaJDBC {
                                        + " \n-- CEP: " + f.getCep()
                                        + " \n-- Endereço: " + f.getEndereco()
                                        + " \n-- Complemento: " + f.getComplemento()
-                                       //+ " \n-- Tipo: " + f.getTipo()
                                        + " \n-- CNPJ: " + f.getCnpj()
                                        + " \n-- IE: " + f.getIe() + "\n");
                     
@@ -352,8 +276,8 @@ public class TestePersistenciaJDBC {
                 
                 Fornecedor f = new Fornecedor();
                 
-                f.setCpf("88888888888");
-                f.setRg("7777777777");
+                f.setCpf("33333333399");
+                f.setRg("3333333388");
                 f.setNome("Carlos");
                 f.setSenha("12345");
                 f.setNumero_celular("54991347611");
@@ -367,15 +291,17 @@ public class TestePersistenciaJDBC {
                 
                 f.setCep("99900000");
                 f.setEndereco("Rua São João");
-                f.setComplemento("Nenhum");
-                //f.setTipo("Func");
-                f.setCnpj("33444555666677");
-                f.setIe("333");
+                f.setComplemento("Casa");
+                f.setCnpj("33333333333377");
+                f.setIe("366");
+                
+                persistencia.persist(f);
+                System.out.println("Cadastrou o fornecedor de CPF " + f.getCpf() + ".\n");
                 
                 f = new Fornecedor();
                 
-                f.setCpf("77777777777");
-                f.setRg("7777777777");
+                f.setCpf("44444444499");
+                f.setRg("4444444488");
                 f.setNome("Antonio");
                 f.setSenha("12345");
                 f.setNumero_celular("54991548777");
@@ -387,11 +313,10 @@ public class TestePersistenciaJDBC {
                 f.setData_nascimento(data_convertida_2);
                 
                 f.setCep("99900000");
-                f.setEndereco("Rua 1");
+                f.setEndereco("Rua Dona Florinda");
                 f.setComplemento("Casa");
-                //f.setTipo("Func");
-                f.setCnpj("66888111333377");
-                f.setIe("777");
+                f.setCnpj("44444444444477");
+                f.setIe("466");
                 
                 persistencia.persist(f); // INSERT na tabela.
                 System.out.println("Cadastrou o fornecedor de CPF " + f.getCpf() + ".\n");
@@ -428,7 +353,6 @@ public class TestePersistenciaJDBC {
                                        + " \n-- CEP: " + cli.getCep()
                                        + " \n-- Endereço: " + cli.getEndereco()
                                        + " \n-- Complemento: " + cli.getComplemento()
-                                       //+ " \n-- Tipo: " + f.getTipo()
                                        + " \n-- Data da ultima visita: " + formatada.format(cli.getData_ultima_visita().getTime()) + "\n");
                     
                     persistencia.remover(cli);
@@ -442,8 +366,8 @@ public class TestePersistenciaJDBC {
                 
                 Cliente cli = new Cliente();
                 
-                cli.setCpf("55555555555");
-                cli.setRg("6666666666");
+                cli.setCpf("55555555599");
+                cli.setRg("5555555588");
                 cli.setNome("Henrique");
                 cli.setSenha("12345");
                 cli.setNumero_celular("54991007699");
@@ -457,8 +381,30 @@ public class TestePersistenciaJDBC {
                 
                 cli.setCep("99900000");
                 cli.setEndereco("Rua Santo Antonio");
-                cli.setComplemento("Nenhum");
-                //f.setTipo("Func");
+                cli.setComplemento("Casa");
+                
+                persistencia.persist(cli); // INSERT na tabela.
+                System.out.println("Cadastrou o cliente de CPF " + cli.getCpf() + ".\n");
+                
+                
+                cli = new Cliente();
+                
+                cli.setCpf("66666666699");
+                cli.setRg("6666666688");
+                cli.setNome("Jose");
+                cli.setSenha("12345");
+                cli.setNumero_celular("54991318809");
+                cli.setEmail("Jose@gmail.com");
+                
+                Calendar data_convertida_3 = Calendar.getInstance();
+                data_convertida_3.set(Calendar.YEAR, 2002);
+                data_convertida_3.set(Calendar.MONTH, 1 + 1);
+                data_convertida_3.set(Calendar.DAY_OF_MONTH, 12);
+                cli.setData_nascimento(data_convertida_3);
+                
+                cli.setCep("99900000");
+                cli.setEndereco("Rua Miguel Almeida");
+                cli.setComplemento("Casa");
                 
                 persistencia.persist(cli); // INSERT na tabela.
                 System.out.println("Cadastrou o cliente de CPF " + cli.getCpf() + ".\n");
@@ -477,7 +423,7 @@ public class TestePersistenciaJDBC {
         if(persistencia.conexaoAberta()) {
             System.out.println("\nAbriu a conexão com o BD via JDBC.\n");
             
-            Funcionario f = persistencia.doLogin("12345678999", "12345");
+            Funcionario f = persistencia.doLogin("11111111199", "12345");
 
             if(f == null) {
                 

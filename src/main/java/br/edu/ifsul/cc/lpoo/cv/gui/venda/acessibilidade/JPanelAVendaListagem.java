@@ -2,14 +2,12 @@
 package br.edu.ifsul.cc.lpoo.cv.gui.venda.acessibilidade;
 
 import br.edu.ifsul.cc.lpoo.cv.Controle;
-import br.edu.ifsul.cc.lpoo.cv.model.Produto;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Vector;
 import javax.swing.JButton;
@@ -47,12 +45,6 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
     private JButton btnAlterar;
     private JButton btnRemover;
     
-    
-    //---------------------------
-    
-    
-    
-    private SimpleDateFormat format;
     
     public JPanelAVendaListagem(JPanelAVenda pnlAVenda, Controle controle) {
         this.pnlAVenda = pnlAVenda;
@@ -154,8 +146,6 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
         pnlSul.add(btnRemover); // Adiciona o botão na fila organizada pelo flowlayout.
         
         this.add(pnlSul, BorderLayout.SOUTH); // Adiciona o painel na posição norte.
-        
-        format = new SimpleDateFormat("dd/MM/yyyy");
         
     }
 

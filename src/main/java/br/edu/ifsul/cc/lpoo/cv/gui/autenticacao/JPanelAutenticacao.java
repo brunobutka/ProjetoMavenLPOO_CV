@@ -21,8 +21,7 @@ import javax.swing.border.LineBorder;
  * @author bruno
  */
 
-public class JPanelAutenticacao extends JPanel implements ActionListener {
-    
+public class JPanelAutenticacao extends JPanel implements ActionListener { 
     private Controle controle;
     private GridBagLayout gridLayout;
     private GridBagConstraints posicionador;
@@ -36,14 +35,13 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
     
     // Construtor da classe que recebe um parametro.
     public JPanelAutenticacao(Controle controle) {
-        
         this.controle = controle;
+        
         initComponents();
         
     }
     
     private void initComponents() {
-    
         gridLayout = new GridBagLayout(); // Inicializando o gerenciador de layout.
         this.setLayout(gridLayout); // Definie o gerenciador para este painel.
         
@@ -99,6 +97,7 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
     
     public void requestFocus(){
         txfCpf.requestFocus();
+        
     }
     
     public void cleanForm(){
@@ -107,26 +106,21 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
         
         txfCpf.setBorder(defaultBorder);        
         psfSenha.setBorder(defaultBorder);
+        
     }
 
     @Override
-    public void actionPerformed(ActionEvent e) {
-        
+    public void actionPerformed(ActionEvent e) {   
         if(e.getActionCommand().equals(btnLogar.getActionCommand())){
-            
-            // Validação do formulário.
             if(txfCpf.getText().trim().length() == 11) {
-
                 txfCpf.setBorder(new LineBorder(Color.green,1));
 
                 if(new String(psfSenha.getPassword()).trim().length() > 3 ) {
-
                     psfSenha.setBorder(new LineBorder(Color.green,1));
 
                     controle.autenticar(txfCpf.getText().trim(), new String(psfSenha.getPassword()).trim());
 
                 } else {
-
                     JOptionPane.showMessageDialog(this, "Informe Senha com 4 ou mais dígitos.", "Autenticação", JOptionPane.ERROR_MESSAGE);
                     psfSenha.setBorder(new LineBorder(Color.red, 1));
                     psfSenha.requestFocus();                        
@@ -134,14 +128,10 @@ public class JPanelAutenticacao extends JPanel implements ActionListener {
                 }
 
             } else {
-
                 JOptionPane.showMessageDialog(this, "Informe CPF com 11 dígitos.", "Autenticação", JOptionPane.ERROR_MESSAGE);                    
                 txfCpf.setBorder(new LineBorder(Color.red, 1));
                 txfCpf.requestFocus();
-            }                          
-            
-        }
-        
-    }
-    
+            }                                      
+        }        
+    }   
 }

@@ -9,8 +9,7 @@ import javax.swing.JPanel;
  * @author bruno
  */
 
-public class JPanelAFuncionario extends JPanel {
-    
+public class JPanelAFuncionario extends JPanel {  
     private CardLayout cardLayout;
     private Controle controle;
     
@@ -18,13 +17,12 @@ public class JPanelAFuncionario extends JPanel {
     private JPanelAFuncionarioListagem listagem;
     
     public JPanelAFuncionario(Controle controle) {
-        
         this.controle = controle;
         initComponents();
+        
     }
     
     private void initComponents() {
-        
         cardLayout = new CardLayout();
         this.setLayout(cardLayout);
         
@@ -35,26 +33,24 @@ public class JPanelAFuncionario extends JPanel {
         this.add(listagem, "tela_funcionario_listagem");
         
         cardLayout.show(this, "tela_funcionario_listagem");
+        
     }
     
     public void showTela(String nomeTela) {
-        
         if(nomeTela.equals("tela_funcionario_listagem")) {
-            
             listagem.populaTable();
             
         } else if(nomeTela.equals("tela_funcionario_formulario")) {
-            
             getFormulario().populaComboCargo();
         }
         
         cardLayout.show(this, nomeTela);
+        
     }
 
     /**
      * @return the controle
      */
-    
     public Controle getControle() {
         return controle;
     }
@@ -65,5 +61,4 @@ public class JPanelAFuncionario extends JPanel {
     public JPanelAFuncionarioFormulario getFormulario() {
         return formulario;
     }
-    
 }

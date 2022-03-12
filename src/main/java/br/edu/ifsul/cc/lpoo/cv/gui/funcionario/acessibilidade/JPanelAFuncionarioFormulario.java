@@ -10,11 +10,9 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
@@ -35,8 +33,6 @@ import javax.swing.text.MaskFormatter;
  */
 
 public class JPanelAFuncionarioFormulario extends JPanel implements ActionListener{
-    
-    
     private JPanelAFuncionario pnlAFuncionario;
     private Controle controle;
     
@@ -96,12 +92,8 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     private JButton btnGravar;
     private JButton btnCancelar;
     
-    private JPanel pnlDadosVendas;
-    private JPanel pnlDadosProdutos;
-
     
-    public JPanelAFuncionarioFormulario(JPanelAFuncionario pnlAFuncionario, Controle controle) {
-        
+    public JPanelAFuncionarioFormulario(JPanelAFuncionario pnlAFuncionario, Controle controle) { 
         this.pnlAFuncionario = pnlAFuncionario;
         this.controle = controle;
         
@@ -110,30 +102,25 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     }
     
     public void populaComboCargo(){
-        
         cbxCargo.removeAllItems();//zera o combo
 
         DefaultComboBoxModel model =  (DefaultComboBoxModel) cbxCargo.getModel();
 
         model.addElement("Selecione"); //primeiro item        
         try {
-            
             model.addElement(Cargo.ADESTRADOR);
             model.addElement(Cargo.ATENDENTE);
             model.addElement(Cargo.AUXILIAR_VETERINARIO);
 
         } catch (Exception ex) {
-
             JOptionPane.showMessageDialog(this, "Erro ao listar Cargos -:"+ex.getLocalizedMessage(), "Cargos", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
-        }  
-        
-        
+            
+        } 
     }
     
     public Funcionario getFuncionariobyFormulario(){
-        
-        //validacao do formulario
+        // Validacao do formulario
          if(txfCpf.getText().trim().length() == 11 && txfRg.getText().trim().length() == 10 &&
             txfNome.getText().trim().length() > 3 && new String(txfSenha.getPassword()).trim().length() > 3 &&
             txfNumero_celular.getText().trim().length() > 7 && txfEmail.getText().trim().length() > 8 && 
@@ -177,8 +164,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
     }
     
     public void setFuncionarioFormulario(Funcionario f){
-
-        if(f == null){//se o parametro estiver nullo, limpa o formulario
+        if(f == null){ // Se o parametro estiver nullo, limpa o formulario
             txfCpf.setEditable(true);
             txfCpf.setText("");
             
@@ -215,7 +201,6 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             funcionario = null;
 
         }else{
-
             funcionario = f;
             
             txfCpf.setEditable(false);
@@ -254,11 +239,9 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             cbxCargo.getModel().setSelectedItem(funcionario.getCargo());
 
         }
-
     }
     
     private void initComponents(){
-        
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout);
         
@@ -269,6 +252,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         gridBagLayoutDadosCadastrais = new GridBagLayout();
         pnlDadosCadastrais.setLayout(gridBagLayoutDadosCadastrais);
         
+        // ---------------------------------- CPF ----------------------------------
         lblCpf = new JLabel("CPF: ");
         GridBagConstraints posicionador = new GridBagConstraints();
         posicionador.gridy = 0; // Posição da linha (vertical).
@@ -283,6 +267,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfCpf, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- RG ----------------------------------
         lblRg = new JLabel("Rg: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 1; // Posição da linha (vertical).
@@ -297,6 +282,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfRg, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- NOME ----------------------------------
         lblNome = new JLabel("Nome: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 2; // Posição da linha (vertical).
@@ -311,6 +297,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfNome, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- SENHA ----------------------------------
         lblSenha = new JLabel("Senha:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 3; // Polição da linha (vertical).
@@ -325,6 +312,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; // Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfSenha, posicionador); // O add adiciona o rotulo no painel.
         
+        // ---------------------------------- DATA CADASTRO ----------------------------------
         lblDataCadastro = new JLabel("Data de cadastro: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 4; // Polição da linha (vertical).
@@ -340,6 +328,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; // Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfDataCadastro, posicionador); // O add adiciona o rotulo no painel.
         
+        // ---------------------------------- NUMERO DE CELULAR ----------------------------------
         lblNumero_celular = new JLabel("Número de Celular: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 5; // Posição da linha (vertical).
@@ -354,6 +343,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfNumero_celular, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- EMAIL ----------------------------------
         lblEmail = new JLabel("Email: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 6; // Posição da linha (vertical).
@@ -368,6 +358,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfEmail, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- CEP ----------------------------------
         lblCep = new JLabel("Cep: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 7; // Posição da linha (vertical).
@@ -382,6 +373,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfCep, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- ENDERECO ----------------------------------
         lblEndereco = new JLabel("Endereço: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 8; // Posição da linha (vertical).
@@ -396,6 +388,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfEndereco, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- COMPLEMENTO ----------------------------------
         lblComplemento = new JLabel("Complemento: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 9; // Posição da linha (vertical).
@@ -410,6 +403,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfComplemento, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- NUMERO CTPS ----------------------------------
         lblNumero_ctps = new JLabel("Número CTPS: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 10; // Posição da linha (vertical).
@@ -424,6 +418,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfNumero_ctps, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- NUMERO PIS ----------------------------------
         lblNumero_pis = new JLabel("Número PIS: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 11; // Posição da linha (vertical).
@@ -438,6 +433,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfNumero_pis, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- DATA DE NASCIMENTO ----------------------------------
         lblData_nascimento = new JLabel("Data de nascimento: ");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 12; // Posição da linha (vertical).
@@ -456,6 +452,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         posicionador.anchor = java.awt.GridBagConstraints.LINE_START; //Ancoragem a esquerda.
         pnlDadosCadastrais.add(txfData_nascimento, posicionador); // O add adiciona o rótulo no painel.
         
+        // ---------------------------------- CARGO ----------------------------------
         lblCargo = new JLabel("Cargo:");
         posicionador = new GridBagConstraints();
         posicionador.gridy = 13;//policao da linha (vertical)
@@ -472,12 +469,6 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
-        
-        pnlDadosVendas = new JPanel();
-        tbpAbas.addTab("Vendas", pnlDadosVendas);
-        
-        pnlDadosProdutos = new JPanel();
-        tbpAbas.addTab("Produtos", pnlDadosProdutos);
         
         pnlSul = new JPanel();
         pnlSul.setLayout(new FlowLayout());
@@ -513,23 +504,27 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
             
             if(f != null) {
 
-                try {
-                    
+                try { 
                     pnlAFuncionario.getControle().getConexaoJDBC().persist(f);
                     
                     JOptionPane.showMessageDialog(this, "Funcionario armazenado!", "Salvar", JOptionPane.INFORMATION_MESSAGE);
             
                     pnlAFuncionario.showTela("tela_funcionario_listagem");
+                    
                 } catch (Exception ex) {
+                    
                     JOptionPane.showMessageDialog(this, "Erro ao salvar funcionário: " + ex.getMessage(), "Salvar", JOptionPane.ERROR_MESSAGE);
                     ex.printStackTrace();
+                    
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Preencha o formulário.", "Edição", JOptionPane.INFORMATION_MESSAGE);
             }
             
         } else if(arg0.getActionCommand().equals(btnCancelar.getActionCommand())) {
+            
             pnlAFuncionario.showTela("tela_funcionario_listagem");
+            
         }
     }
 }

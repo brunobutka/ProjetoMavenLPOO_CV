@@ -6,7 +6,6 @@ import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
 import br.edu.ifsul.cc.lpoo.cv.model.Fornecedor;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pagamento;
-import br.edu.ifsul.cc.lpoo.cv.model.Pessoa;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
 import br.edu.ifsul.cc.lpoo.cv.model.TipoProduto;
@@ -16,7 +15,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -147,53 +145,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                 return p;
             }
             
-        } /*else if(c == Pessoa.class) {
-            
-            // tb_pessoa
-            PreparedStatement ps = this.con.prepareStatement("select cpf, rg, nome, senha, numero_celular, "
-                                                            + "email, data_cadastro, data_nascimento, cep, "
-                                                            + "endereco, complemento, tipo from tb_pessoa "
-                                                            + "where cpf = ?");
-            ps.setInt(1, Integer.parseInt(id.toString()));
-            
-            ResultSet rs = ps.executeQuery();
-
-            if(rs.next()) {
-            
-                Pessoa pes = new Pessoa();
-                
-                pes.setCpf(rs.getString("cpf"));
-                
-                pes.setRg(rs.getString("rg"));
-                
-                pes.setNome(rs.getString("nome"));
-                
-                pes.setSenha(rs.getString("senha"));
-                
-                pes.setNumero_celular(rs.getString("numero_celular"));
-                
-                pes.setEmail(rs.getString("email"));
-                
-                Calendar data_cadastro_cal = Calendar.getInstance();
-                data_cadastro_cal.setTimeInMillis(rs.getDate("data_cadastro").getTime());
-                pes.setData_cadastro(data_cadastro_cal);
-                
-                Calendar data_nascimento_cal = Calendar.getInstance();
-                data_nascimento_cal.setTimeInMillis(rs.getDate("data_nascimento").getTime());
-                pes.setData_nascimento(data_nascimento_cal);
-                
-                pes.setCep(rs.getString("cep"));
-                
-                pes.setEndereco(rs.getString("endereco"));
-                
-                pes.setComplemento(rs.getString("complemento"));
-                
-                pes.setTipo(rs.getString("tipo"));
-                
-                return pes;                
-            }
-            
-        }*/ else if(c == Funcionario.class) {
+        } else if(c == Funcionario.class) {
             PreparedStatement ps = this.con.prepareStatement("select pes.cpf, pes.rg, pes.nome, pes.senha, "
                                                             + "pes.numero_celular, pes.email, pes.data_cadastro, "
                                                             + "pes.data_nascimento, pes.cep, pes.endereco, "
@@ -439,70 +391,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
                     }
                 } 
             }
-        } /*else if(o instanceof Pessoa) {
-            
-            Pessoa p = (Pessoa) o; // Converter o para o e que eh do tipo Pessoa.
-            
-            // Descobrir se eh para realiar INSERT ou UPDATE.
-            if(p.getData_cadastro()== null) {
-             
-                // INSERT.
-                PreparedStatement ps = this.con.prepareStatement("insert into tb_pessoa "
-                                                                + "(cpf, rg, nome, senha, numero_celular, "
-                                                                + "email, data_cadastro, data_nascimento, "
-                                                                + "cep, endereco, complemento, tipo) "
-                                                                + "values (?, ?, ?, ?, ?, ?, now(), ?, ?, ?, ?, ?)");
-                
-                ps.setString(1, p.getCpf());
-                ps.setString(2, p.getRg());
-                ps.setString(3, p.getNome());
-                ps.setString(4, p.getSenha());
-                ps.setString(5, p.getNumero_celular());
-                ps.setString(6, p.getEmail());
-                //ps.setDate(7, new java.sql.Date(p.getData_cadastro().getTimeInMillis()));
-                //ps.setString(7, "now()");
-                ps.setDate(7, new java.sql.Date(p.getData_nascimento().getTimeInMillis()));
-                ps.setString(8, p.getCep());
-                ps.setString(9, p.getEndereco());
-                ps.setString(10, p.getComplemento());
-                ps.setString(11, p.getTipo());
-                
-                ps.execute();
-                
-            } else {
-                
-                // UPDATE.
-                PreparedStatement ps = this.con.prepareStatement("update tb_pessoa set "
-                                                                + "rg = ?, "
-                                                                + "nome = ?, "
-                                                                + "senha = ?,"
-                                                                + "numero_celular = ?, "
-                                                                + "email = ?, "
-                                                                + "data_nascimento = ?, "
-                                                                + "cep = ?, "
-                                                                + "endereco = ?, "
-                                                                + "complemento = ?, "
-                                                                + "tipo = ? "
-                                                                + "where cpf = ?");
-                
-                ps.setString(1, p.getRg());
-                ps.setString(2, p.getNome());
-                ps.setString(3, p.getSenha());
-                ps.setString(4, p.getNumero_celular());
-                ps.setString(5, p.getEmail());
-                //ps.setDate(6, new java.sql.Date(p.getData_cadastro().getTimeInMillis()));
-                ps.setDate(6, new java.sql.Date(p.getData_nascimento().getTimeInMillis()));
-                ps.setString(7, p.getCep());
-                ps.setString(8, p.getEndereco());
-                ps.setString(9, p.getComplemento());
-                ps.setString(10, p.getTipo());
-                ps.setString(11, p.getCpf());
-                
-                ps.execute(); // Executa o comando.
-                
-            }
-            
-        }*/ else if(o instanceof Funcionario) {
+        } else if(o instanceof Funcionario) {
             
             Funcionario f = (Funcionario) o; // Converter o para o e que eh do tipo Pessoa.
             
@@ -773,6 +662,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             PreparedStatement ps2 = this.con.prepareStatement("delete from tb_produto where id = ?");
             ps2.setInt(1, p.getId());
             ps2.execute();
+            
         }else if(o instanceof Venda){
             Venda v = (Venda) o;
             
@@ -783,15 +673,8 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             PreparedStatement ps2 = this.con.prepareStatement("delete from tb_venda where id = ?");
             ps2.setInt(1, v.getId());
             ps2.execute();
-        } /*else if(o instanceof Pessoa) {
             
-            Pessoa p = (Pessoa) o;
-            
-            PreparedStatement ps = this.con.prepareStatement("delete from tb_pessoa where cpf = ?");
-            ps.setString(1, p.getCpf());
-            ps.execute();
-            
-        }*/ else if(o instanceof Funcionario) {
+        } else if(o instanceof Funcionario) {
             
             Funcionario f = (Funcionario) o;
             
@@ -802,6 +685,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             PreparedStatement ps2 = this.con.prepareStatement("delete from tb_pessoa where cpf = ?");
             ps2.setString(1, f.getCpf());
             ps2.execute();
+            
         } else if(o instanceof Fornecedor) {
             
             Fornecedor f = (Fornecedor) o;
@@ -813,6 +697,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             PreparedStatement ps2 = this.con.prepareStatement("delete from tb_pessoa where cpf = ?");
             ps2.setString(1, f.getCpf());
             ps2.execute();
+            
         } else if(o instanceof Cliente) {
             
             Cliente cli = (Cliente) o;
@@ -825,7 +710,6 @@ public class PersistenciaJDBC implements InterfacePersistencia {
             ps2.setString(1, cli.getCpf());
             ps2.execute();
         }
-        
     }
 
     @Override
@@ -915,64 +799,7 @@ public class PersistenciaJDBC implements InterfacePersistencia {
       
         }
         return lista;
-    }
-    
-    @Override
-    public List<Pessoa> listPessoas() throws Exception {
-                
-        List<Pessoa> lista = null;
-                        
-        PreparedStatement ps = this.con.prepareStatement("select cpf, rg, "
-                                                        + "nome, senha, numero_celular, "
-                                                        + "email, data_cadastro, data_nascimento, cep, endereco, "
-                                                        + "complemento, tipo from tb_pessoa "
-                                                        + "order by data_cadastro asc");
-        
-        ResultSet rs = ps.executeQuery(); // Executa a query.
-
-        lista = new ArrayList();
-        while(rs.next()){
-            
-            Pessoa p = new Pessoa();
-            
-            p.setCpf(rs.getString("cpf"));
-            
-            p.setRg(rs.getString("rg"));
-            
-            p.setNome(rs.getString("nome"));
-            
-            p.setSenha(rs.getString("senha"));
-            
-            p.setNumero_celular(rs.getString("numero_celular"));
-            
-            p.setEmail(rs.getString("email"));
-
-            if(rs.getDate("data_cadastro") != null){
-                Calendar dtCad = Calendar.getInstance();
-                dtCad.setTimeInMillis(rs.getDate("data_cadastro").getTime());                        
-                p.setData_cadastro(dtCad);
-            }
-
-            Calendar dtU = Calendar.getInstance();
-            dtU.setTimeInMillis(rs.getDate("data_nascimento").getTime());
-            p.setData_nascimento(dtU);
-            
-            p.setCep(rs.getString("cep"));
-            
-            p.setEndereco(rs.getString("endereco"));
-            
-            p.setComplemento(rs.getString("complemento"));
-            
-            //p.setTipo(rs.getString("tipo"));
-
-            
-            lista.add(p);
-        
-        }
-        
-        return lista;
-        
-    }
+    } 
     
     @Override
     public List<Funcionario> listFuncionarios() throws Exception {

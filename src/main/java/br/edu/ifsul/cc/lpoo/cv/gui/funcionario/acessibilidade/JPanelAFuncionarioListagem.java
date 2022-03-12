@@ -25,7 +25,6 @@ import javax.swing.table.DefaultTableModel;
  */
 
 public class JPanelAFuncionarioListagem extends JPanel implements ActionListener {
-    
     private JPanelAFuncionario pnlAFuncionario;
     private Controle controle;
     
@@ -47,25 +46,23 @@ public class JPanelAFuncionarioListagem extends JPanel implements ActionListener
     
     private SimpleDateFormat format;
     
-    public JPanelAFuncionarioListagem(JPanelAFuncionario pnlAFuncionario, Controle controle) {
-        
+    public JPanelAFuncionarioListagem(JPanelAFuncionario pnlAFuncionario, Controle controle) { 
         this.pnlAFuncionario = pnlAFuncionario;
         this.controle = controle;
         
         initComponents();
+        
     }
     
     public void populaTable() {
-        
         DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da tabela.
 
         model.setRowCount(0); // Elimina as linhas existentes (reset na tabela).
 
         try {
-
             List<Funcionario> listFuncionarios = controle.getConexaoJDBC().listFuncionarios();
-            for(Funcionario j : listFuncionarios){
-                                
+            
+            for(Funcionario j : listFuncionarios){               
                 model.addRow(new Object[]{j, format.format(j.getData_cadastro().getTime()), j.getCep()});
             }
 
@@ -73,12 +70,12 @@ public class JPanelAFuncionarioListagem extends JPanel implements ActionListener
 
             JOptionPane.showMessageDialog(this, "Erro ao listar funcionários: " + ex.getLocalizedMessage(), "Funcionários", JOptionPane.ERROR_MESSAGE);
             ex.printStackTrace();
+            
         }        
         
     }
     
     private void initComponents(){
-        
         borderLayout = new BorderLayout();
         this.setLayout(borderLayout); // Seta o gerenciado border para este painel.
         
@@ -161,17 +158,16 @@ public class JPanelAFuncionarioListagem extends JPanel implements ActionListener
 
     @Override
     public void actionPerformed(ActionEvent arg0) {
-    
         if(arg0.getActionCommand().equals(btnNovo.getActionCommand())) {
             
             pnlAFuncionario.showTela("tela_funcionario_formulario");
-            
             pnlAFuncionario.getFormulario().setFuncionarioFormulario(null); // Limpando o formulário.
             
             
         } else if(arg0.getActionCommand().equals(btnAlterar.getActionCommand())) {
             
             int indice = tblListagem.getSelectedRow(); // Recupera a linha selecionada.
+            
             if(indice > -1) {
 
                 DefaultTableModel model =  (DefaultTableModel) tblListagem.getModel(); // Recuperação do modelo da table.

@@ -19,7 +19,9 @@ public class JPanelAVenda extends JPanel {
     
     public JPanelAVenda(Controle controle) {
         this.controle = controle;
+        
         initComponents();
+        
     }
     
     private void initComponents() {
@@ -46,6 +48,7 @@ public class JPanelAVenda extends JPanel {
             getFormulario().populaComboFuncionario();
             getFormulario().populaComboCliente();
             getFormulario().populaComboProduto();
+            
         }
         
         cardLayout.show(this, nomeTela);

@@ -3,11 +3,9 @@ package br.edu.ifsul.cc.lpoo.cv.gui.venda.acessibilidade;
 
 import br.edu.ifsul.cc.lpoo.cv.Controle;
 import br.edu.ifsul.cc.lpoo.cv.model.Cliente;
-import br.edu.ifsul.cc.lpoo.cv.model.Fornecedor;
 import br.edu.ifsul.cc.lpoo.cv.model.Funcionario;
 import br.edu.ifsul.cc.lpoo.cv.model.Pagamento;
 import br.edu.ifsul.cc.lpoo.cv.model.Produto;
-import br.edu.ifsul.cc.lpoo.cv.model.TipoProduto;
 import br.edu.ifsul.cc.lpoo.cv.model.Venda;
 import java.awt.BorderLayout;
 import java.awt.FlowLayout;
@@ -16,29 +14,19 @@ import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Vector;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.JButton;
 import javax.swing.JComboBox;
-import javax.swing.JFormattedTextField;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTabbedPane;
 import javax.swing.JTable;
 import javax.swing.JTextField;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.text.MaskFormatter;
 
 /**
  *
@@ -46,8 +34,6 @@ import javax.swing.text.MaskFormatter;
  */
 
 public class JPanelAVendaFormulario extends JPanel implements ActionListener{
-    
-    
     private JPanelAVenda pnlAVenda;
     private Controle controle;
     
@@ -78,7 +64,6 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
     private JComboBox cbxFuncionario;
     
     private Venda venda;
-    private SimpleDateFormat format;
     
     private JPanel pnlSul;
     private JButton btnGravar;
@@ -459,8 +444,6 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         
         this.add(pnlSul, BorderLayout.SOUTH);
         
-        format = new SimpleDateFormat("dd/MM/yyyy");
-        
     }
 
     @Override
@@ -491,6 +474,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
             pnlAVenda.showTela("tela_venda_listagem");
             
         } else if(arg0.getActionCommand().equals(btnAdicionarProduto.getActionCommand())) {
+            
             if(cbxProduto.getSelectedIndex() > 0){
                 Produto p = (Produto) cbxProduto.getSelectedItem();
                 modeloTabelaProduto.addRow(new Object[]{p, p.getNome(), p.getFornecedor()});
@@ -504,8 +488,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
             if(indice > -1){
                 DefaultTableModel model = (DefaultTableModel) tblListagemProduto.getModel(); // Recuperação do modelo da table.
 
-                model.removeRow(tblListagemProduto.getSelectedRow());
-               
+                model.removeRow(tblListagemProduto.getSelectedRow());         
 
             } else {
                   JOptionPane.showMessageDialog(this, "Selecione uma linha para remover.", "Remoção", JOptionPane.INFORMATION_MESSAGE);

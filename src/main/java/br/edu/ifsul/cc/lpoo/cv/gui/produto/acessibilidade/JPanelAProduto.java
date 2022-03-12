@@ -1,3 +1,4 @@
+
 package br.edu.ifsul.cc.lpoo.cv.gui.produto.acessibilidade;
 
 import br.edu.ifsul.cc.lpoo.cv.Controle;
@@ -10,7 +11,6 @@ import javax.swing.JPanel;
  */
 
 public class JPanelAProduto extends JPanel {
-    
     private CardLayout cardLayout;
     private Controle controle;
     
@@ -19,7 +19,9 @@ public class JPanelAProduto extends JPanel {
     
     public JPanelAProduto(Controle controle) {
         this.controle = controle;
+        
         initComponents();
+        
     }
     
     private void initComponents() {
@@ -33,6 +35,7 @@ public class JPanelAProduto extends JPanel {
         this.add(listagem, "tela_produto_listagem");
         
         cardLayout.show(this, "tela_produto_listagem");
+        
     }
     
     public void showTela(String nomeTela) {  
