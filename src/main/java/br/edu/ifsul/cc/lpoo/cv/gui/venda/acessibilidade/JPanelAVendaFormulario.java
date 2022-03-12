@@ -89,6 +89,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
     private JTable tblListagemProduto;
     private JComboBox cbxProduto;
     private JButton btnAdicionarProduto;
+    private JButton btnRemoverProduto;
     private DefaultTableModel modeloTabelaProduto;
     private JLabel lblProdutoAdicionar;
 
@@ -201,19 +202,12 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
             v.setPagamento(Pagamento.getPagamento(cbxPagamento.getSelectedItem().toString()));
             v.setCliente((Cliente) cbxCliente.getSelectedItem());
             v.setFuncionario((Funcionario) cbxFuncionario.getSelectedItem());
-
             
-            //Vector linha = (Vector) model.getDataVector().get(indice);       
             for(Vector linha : modeloTabelaProduto.getDataVector()){
                 Produto p = (Produto) linha.get(0);
                  
-                v.setProduto(p);
-                
-                
+                v.setProduto(p); 
             }
-            //v.setProdutos(produtos);
-            
-            //v.setProdutos(produtos);
             
             if(venda != null){
                 v.setId(venda.getId());
@@ -229,6 +223,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         if(v == null){//se o parametro estiver nullo, limpa o formulario
             
             txfId.setEditable(false);
+            txfId.setText("");
             txfObservacao.setText("");          
             txfValor_total.setText("");  
             cbxPagamento.setSelectedIndex(0); 
@@ -263,7 +258,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         try {
             if(list != null){
                 for(Produto p : list){                          
-                    model.addRow(new Object[]{p, p.getNome(), p.getFornecedor().getNome()});
+                    model.addRow(new Object[]{p, p.getNome(), p.getFornecedor()});
                 }
             }
         } catch (Exception ex) {
@@ -408,6 +403,12 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         btnAdicionarProduto.setToolTipText("btnAdicionarProduto"); //acessibilidade
         btnAdicionarProduto.setActionCommand("botao_adicionar_produto_jogador");
         
+        btnRemoverProduto = new JButton("Remover");
+        btnRemoverProduto.addActionListener(this);
+        btnRemoverProduto.setFocusable(true);    //acessibilidade    
+        btnRemoverProduto.setToolTipText("btnRemoverProduto"); //acessibilidade
+        btnRemoverProduto.setActionCommand("botao_remover_produto_jogador");
+        
         posicionador = new GridBagConstraints();
         posicionador.gridy = 0;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
@@ -428,6 +429,11 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         posicionador.gridy = 2;//policao da linha (vertical)
         posicionador.gridx = 0;// posição da coluna (horizontal)
         pnlDadosProdutos.add(btnAdicionarProduto, posicionador);//o add adiciona o rotulo no painel
+        
+        posicionador = new GridBagConstraints();
+        posicionador.gridy = 3;//policao da linha (vertical)
+        posicionador.gridx = 0;// posição da coluna (horizontal)
+        pnlDadosProdutos.add(btnRemoverProduto, posicionador);//o add adiciona o rotulo no painel
         
         tbpAbas.addTab("Produtos", pnlDadosProdutos);
         
@@ -483,12 +489,28 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
             
         } else if(arg0.getActionCommand().equals(btnCancelar.getActionCommand())) {
             pnlAVenda.showTela("tela_venda_listagem");
+            
         } else if(arg0.getActionCommand().equals(btnAdicionarProduto.getActionCommand())) {
             if(cbxProduto.getSelectedIndex() > 0){
                 Produto p = (Produto) cbxProduto.getSelectedItem();
-                modeloTabelaProduto.addRow(new Object[]{p, p.getNome(), p.getFornecedor().getNome()});
+                modeloTabelaProduto.addRow(new Object[]{p, p.getNome(), p.getFornecedor()});
             } else
                 JOptionPane.showMessageDialog(this, "Selecione um Produto", "Produto", JOptionPane.INFORMATION_MESSAGE);
-        }
+            
+        } else if(arg0.getActionCommand().equals(btnRemoverProduto.getActionCommand())) {
+            
+            int indice = tblListagemProduto.getSelectedRow();
+            
+            if(indice > -1){
+                DefaultTableModel model = (DefaultTableModel) tblListagemProduto.getModel(); // Recuperação do modelo da table.
+
+                model.removeRow(tblListagemProduto.getSelectedRow());
+               
+
+            } else {
+                  JOptionPane.showMessageDialog(this, "Selecione uma linha para remover.", "Remoção", JOptionPane.INFORMATION_MESSAGE);
+            }
+          
+        } 
     }
 }

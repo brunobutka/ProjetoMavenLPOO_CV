@@ -155,8 +155,9 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     
     public void setProdutoFormulario(Produto p){
         if(p == null){//se o parametro estiver nullo, limpa o formulario
+            
             txfId.setEditable(false);
-            txfId.setText("");
+            txfId.setText(""); 
             txfNome.setText(""); 
             txfQuantidade.setText("");         
             txfValor.setText(""); 
