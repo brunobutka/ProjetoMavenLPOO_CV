@@ -226,25 +226,29 @@ public class Pessoa implements Serializable{
     public void setComplemento(String complemento) {
         this.complemento = complemento;
     }
-
-    /**
-     * @return the tipo
-     */
-    /*public String getTipo() {
-        return tipo;
-    }*/
-
-    /**
-     * @param tipo the tipo to set
-     */
-    /*public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }*/
     
     @Override
     public String toString(){        
         return cpf;
     }
    
+    @Override
+    public boolean equals(Object o){
+
+        if(o == null){
+            return false;
+
+        }else if(!(o instanceof Pessoa)){
+            return false;
+
+        }else{
+            Pessoa p = (Pessoa) o;
+            if (p.getCpf() == null ? this.getCpf() == null : p.getCpf().equals(this.getCpf())){
+                return true;
+            }else{
+                return false;
+            }
+        }
+    }
     
 }

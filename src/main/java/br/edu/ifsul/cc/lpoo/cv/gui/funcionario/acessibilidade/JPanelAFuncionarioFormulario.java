@@ -486,6 +486,7 @@ public class JPanelAFuncionarioFormulario extends JPanel implements ActionListen
         btnCancelar.addActionListener(this);
         btnCancelar.setFocusable(true); // Acessibilidade.
         btnCancelar.setToolTipText("btnCancelarFuncionario"); // Acessibilidade.
+        btnCancelar.setMnemonic(KeyEvent.VK_V);
         btnCancelar.setActionCommand("botao_cancelar_formulario_funcionario");
         
         pnlSul.add(btnCancelar);

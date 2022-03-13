@@ -133,6 +133,7 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
         btnAlterar.addActionListener(this);
         btnAlterar.setFocusable(true); // Acessibilidade.
         btnAlterar.setToolTipText("btnAlterar"); // Acessibilidade.
+        btnAlterar.setMnemonic(KeyEvent.VK_E);
         btnAlterar.setActionCommand("botao_alterar");
         
         pnlSul.add(btnAlterar);
@@ -141,6 +142,7 @@ public class JPanelAProdutoListagem extends JPanel implements ActionListener {
         btnRemover.addActionListener(this);
         btnRemover.setFocusable(true); // Acessibilidade.
         btnRemover.setToolTipText("btnRemvoer"); // Acessibilidade.
+        btnRemover.setMnemonic(KeyEvent.VK_X);
         btnRemover.setActionCommand("botao_remover");
         
         pnlSul.add(btnRemover); // Adiciona o botão na fila organizada pelo flowlayout.

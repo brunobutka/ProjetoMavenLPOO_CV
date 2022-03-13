@@ -61,7 +61,7 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
             List<Venda> listVendas = controle.getConexaoJDBC().listVendas();
             
             for(Venda v : listVendas){                          
-                model.addRow(new Object[]{v, v.getObservacao(), v.getFuncionario()});
+                model.addRow(new Object[]{v, v.getObservacao(), v.getFuncionario(), v.getCliente()});
             }
         } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, "Erro ao listar vendas: " + ex.getLocalizedMessage(), "Vendas", JOptionPane.ERROR_MESSAGE);
@@ -100,7 +100,7 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
         
         modeloTabela = new DefaultTableModel(
             new String [] {
-                "ID", "Observação", "CPF Funcionário"
+                "ID", "Observação", "CPF Funcionário", "CPF Cliente"
             }, 0
              
         ){
@@ -133,6 +133,7 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
         btnAlterar.addActionListener(this);
         btnAlterar.setFocusable(true); // Acessibilidade.
         btnAlterar.setToolTipText("btnAlterar"); // Acessibilidade.
+        btnAlterar.setMnemonic(KeyEvent.VK_E);
         btnAlterar.setActionCommand("botao_alterar");
         
         pnlSul.add(btnAlterar);
@@ -141,6 +142,7 @@ public class JPanelAVendaListagem extends JPanel implements ActionListener {
         btnRemover.addActionListener(this);
         btnRemover.setFocusable(true); // Acessibilidade.
         btnRemover.setToolTipText("btnRemvoer"); // Acessibilidade.
+        btnRemover.setMnemonic(KeyEvent.VK_X);
         btnRemover.setActionCommand("botao_remover");
         
         pnlSul.add(btnRemover); // Adiciona o botão na fila organizada pelo flowlayout.

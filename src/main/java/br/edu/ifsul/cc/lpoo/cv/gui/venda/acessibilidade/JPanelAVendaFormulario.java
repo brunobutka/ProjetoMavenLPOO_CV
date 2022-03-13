@@ -41,7 +41,6 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
     private JTabbedPane tbpAbas;
     
     private JPanel pnlDadosCadastrais;    
-    private JPanel pnlCentroDadosCadastrais;
     
     private GridBagLayout gridBagLayoutDadosCadastrais;
     
@@ -176,14 +175,19 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
     public Venda getVendabyFormulario(){
         
         //validacao do formulario
-         if(txfObservacao.getText().trim().length() > 2 /*&& 
-            new String(txfSenha.getPassword()).trim().length() > 3 && 
-            cbxCargo.getSelectedIndex() > 0*/){
+         if(txfObservacao.getText().trim().length() > 2 && txfValor_total.getText().trim().length() > 0 &&
+            cbxPagamento.getSelectedIndex() > 0 && cbxCliente.getSelectedIndex() > 0 &&
+            cbxFuncionario.getSelectedIndex() > 0){
 
             Venda v = new Venda(); 
             
             v.setObservacao(txfObservacao.getText().trim());
-            v.setValor_total(Float.parseFloat(txfValor_total.getText().trim()));
+            try{
+                v.setValor_total(Float.parseFloat(txfValor_total.getText().trim()));
+             }catch (NumberFormatException e){
+                JOptionPane.showMessageDialog(this, "Coloque numeros em Valor Total ", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+            
             v.setPagamento(Pagamento.getPagamento(cbxPagamento.getSelectedItem().toString()));
             v.setCliente((Cliente) cbxCliente.getSelectedItem());
             v.setFuncionario((Funcionario) cbxFuncionario.getSelectedItem());
@@ -355,6 +359,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         pnlDadosCadastrais.add(cbxCliente, posicionador);//o add adiciona o rotulo no painel
         
         tbpAbas.addTab("Dados cadastrais", pnlDadosCadastrais);
+        tbpAbas.setMnemonicAt(0, KeyEvent.VK_D);
         
         pnlDadosProdutos = new JPanel();
         
@@ -386,12 +391,14 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         btnAdicionarProduto.addActionListener(this);
         btnAdicionarProduto.setFocusable(true);    //acessibilidade    
         btnAdicionarProduto.setToolTipText("btnAdicionarProduto"); //acessibilidade
+        btnAdicionarProduto.setMnemonic(KeyEvent.VK_I);
         btnAdicionarProduto.setActionCommand("botao_adicionar_produto_jogador");
         
         btnRemoverProduto = new JButton("Remover");
         btnRemoverProduto.addActionListener(this);
         btnRemoverProduto.setFocusable(true);    //acessibilidade    
         btnRemoverProduto.setToolTipText("btnRemoverProduto"); //acessibilidade
+        btnRemoverProduto.setMnemonic(KeyEvent.VK_O);
         btnRemoverProduto.setActionCommand("botao_remover_produto_jogador");
         
         posicionador = new GridBagConstraints();
@@ -421,6 +428,8 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         pnlDadosProdutos.add(btnRemoverProduto, posicionador);//o add adiciona o rotulo no painel
         
         tbpAbas.addTab("Produtos", pnlDadosProdutos);
+        tbpAbas.setMnemonicAt(1, KeyEvent.VK_P);
+        
         
         pnlSul = new JPanel();
         pnlSul.setLayout(new FlowLayout());
@@ -438,6 +447,7 @@ public class JPanelAVendaFormulario extends JPanel implements ActionListener{
         btnCancelar.addActionListener(this);
         btnCancelar.setFocusable(true); // Acessibilidade.
         btnCancelar.setToolTipText("btnCancelarVenda"); // Acessibilidade.
+        btnCancelar.setMnemonic(KeyEvent.VK_V);
         btnCancelar.setActionCommand("botao_cancelar_formulario_venda");
         
         pnlSul.add(btnCancelar);

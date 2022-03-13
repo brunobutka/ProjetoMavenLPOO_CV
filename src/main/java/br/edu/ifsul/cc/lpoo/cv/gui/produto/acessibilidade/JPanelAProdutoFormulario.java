@@ -109,8 +109,9 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
     
     public Produto getProdutobyFormulario(){
         //validacao do formulario
-         if(txfNome.getText().trim().length() > 1 &&  cbxTipo_produto.getSelectedIndex() > 0 &&
-            cbxFornecedor.getSelectedIndex() > 0){
+         if(txfNome.getText().trim().length() > 1 && txfQuantidade.getText().trim().length() > 0 &&
+            txfValor.getText().trim().length() > 0 &&
+            cbxTipo_produto.getSelectedIndex() > 0 && cbxFornecedor.getSelectedIndex() > 0){
 
             Produto p = new Produto();         
             
@@ -280,6 +281,7 @@ public class JPanelAProdutoFormulario extends JPanel implements ActionListener{
         btnCancelar.addActionListener(this);
         btnCancelar.setFocusable(true); // Acessibilidade.
         btnCancelar.setToolTipText("btnCancelarProduto"); // Acessibilidade.
+        btnCancelar.setMnemonic(KeyEvent.VK_V);
         btnCancelar.setActionCommand("botao_cancelar_formulario_produto");
         
         pnlSul.add(btnCancelar);
