@@ -34,6 +34,6 @@ public interface InterfacePersistencia {
     
     public List<Cliente> listClientes() throws Exception;
     
-    public Funcionario doLogin(String nome, String senha) throws Exception;
+    public Funcionario doLogin(String cpf, String senha) throws Exception;
         
 }

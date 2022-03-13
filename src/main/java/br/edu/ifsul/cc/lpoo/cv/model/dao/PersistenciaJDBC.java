@@ -965,7 +965,8 @@ public class PersistenciaJDBC implements InterfacePersistencia {
         Funcionario funcionario = null;
         
          PreparedStatement ps = 
-            this.con.prepareStatement("select p.cpf, p.senha from tb_pessoa p where p.cpf = ? and p.senha = ? ");
+            this.con.prepareStatement("select p.cpf, p.senha from tb_pessoa p " +
+                    " inner join tb_funcionario f on p.cpf = f.cpf where p.cpf = ? and p.senha = ? ");
                         
             ps.setString(1, cpf);
             ps.setString(2, senha);
